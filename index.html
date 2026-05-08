@@ -1233,6 +1233,337 @@
   });
 })();
   </script>
-  <!-- CHAT WIDGET: Pegar aquí el script del agente de chat cuando esté disponible. Asegurarse de que el z-index del widget sea mayor que el del banner de cookies. -->
+  <style>
+  #air-chat-widget {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+ 
+  #air-chat-toggle {
+    width: 60px;
+    height: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #052E16;
+    background: #4ADE80;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 14px 40px rgba(74, 222, 128, 0.35);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  #air-chat-toggle:hover { transform: translateY(-3px); background: #6EE7A1; }
+  #air-chat-toggle svg { width: 26px; height: 26px; }
+ 
+  #air-chat-panel {
+    position: absolute;
+    right: 0;
+    bottom: 76px;
+    width: min(calc(100vw - 40px), 380px);
+    height: min(calc(100vh - 130px), 540px);
+    display: none;
+    flex-direction: column;
+    background: #141414;
+    border: 1px solid #262626;
+    border-radius: 14px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+  }
+  #air-chat-panel.is-open { display: flex; }
+ 
+  #air-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: #0F0F0F;
+    border-bottom: 1px solid #262626;
+  }
+  #air-chat-header-info { display: flex; align-items: center; gap: 10px; }
+  #air-chat-avatar {
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(74, 222, 128, 0.12);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: 999px;
+    color: #4ADE80;
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  #air-chat-header-title {
+    color: #FFFFFF;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  #air-chat-header-status {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: #A0A0A0;
+    font-size: 0.75rem;
+    margin-top: 2px;
+  }
+  #air-chat-header-status::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 999px;
+    background: #4ADE80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.7);
+  }
+  #air-chat-close {
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent;
+    border: 1px solid #262626;
+    border-radius: 8px;
+    color: #A0A0A0;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  #air-chat-close:hover { color: #FFFFFF; border-color: #4ADE80; }
+  #air-chat-close svg { width: 14px; height: 14px; }
+ 
+  #air-chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #262626 transparent;
+  }
+  #air-chat-messages::-webkit-scrollbar { width: 6px; }
+  #air-chat-messages::-webkit-scrollbar-thumb { background: #262626; border-radius: 999px; }
+ 
+  .air-msg {
+    max-width: 85%;
+    padding: 10px 13px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+  .air-msg-bot {
+    align-self: flex-start;
+    background: #1A1A1A;
+    border: 1px solid #262626;
+    color: #E8E8E8;
+    border-bottom-left-radius: 4px;
+  }
+  .air-msg-user {
+    align-self: flex-end;
+    background: #4ADE80;
+    color: #052E16;
+    font-weight: 500;
+    border-bottom-right-radius: 4px;
+  }
+  .air-msg-typing {
+    display: inline-flex; gap: 4px;
+    align-items: center;
+  }
+  .air-msg-typing span {
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: #4ADE80;
+    opacity: 0.4;
+    animation: airDot 1.2s infinite ease-in-out;
+  }
+  .air-msg-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .air-msg-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes airDot {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30% { opacity: 1; transform: translateY(-3px); }
+  }
+ 
+  #air-chat-form {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: #0F0F0F;
+    border-top: 1px solid #262626;
+  }
+  #air-chat-input {
+    flex: 1;
+    min-height: 42px;
+    padding: 10px 12px;
+    color: #FFFFFF;
+    background: #141414;
+    border: 1px solid #262626;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #air-chat-input:focus { border-color: rgba(74, 222, 128, 0.65); }
+  #air-chat-input:disabled { opacity: 0.5; cursor: not-allowed; }
+ 
+  #air-chat-send {
+    width: 42px; height: 42px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #052E16;
+    background: #4ADE80;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  #air-chat-send:hover { background: #6EE7A1; }
+  #air-chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+  #air-chat-send svg { width: 18px; height: 18px; }
+ 
+  #air-chat-disclaimer {
+    padding: 8px 12px 10px;
+    color: #707070;
+    font-size: 0.7rem;
+    text-align: center;
+    background: #0F0F0F;
+    border-top: 1px solid #1A1A1A;
+  }
+ 
+  @media (max-width: 480px) {
+    #air-chat-panel {
+      width: calc(100vw - 24px);
+      height: calc(100vh - 110px);
+      right: -8px;
+    }
+    #air-chat-widget { right: 16px; bottom: 16px; }
+  }
+</style>
+ 
+<div id="air-chat-widget">
+  <button id="air-chat-toggle" aria-label="Abrir chat">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </button>
+ 
+  <div id="air-chat-panel" role="dialog" aria-label="Asistente de Air">
+    <div id="air-chat-header">
+      <div id="air-chat-header-info">
+        <div id="air-chat-avatar">A</div>
+        <div>
+          <div id="air-chat-header-title">Air Asistente</div>
+          <div id="air-chat-header-status">En línea</div>
+        </div>
+      </div>
+      <button id="air-chat-close" aria-label="Cerrar chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+ 
+    <div id="air-chat-messages" aria-live="polite"></div>
+ 
+    <form id="air-chat-form" autocomplete="off">
+      <input id="air-chat-input" type="text" placeholder="Escribe tu mensaje…" maxlength="500" required>
+      <button id="air-chat-send" type="submit" aria-label="Enviar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m22 2-7 20-4-9-9-4Z"></path>
+          <path d="M22 2 11 13"></path>
+        </svg>
+      </button>
+    </form>
+ 
+    <div id="air-chat-disclaimer">Asistente IA — puede cometer errores. Para detalles concretos, contacta con el equipo.</div>
+  </div>
+</div>
+ 
+<script>
+(function () {
+  const CHAT_WEBHOOK = 'https://n8n.airconsulting.es/webhook/chat';
+  const STORAGE_KEY  = 'airChatSessionId';
+ 
+  const toggle   = document.getElementById('air-chat-toggle');
+  const panel    = document.getElementById('air-chat-panel');
+  const closeBtn = document.getElementById('air-chat-close');
+  const form     = document.getElementById('air-chat-form');
+  const input    = document.getElementById('air-chat-input');
+  const sendBtn  = document.getElementById('air-chat-send');
+  const messages = document.getElementById('air-chat-messages');
+ 
+  // Sesión persistente durante la visita
+  let sessionId = localStorage.getItem(STORAGE_KEY);
+  if (!sessionId) {
+    sessionId = 'air-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+    localStorage.setItem(STORAGE_KEY, sessionId);
+  }
+ 
+  function addMessage(text, role) {
+    const div = document.createElement('div');
+    div.className = 'air-msg air-msg-' + role;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+ 
+  function addTyping() {
+    const div = document.createElement('div');
+    div.className = 'air-msg air-msg-bot';
+    div.innerHTML = '<span class="air-msg-typing"><span></span><span></span><span></span></span>';
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+ 
+  function openPanel() {
+    panel.classList.add('is-open');
+    if (!messages.children.length) {
+      addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo contarte sobre nuestros servicios de IA, nuestro proceso de trabajo o cómo contactar con el equipo.', 'bot');
+    }
+    setTimeout(() => input.focus(), 100);
+  }
+ 
+  function closePanel() {
+    panel.classList.remove('is-open');
+  }
+ 
+  toggle.addEventListener('click', () => {
+    panel.classList.contains('is-open') ? closePanel() : openPanel();
+  });
+  closeBtn.addEventListener('click', closePanel);
+ 
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+ 
+    addMessage(text, 'user');
+    input.value = '';
+    input.disabled = true;
+    sendBtn.disabled = true;
+ 
+    const typing = addTyping();
+ 
+    try {
+      const res = await fetch(CHAT_WEBHOOK, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ sessionId: sessionId, message: text })
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      typing.remove();
+      addMessage(data.reply || 'No he podido procesar tu mensaje. Inténtalo de nuevo.', 'bot');
+    } catch (err) {
+      console.error('Chat error:', err);
+      typing.remove();
+      addMessage('Hay un problema de conexión. Puedes escribirnos a air@airconsulting.es y te atendemos lo antes posible.', 'bot');
+    } finally {
+      input.disabled = false;
+      sendBtn.disabled = false;
+      input.focus();
+    }
+  });
+})();
+</script>
 </body>
 </html>
