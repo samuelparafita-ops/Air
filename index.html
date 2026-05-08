@@ -969,30 +969,29 @@
             <p class="section-description">Nos pondremos en contacto contigo en menos de 24 horas.</p>
           </div>
 
-          <!-- Sustituir mailto por un endpoint real cuando el sitio pase a producción: Formspree, backend propio o servicio equivalente. -->
-          <form class="contact-form" id="contact-form" action="mailto:air@airconsulting.es" method="post" enctype="text/plain">
+          <form class="contact-form" id="contact-form" novalidate>
             <div class="field">
               <label for="nombre">Nombre completo</label>
-              <input id="nombre" name="Nombre completo" type="text" autocomplete="name" required>
+              <input id="nombre" name="nombre" type="text" autocomplete="name" required>
             </div>
             <div class="field">
               <label for="empresa">Empresa</label>
-              <input id="empresa" name="Empresa" type="text" autocomplete="organization" required>
+              <input id="empresa" name="empresa" type="text" autocomplete="organization" required>
             </div>
             <div class="field">
               <label for="email">Email</label>
-              <input id="email" name="Email" type="email" autocomplete="email" required>
+              <input id="email" name="email" type="email" autocomplete="email" required>
             </div>
             <div class="field">
               <label for="telefono">Teléfono</label>
-              <input id="telefono" name="Teléfono" type="tel" autocomplete="tel" required>
+              <input id="telefono" name="telefono" type="tel" autocomplete="tel" required>
             </div>
             <div class="privacy-check">
-              <input id="privacidad" name="Acepta privacidad" type="checkbox" required>
+              <input id="privacidad" name="privacidad" type="checkbox" required>
               <label for="privacidad">He leído y acepto la <a href="privacidad.html">Política de Privacidad</a></label>
             </div>
-            <button class="btn btn-primary" type="submit">Solicitar contacto</button>
-            <p class="submit-status" id="submit-status" hidden>Mensaje preparado. Se abrirá tu cliente de correo para completar el envío.</p>
+            <button class="btn btn-primary" type="submit" id="submit-btn">Solicitar contacto</button>
+            <p class="submit-status" id="submit-status" hidden></p>
           </form>
         </div>
       </div>
@@ -1065,8 +1064,7 @@
     const mobileMenu = document.getElementById('mobile-menu');
     const cookieBanner = document.getElementById('cookie-banner');
     const acceptCookies = document.getElementById('accept-cookies');
-    const contactForm = document.getElementById('contact-form');
-    const submitStatus = document.getElementById('submit-status');
+
     const networkNodes = [];
     const maxDistance = 150;
     let canvasWidth = 0;
@@ -1187,11 +1185,53 @@
       cookieBanner.classList.remove('is-visible');
     });
 
-    contactForm.addEventListener('submit', () => {
-      if (contactForm.checkValidity()) {
-        submitStatus.hidden = false;
+    (function () {
+      const N8N_WEBHOOK = 'https://air-consulting-n8n.g2jm2v.easypanel.host/webhook/contacto';
+      const form   = document.getElementById('contact-form');
+      const btn    = document.getElementById('submit-btn');
+      const status = document.getElementById('submit-status');
+
+      function setStatus(msg, ok) {
+        status.hidden = false;
+        status.textContent = msg;
+        status.style.color = ok ? '#4ADE80' : '#F87171';
       }
-    });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Enviando…';
+        status.hidden = true;
+
+        const payload = {
+          nombre:   document.getElementById('nombre').value.trim(),
+          empresa:  document.getElementById('empresa').value.trim(),
+          email:    document.getElementById('email').value.trim(),
+          telefono: document.getElementById('telefono').value.trim(),
+          fecha:    new Date().toISOString(),
+          origen:   window.location.href
+        };
+
+        try {
+          const res = await fetch(N8N_WEBHOOK, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          btn.textContent = '✓ Solicitud enviada';
+          setStatus('Recibido. Te contactaremos en menos de 24 horas.', true);
+          form.reset();
+        } catch (err) {
+          console.error('Webhook error:', err);
+          btn.disabled = false;
+          btn.textContent = 'Solicitar contacto';
+          setStatus('Error al enviar. Escríbenos a air@airconsulting.es', false);
+        }
+      });
+    })();
   </script>
   <!-- CHAT WIDGET: Pegar aquí el script del agente de chat cuando esté disponible. Asegurarse de que el z-index del widget sea mayor que el del banner de cookies. -->
 </body>
