@@ -1185,53 +1185,53 @@
       cookieBanner.classList.remove('is-visible');
     });
 
-    (function () {
-      const N8N_WEBHOOK = 'https://air-consulting-n8n.g2jm2v.easypanel.host/webhook/contacto';
-      const form   = document.getElementById('contact-form');
-      const btn    = document.getElementById('submit-btn');
-      const status = document.getElementById('submit-status');
+   (function () {
+  const N8N_WEBHOOK = 'https://n8n.airconsulting.es/webhook/contacto';
+  const form   = document.getElementById('contact-form');
+  const btn    = document.getElementById('submit-btn');
+  const status = document.getElementById('submit-status');
 
-      function setStatus(msg, ok) {
-        status.hidden = false;
-        status.textContent = msg;
-        status.style.color = ok ? '#4ADE80' : '#F87171';
-      }
+  function setStatus(msg, ok) {
+    status.hidden = false;
+    status.textContent = msg;
+    status.style.color = ok ? '#4ADE80' : '#F87171';
+  }
 
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        if (!form.checkValidity()) { form.reportValidity(); return; }
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
 
-        btn.disabled = true;
-        btn.textContent = 'Enviando…';
-        status.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+    status.hidden = true;
 
-        const payload = {
-          nombre:   document.getElementById('nombre').value.trim(),
-          empresa:  document.getElementById('empresa').value.trim(),
-          email:    document.getElementById('email').value.trim(),
-          telefono: document.getElementById('telefono').value.trim(),
-          fecha:    new Date().toISOString(),
-          origen:   window.location.href
-        };
+    const payload = {
+      nombre:   document.getElementById('nombre').value.trim(),
+      empresa:  document.getElementById('empresa').value.trim(),
+      email:    document.getElementById('email').value.trim(),
+      telefono: document.getElementById('telefono').value.trim(),
+      fecha:    new Date().toISOString(),
+      origen:   window.location.href
+    };
 
-        try {
-          const res = await fetch(N8N_WEBHOOK, {
-            method:  'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify(payload)
-          });
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          btn.textContent = '✓ Solicitud enviada';
-          setStatus('Recibido. Te contactaremos en menos de 24 horas.', true);
-          form.reset();
-        } catch (err) {
-          console.error('Webhook error:', err);
-          btn.disabled = false;
-          btn.textContent = 'Solicitar contacto';
-          setStatus('Error al enviar. Escríbenos a air@airconsulting.es', false);
-        }
+    try {
+      const res = await fetch(N8N_WEBHOOK, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload)
       });
-    })();
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      btn.textContent = '✓ Solicitud enviada';
+      setStatus('Recibido. Te contactaremos en menos de 24 horas.', true);
+      form.reset();
+    } catch (err) {
+      console.error('Webhook error:', err);
+      btn.disabled = false;
+      btn.textContent = 'Solicitar contacto';
+      setStatus('Error al enviar. Escríbenos a air@airconsulting.es', false);
+    }
+  });
+})();
   </script>
   <!-- CHAT WIDGET: Pegar aquí el script del agente de chat cuando esté disponible. Asegurarse de que el z-index del widget sea mayor que el del banner de cookies. -->
 </body>
