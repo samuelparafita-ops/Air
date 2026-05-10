@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Air | Computer Vision Live Demo</title>
+  <meta name="description" content="Demo frontend-only de deteccion de objetos con Computer Vision en navegador.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A0A0A'/%3E%3Ctext x='12' y='42' font-family='Arial' font-size='25' font-weight='700' fill='white'%3EAir%3C/text%3E%3Ccircle cx='52' cy='43' r='5' fill='%234ADE80'/%3E%3C/svg%3E">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    :root {
+      --bg: #0A0A0A;
+      --surface: #141414;
+      --text: #FFFFFF;
+      --muted: #A0A0A0;
+      --accent: #4ADE80;
+      --border: #262626;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      --max-width: 1200px;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .network-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .ambient-glow {
+      position: fixed;
+      width: min(48vw, 640px);
+      aspect-ratio: 1;
+      top: 14%;
+      right: 2%;
+      z-index: 0;
+      background: radial-gradient(circle, rgba(74, 222, 128, 0.2), rgba(74, 222, 128, 0.07) 42%, transparent 72%);
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(38, 38, 38, 0.85);
+      background: rgba(10, 10, 10, 0.78);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(18px);
+    }
+
+    main,
+    .site-footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      min-width: 112px;
+      color: var(--text);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .logo-dot {
+      width: 0.34em;
+      height: 0.34em;
+      margin-left: 0.08em;
+      margin-top: 0.48em;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 26px rgba(74, 222, 128, 0.45);
+      flex: 0 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 500;
+      padding: 10px 14px;
+      border-radius: 999px;
+      transition: color 0.3s ease, background 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.06);
+      outline: none;
+    }
+
+    .nav-demo {
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links .nav-demo {
+      color: #052E16;
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 14px 40px rgba(74, 222, 128, 0.22);
+    }
+
+    .btn {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #052E16;
+      border-color: var(--accent);
+      box-shadow: 0 14px 40px rgba(74, 222, 128, 0.22);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .section {
+      padding: 82px 0 96px;
+    }
+
+    .section-header {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 44px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(74, 222, 128, 0.7);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: 0;
+      line-height: 1.05;
+    }
+
+    .section-title {
+      max-width: 840px;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 700;
+    }
+
+    .section-description {
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.8;
+    }
+
+    .vision {
+      min-height: calc(100vh - 76px);
+      background:
+        linear-gradient(180deg, rgba(74, 222, 128, 0.035), rgba(255, 255, 255, 0.012) 42%, rgba(255, 255, 255, 0));
+    }
+
+    .vision-toolbar {
+      display: grid;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .vision-controls {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      background: rgba(20, 20, 20, 0.82);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .vision-control {
+      display: grid;
+      gap: 8px;
+    }
+
+    .vision-control label,
+    .vision-toggle {
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .vision-control input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .vision-control-value {
+      color: var(--accent);
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+    }
+
+    .vision-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .vision-toggle input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+    }
+
+    .vision-status {
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .vision-card,
+    .vision-upload {
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)), var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .vision-frame {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #0F0F0F;
+      overflow: hidden;
+    }
+
+    .vision-frame img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    .vision-frame canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .vision-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .vision-meta h3 {
+      font-size: 1.08rem;
+      font-weight: 700;
+    }
+
+    .vision-chip {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      color: var(--accent);
+      background: rgba(74, 222, 128, 0.08);
+      border: 1px solid rgba(74, 222, 128, 0.26);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .vision-upload {
+      display: grid;
+      gap: 18px;
+      padding: 18px;
+      margin-top: 22px;
+    }
+
+    .vision-upload-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .vision-upload-head h3 {
+      font-size: 1.28rem;
+    }
+
+    .vision-upload-hint {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      max-width: 520px;
+    }
+
+    .vision-upload-hint kbd {
+      display: inline-block;
+      padding: 1px 6px;
+      margin: 0 1px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      font-family: "Space Grotesk", monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .vision-upload-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .vision-search-form {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: rgba(20, 20, 20, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 50px;
+    }
+
+    .vision-search-form:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.18);
+    }
+
+    .vision-search-input {
+      width: clamp(180px, 26vw, 260px);
+      padding: 0 14px;
+      height: 48px;
+      color: var(--text);
+      background: transparent;
+      border: 0;
+      outline: none;
+      font-size: 0.92rem;
+    }
+
+    .vision-search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .vision-search-btn {
+      height: 48px;
+      padding: 0 16px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      border: 0;
+      border-left: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 700;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .vision-search-btn:hover,
+    .vision-search-btn:focus-visible {
+      color: var(--accent);
+      background: rgba(74, 222, 128, 0.08);
+      outline: none;
+    }
+
+    .vision-file {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+
+    .vision-upload .vision-frame {
+      min-height: 280px;
+      border: 1px dashed rgba(74, 222, 128, 0.34);
+      border-radius: 12px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .vision-upload .vision-frame.is-dragover {
+      border-color: var(--accent);
+      background: rgba(74, 222, 128, 0.06);
+    }
+
+    .vision-empty {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 26px;
+      color: var(--muted);
+      text-align: center;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 34px 34px;
+      pointer-events: none;
+    }
+
+    .vision-empty.is-hidden {
+      display: none;
+    }
+
+    .vision-empty-inner {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+    }
+
+    .vision-empty-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.28);
+      border-radius: 12px;
+    }
+
+    .vision-empty strong {
+      color: var(--text);
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.05rem;
+    }
+
+    .vision-empty small {
+      max-width: 380px;
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .vision-search-wrap {
+      position: relative;
+    }
+
+    .vision-search-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      z-index: 30;
+      width: min(560px, 90vw);
+      max-height: 70vh;
+      overflow-y: auto;
+      padding: 16px;
+      background: rgba(15, 15, 15, 0.98);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(14px);
+    }
+
+    .vision-search-panel.is-hidden {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .vision-search-panel {
+        position: fixed;
+        inset: auto 12px 12px 12px;
+        width: auto;
+        right: 12px;
+      }
+    }
+
+    .vision-search-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .vision-search-panel-head strong {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1rem;
+    }
+
+    .vision-search-panel-head em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .vision-search-close {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .vision-search-close:hover,
+    .vision-search-close:focus-visible {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.3);
+      outline: none;
+    }
+
+    .vision-search-status {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .vision-search-status.is-error {
+      color: #F87171;
+    }
+
+    .vision-search-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 8px;
+    }
+
+    .vision-search-thumb {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      padding: 0;
+      background: #0F0F0F;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .vision-search-thumb:hover,
+    .vision-search-thumb:focus-visible {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .vision-search-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .vision-error {
+      color: #F87171;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      background: #080808;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        width: min(100% - 48px, var(--max-width));
+      }
+
+      .vision-toolbar {
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+      }
+
+      .vision-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        gap: 4px;
+      }
+
+      .nav-links a {
+        padding: 9px 10px;
+        font-size: 0.84rem;
+      }
+
+      .logo {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow" aria-hidden="true"></div>
+  <canvas class="network-canvas" id="network-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Navegacion principal">
+        <a class="logo" href="index.html" aria-label="Air, inicio">
+          <span>Air</span><span class="logo-dot" aria-hidden="true"></span>
+        </a>
+        <div class="nav-links" aria-label="Secciones principales">
+          <a href="index.html#servicios">Servicios</a>
+          <a class="btn btn-primary nav-demo" href="#vision">LIVE DEMO</a>
+          <a href="index.html#contacto">Contacto</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section vision" id="vision">
+      <div class="container">
+        <div class="vision-toolbar">
+          <div class="section-header">
+            <p class="eyebrow">LIVE DEMO</p>
+            <h1 class="section-title">Modelos visuales a tu medida</h1>
+            <p class="section-description">Moldeamos modelos de Computer Vision alrededor de tus imagenes, reglas y objetivos. Prueba esta demo frontend-only con muestras o una imagen local: la inferencia se ejecuta en tu navegador y nada se sube a un servidor.</p>
+          </div>
+
+          <div class="vision-controls" aria-label="Controles de deteccion">
+            <div class="vision-control">
+              <label for="cv-confidence">Confianza minima <span class="vision-control-value" id="cv-confidence-value">35%</span></label>
+              <input id="cv-confidence" type="range" min="10" max="80" step="5" value="35">
+            </div>
+            <label class="vision-toggle" for="cv-label-toggle">
+              <input id="cv-label-toggle" type="checkbox" checked>
+              Mostrar etiquetas
+            </label>
+            <p class="vision-status" id="cv-status">El modelo se cargara al abrir esta pagina.</p>
+          </div>
+        </div>
+
+        <div class="vision-grid" id="cv-gallery" aria-label="Galeria de imagenes para deteccion">
+          <article class="vision-card" data-cv-item>
+            <div class="vision-frame">
+              <img src="assets/cv/samples/domestic.jpg" alt="Sal&oacute;n dom&eacute;stico con muebles" data-cv-image>
+              <canvas data-cv-canvas aria-hidden="true"></canvas>
+            </div>
+            <div class="vision-meta">
+              <h3>Dom&eacute;stico</h3>
+              <span class="vision-chip" data-cv-result>Sin analizar</span>
+            </div>
+          </article>
+
+          <article class="vision-card" data-cv-item>
+            <div class="vision-frame">
+              <img src="assets/cv/samples/industrial.jpg" alt="Almac&eacute;n industrial con trabajadores y carretillas" data-cv-image>
+              <canvas data-cv-canvas aria-hidden="true"></canvas>
+            </div>
+            <div class="vision-meta">
+              <h3>Industrial</h3>
+              <span class="vision-chip" data-cv-result>Sin analizar</span>
+            </div>
+          </article>
+
+          <article class="vision-card" data-cv-item>
+            <div class="vision-frame">
+              <img src="assets/cv/samples/sports.jpg" alt="Jugadores de f&uacute;tbol antes de un partido" data-cv-image>
+              <canvas data-cv-canvas aria-hidden="true"></canvas>
+            </div>
+            <div class="vision-meta">
+              <h3>Deportes</h3>
+              <span class="vision-chip" data-cv-result>Sin analizar</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="vision-upload" id="cv-upload-card">
+          <div class="vision-upload-head">
+            <div>
+              <h3>Tu propia imagen</h3>
+              <p class="vision-upload-hint">Sube un archivo, arrastra y suelta, pega con <kbd>Ctrl</kbd>+<kbd>V</kbd> o busca im&aacute;genes en Wikimedia Commons y haz clic para analizarla.</p>
+            </div>
+            <div class="vision-upload-actions">
+              <input class="vision-file" id="cv-file" type="file" accept="image/jpeg,image/png,image/webp">
+              <label class="btn btn-primary" for="cv-file">Seleccionar</label>
+              <div class="vision-search-wrap">
+                <form class="vision-search-form" id="cv-search-form" role="search">
+                  <input class="vision-search-input" id="cv-search-input" type="search" placeholder="Buscar im&aacute;genes" aria-label="Buscar imagen en Wikimedia Commons" autocomplete="off">
+                  <button class="vision-search-btn" type="submit">Buscar</button>
+                </form>
+                <div class="vision-search-panel is-hidden" id="cv-search-panel" aria-live="polite">
+                  <div class="vision-search-panel-head">
+                    <strong>Resultados para <em id="cv-search-query"></em></strong>
+                    <button type="button" class="vision-search-close" id="cv-search-close" aria-label="Cerrar resultados">&times;</button>
+                  </div>
+                  <p class="vision-search-status" id="cv-search-status"></p>
+                  <div class="vision-search-grid" id="cv-search-grid"></div>
+                </div>
+              </div>
+              <button class="btn btn-secondary" type="button" id="cv-clear-upload">Limpiar</button>
+            </div>
+          </div>
+          <div class="vision-frame" data-cv-upload-frame id="cv-upload-frame">
+            <img alt="" data-cv-upload-image hidden>
+            <canvas data-cv-upload-canvas aria-hidden="true"></canvas>
+            <div class="vision-empty" data-cv-upload-empty>
+              <div class="vision-empty-inner">
+                <span class="vision-empty-icon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+                </span>
+                <strong>Suelta, pega o busca una imagen</strong>
+                <small>JPG, PNG o WebP. Todo el procesamiento se queda en tu navegador.</small>
+              </div>
+            </div>
+          </div>
+          <div class="vision-meta">
+            <h3 id="cv-upload-title">Imagen local</h3>
+            <span class="vision-chip" data-cv-upload-result>Sin imagen</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">Air | Computer Vision demo frontend-only</div>
+  </footer>
+
+  <script>
+    const networkCanvas = document.getElementById('network-canvas');
+    const networkContext = networkCanvas.getContext('2d');
+    const networkNodes = [];
+    const maxDistance = 150;
+    let canvasWidth = 0;
+    let canvasHeight = 0;
+    let pixelRatio = 1;
+
+    function randomVelocity() {
+      const speed = 0.2 + Math.random() * 0.3;
+      return (Math.random() < 0.5 ? -1 : 1) * speed;
+    }
+
+    function resizeNetworkCanvas() {
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      canvasWidth = window.innerWidth;
+      canvasHeight = window.innerHeight;
+      networkCanvas.width = canvasWidth * pixelRatio;
+      networkCanvas.height = canvasHeight * pixelRatio;
+      networkCanvas.style.width = `${canvasWidth}px`;
+      networkCanvas.style.height = `${canvasHeight}px`;
+      networkContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
+    function createNetworkNodes() {
+      networkNodes.length = 0;
+      const nodeCount = Math.min(30, Math.max(25, Math.round((canvasWidth * canvasHeight) / 65000)));
+
+      for (let index = 0; index < nodeCount; index += 1) {
+        networkNodes.push({
+          x: Math.random() * canvasWidth,
+          y: Math.random() * canvasHeight,
+          vx: randomVelocity(),
+          vy: randomVelocity(),
+          radius: 2 + Math.random()
+        });
+      }
+    }
+
+    function drawNetwork() {
+      networkContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      for (let i = 0; i < networkNodes.length; i += 1) {
+        const node = networkNodes[i];
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x <= node.radius || node.x >= canvasWidth - node.radius) {
+          node.vx *= -1;
+          node.x = Math.min(Math.max(node.x, node.radius), canvasWidth - node.radius);
+        }
+
+        if (node.y <= node.radius || node.y >= canvasHeight - node.radius) {
+          node.vy *= -1;
+          node.y = Math.min(Math.max(node.y, node.radius), canvasHeight - node.radius);
+        }
+
+        for (let j = i + 1; j < networkNodes.length; j += 1) {
+          const otherNode = networkNodes[j];
+          const distance = Math.hypot(node.x - otherNode.x, node.y - otherNode.y);
+
+          if (distance < maxDistance) {
+            const lineOpacity = (1 - distance / maxDistance) * 0.7;
+            networkContext.beginPath();
+            networkContext.moveTo(node.x, node.y);
+            networkContext.lineTo(otherNode.x, otherNode.y);
+            networkContext.strokeStyle = `rgba(74, 222, 128, ${lineOpacity})`;
+            networkContext.lineWidth = 1;
+            networkContext.stroke();
+          }
+        }
+
+        networkContext.beginPath();
+        networkContext.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        networkContext.fillStyle = '#4ADE80';
+        networkContext.fill();
+      }
+
+      requestAnimationFrame(drawNetwork);
+    }
+
+    resizeNetworkCanvas();
+    createNetworkNodes();
+    requestAnimationFrame(drawNetwork);
+
+    window.addEventListener('resize', () => {
+      resizeNetworkCanvas();
+      createNetworkNodes();
+    });
+  </script>
+  <script type="module" src="assets/js/cv-detector.js"></script>
+</body>
+</html>

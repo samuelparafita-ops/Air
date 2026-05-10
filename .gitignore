@@ -1,0 +1,20 @@
+# Tooling / agents
+.claude/
+.cursor/
+.vscode/
+.idea/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor backups
+*.swp
+*~
+*.bak
+
+# Logs / env
+*.log
+.env
+.env.*
