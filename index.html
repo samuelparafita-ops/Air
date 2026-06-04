@@ -777,10 +777,10 @@
       border: none;
       border-radius: 999px;
       cursor: pointer;
-      box-shadow: 0 14px 40px rgba(255, 255, 255, 0.35);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
       transition: transform 0.25s ease, background 0.25s ease;
     }
-    #air-chat-toggle:hover { transform: translateY(-3px); background: #FFFFFF; }
+    #air-chat-toggle:hover { box-shadow: 0 0 15px rgba(255, 255, 255, 0.12); }
     #air-chat-toggle svg { width: 26px; height: 26px; }
     #air-chat-panel {
       position: absolute;
@@ -809,12 +809,12 @@
     #air-chat-avatar {
       width: 32px; height: 32px;
       display: inline-flex; align-items: center; justify-content: center;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
       border-radius: 999px;
-      color: #FFFFFF;
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
+      color: var(--text);
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
       font-size: 0.85rem;
     }
     #air-chat-header-title {
@@ -825,16 +825,18 @@
     }
     #air-chat-header-status {
       display: inline-flex; align-items: center; gap: 6px;
-      color: #A0A0A0;
-      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       margin-top: 2px;
     }
     #air-chat-header-status::before {
       content: "";
       width: 7px; height: 7px;
       border-radius: 999px;
-      background: #FFFFFF;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+      background: var(--muted);
     }
     #air-chat-close {
       width: 32px; height: 32px;
@@ -1358,7 +1360,7 @@
     function openPanel() {
       panel.classList.add('is-open');
       if (!messages.children.length) {
-        addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo contarte sobre nuestros servicios de IA, nuestro proceso de trabajo o cómo contactar con el equipo.', 'bot');
+        addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo contarte sobre nuestros servicios de tecnología, nuestro proceso de trabajo o cómo contactar con el equipo.', 'bot');
       }
       setTimeout(() => input.focus(), 100);
     }
