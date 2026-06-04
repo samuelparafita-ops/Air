@@ -57,28 +57,6 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    .network-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0.12;
-      pointer-events: none;
-    }
-
-    .ambient-glow {
-      position: fixed;
-      width: min(48vw, 640px);
-      aspect-ratio: 1;
-      top: 14%;
-      right: 2%;
-      z-index: 0;
-      background: radial-gradient(circle, rgba(74, 222, 128, 0.2), rgba(74, 222, 128, 0.07) 42%, transparent 72%);
-      filter: blur(2px);
-      pointer-events: none;
-    }
-
     a {
       color: inherit;
       text-decoration: none;
@@ -237,19 +215,6 @@
       align-items: center;
       padding: 70px 0 76px;
       isolation: isolate;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 72%);
-      pointer-events: none;
-      z-index: -3;
     }
 
     .hero-inner {
@@ -1072,8 +1037,7 @@
   </style>
 </head>
 <body>
-  <div class="ambient-glow" aria-hidden="true"></div>
-  <canvas class="network-canvas" id="network-canvas" aria-hidden="true"></canvas>
+  <div class="film-grain" aria-hidden="true"></div>
 
   <header class="site-header" id="site-header">
     <div class="container">
@@ -1371,107 +1335,15 @@
   </div>
 
   <script>
-    const networkCanvas = document.getElementById('network-canvas');
-    const networkContext = networkCanvas.getContext('2d');
     const header = document.getElementById('site-header');
     const menuToggle = document.querySelector('.menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const cookieBanner = document.getElementById('cookie-banner');
     const acceptCookies = document.getElementById('accept-cookies');
 
-    const networkNodes = [];
-    const maxDistance = 150;
-    let canvasWidth = 0;
-    let canvasHeight = 0;
-    let pixelRatio = 1;
-
-    function randomVelocity() {
-      const speed = 0.2 + Math.random() * 0.3;
-      return (Math.random() < 0.5 ? -1 : 1) * speed;
-    }
-
-    function resizeNetworkCanvas() {
-      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-      canvasWidth = window.innerWidth;
-      canvasHeight = window.innerHeight;
-      networkCanvas.width = canvasWidth * pixelRatio;
-      networkCanvas.height = canvasHeight * pixelRatio;
-      networkCanvas.style.width = `${canvasWidth}px`;
-      networkCanvas.style.height = `${canvasHeight}px`;
-      networkContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-    }
-
-    function createNetworkNodes() {
-      networkNodes.length = 0;
-      const nodeCount = Math.min(30, Math.max(25, Math.round((canvasWidth * canvasHeight) / 65000)));
-
-      for (let index = 0; index < nodeCount; index += 1) {
-        networkNodes.push({
-          x: Math.random() * canvasWidth,
-          y: Math.random() * canvasHeight,
-          vx: randomVelocity(),
-          vy: randomVelocity(),
-          radius: 2 + Math.random()
-        });
-      }
-    }
-
-    function drawNetwork() {
-      networkContext.clearRect(0, 0, canvasWidth, canvasHeight);
-
-      for (let i = 0; i < networkNodes.length; i += 1) {
-        const node = networkNodes[i];
-        node.x += node.vx;
-        node.y += node.vy;
-
-        if (node.x <= node.radius || node.x >= canvasWidth - node.radius) {
-          node.vx *= -1;
-          node.x = Math.min(Math.max(node.x, node.radius), canvasWidth - node.radius);
-        }
-
-        if (node.y <= node.radius || node.y >= canvasHeight - node.radius) {
-          node.vy *= -1;
-          node.y = Math.min(Math.max(node.y, node.radius), canvasHeight - node.radius);
-        }
-
-        for (let j = i + 1; j < networkNodes.length; j += 1) {
-          const otherNode = networkNodes[j];
-          const distanceX = node.x - otherNode.x;
-          const distanceY = node.y - otherNode.y;
-          const distance = Math.hypot(distanceX, distanceY);
-
-          if (distance < maxDistance) {
-            const lineOpacity = (1 - distance / maxDistance) * 0.7;
-            networkContext.beginPath();
-            networkContext.moveTo(node.x, node.y);
-            networkContext.lineTo(otherNode.x, otherNode.y);
-            networkContext.strokeStyle = `rgba(74, 222, 128, ${lineOpacity})`;
-            networkContext.lineWidth = 1;
-            networkContext.stroke();
-          }
-        }
-
-        networkContext.beginPath();
-        networkContext.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        networkContext.fillStyle = '#4ADE80';
-        networkContext.fill();
-      }
-
-      requestAnimationFrame(drawNetwork);
-    }
-
     function updateHeader() {
       header.classList.toggle('is-scrolled', window.scrollY > 8);
     }
-
-    resizeNetworkCanvas();
-    createNetworkNodes();
-    requestAnimationFrame(drawNetwork);
-
-    window.addEventListener('resize', () => {
-      resizeNetworkCanvas();
-      createNetworkNodes();
-    });
 
     updateHeader();
     window.addEventListener('scroll', updateHeader, { passive: true });
