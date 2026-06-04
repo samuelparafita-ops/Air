@@ -97,6 +97,12 @@
       100% { opacity: 0.98; }
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .crt-flicker {
+        animation: none;
+      }
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -1463,11 +1469,13 @@
     const repulsionForce = 25;
     const springConstant = 0.08;
     const friction = 0.80;
-    const autoDriftSpeed = 0.1;
-    const parallaxSpeed = 0.2;
 
-    // Movement offsets
-    let currentYOffset = 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const autoDriftSpeed = prefersReducedMotion ? 0 : 0.1;
+    const parallaxSpeed = prefersReducedMotion ? 0 : 0.2;
+
+    // Movement offsets (initialize with current scroll)
+    let currentYOffset = -window.scrollY * parallaxSpeed;
     let lastScrollY = window.scrollY;
 
     // Mouse coordinates (start off screen)
@@ -1483,8 +1491,15 @@
       mouse.y = -1000;
     });
 
+    window.addEventListener('touchstart', (e) => {
+      if (!prefersReducedMotion && e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
     window.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
+      if (!prefersReducedMotion && e.touches.length > 0) {
         mouse.x = e.touches[0].clientX;
         mouse.y = e.touches[0].clientY;
       }
@@ -1516,9 +1531,9 @@
         this.baseY = this.y;
       }
 
-      update(xOffset, yOffset) {
-        const wrapW = logicalWidth + gridSpacing * 2;
-        const wrapH = logicalHeight + gridSpacing * 2;
+      update(xOffset, yOffset, dt) {
+        const wrapW = cols * gridSpacing;
+        const wrapH = rows * gridSpacing;
 
         let targetX = ((this.gx * gridSpacing + xOffset) % wrapW + wrapW) % wrapW - gridSpacing;
         let targetY = ((this.gy * gridSpacing + yOffset) % wrapH + wrapH) % wrapH - gridSpacing;
@@ -1536,28 +1551,32 @@
         this.baseX = targetX;
         this.baseY = targetY;
 
-        // 1. Spring force pull to grid target
-        let ax = (this.baseX - this.x) * springConstant;
-        let ay = (this.baseY - this.y) * springConstant;
+        // 1. Spring force pull to grid target (scaled by dt)
+        let ax = (this.baseX - this.x) * springConstant * dt;
+        let ay = (this.baseY - this.y) * springConstant * dt;
 
-        // 2. Mouse repulsion force (quadratic falloff)
-        let dx = this.x - mouse.x;
-        let dy = this.y - mouse.y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
+        // 2. Mouse repulsion force with squared distance checks
+        if (!prefersReducedMotion) {
+          let dx = this.x - mouse.x;
+          let dy = this.y - mouse.y;
+          let distSq = dx * dx + dy * dy;
+          const rSq = repulsionRadius * repulsionRadius;
 
-        if (dist < repulsionRadius && dist > 0) {
-          let force = (repulsionRadius - dist) / repulsionRadius;
-          force = force * force; // Quadratic curves for soft push
-          
-          ax += (dx / dist) * force * repulsionForce * 0.08;
-          ay += (dy / dist) * force * repulsionForce * 0.08;
+          if (distSq < rSq && distSq > 0) {
+            let dist = Math.sqrt(distSq);
+            let force = (repulsionRadius - dist) / repulsionRadius;
+            force = force * force; // Quadratic curves for soft push
+            
+            ax += (dx / dist) * force * repulsionForce * 0.08 * dt;
+            ay += (dy / dist) * force * repulsionForce * 0.08 * dt;
+          }
         }
 
-        // 3. Euler integration with dampening
-        this.vx = (this.vx + ax) * friction;
-        this.vy = (this.vy + ay) * friction;
-        this.x += this.vx;
-        this.y += this.vy;
+        // 3. Euler integration with continuous friction damping
+        this.vx = (this.vx + ax) * Math.pow(friction, dt);
+        this.vy = (this.vy + ay) * Math.pow(friction, dt);
+        this.x += this.vx * dt;
+        this.y += this.vy * dt;
       }
 
       draw(time) {
@@ -1571,11 +1590,13 @@
     }
 
     let particles = [];
+    let cols = 0;
+    let rows = 0;
 
     function initParticles() {
+      cols = Math.ceil(logicalWidth / gridSpacing) + 2;
+      rows = Math.ceil(logicalHeight / gridSpacing) + 2;
       particles = [];
-      const cols = Math.ceil(logicalWidth / gridSpacing) + 2;
-      const rows = Math.ceil(logicalHeight / gridSpacing) + 2;
       
       for (let c = -1; c < cols - 1; c++) {
         for (let r = -1; r < rows - 1; r++) {
@@ -1600,16 +1621,17 @@
 
     function tick() {
       const now = performance.now();
-      const dt = (now - lastTime) / 16.666; // Normalize to standard 60fps frame time (16.66ms)
+      // Cap dt to prevent particle flinging when backgrounded
+      const dt = Math.min((now - lastTime) / 16.666, 4.0);
       lastTime = now;
 
       // 1. Accumulate auto-drift multiplied by dt
       currentYOffset += autoDriftSpeed * 0.1 * dt;
       
-      // 2. Add scroll parallax delta
+      // 2. Add scroll parallax delta (subtracting scrollDiff to match content scroll direction)
       const currentScrollY = window.scrollY;
       const scrollDiff = currentScrollY - lastScrollY;
-      currentYOffset += scrollDiff * parallaxSpeed;
+      currentYOffset -= scrollDiff * parallaxSpeed;
       lastScrollY = currentScrollY;
 
       // 3. Clear and render scene
@@ -1619,7 +1641,7 @@
       const time = now * 0.001;
 
       particles.forEach(p => {
-        p.update(0, currentYOffset);
+        p.update(0, currentYOffset, dt);
         p.draw(time);
       });
 
