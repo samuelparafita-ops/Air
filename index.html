@@ -1483,6 +1483,27 @@
       mouse.y = -1000;
     });
 
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    window.addEventListener('touchcancel', () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    // Logical dimensions for physics simulation
+    let logicalWidth = window.innerWidth;
+    let logicalHeight = window.innerHeight;
+
     class Particle {
       constructor(gx, gy) {
         this.gx = gx; // Grid column index
@@ -1496,18 +1517,18 @@
       }
 
       update(xOffset, yOffset) {
-        const wrapW = canvas.width + gridSpacing * 2;
-        const wrapH = canvas.height + gridSpacing * 2;
+        const wrapW = logicalWidth + gridSpacing * 2;
+        const wrapH = logicalHeight + gridSpacing * 2;
 
         let targetX = ((this.gx * gridSpacing + xOffset) % wrapW + wrapW) % wrapW - gridSpacing;
         let targetY = ((this.gy * gridSpacing + yOffset) % wrapH + wrapH) % wrapH - gridSpacing;
 
         // Snap coordinates if wrapped around screen boundary to prevent massive spring tension pull
-        if (Math.abs(targetX - this.x) > canvas.width / 2) {
+        if (Math.abs(targetX - this.x) > logicalWidth / 2) {
           this.x = targetX;
           this.vx = 0;
         }
-        if (Math.abs(targetY - this.y) > canvas.height / 2) {
+        if (Math.abs(targetY - this.y) > logicalHeight / 2) {
           this.y = targetY;
           this.vy = 0;
         }
@@ -1544,9 +1565,8 @@
         const pulse = Math.sin((this.x * 0.005) + (this.y * 0.005) + time) * 0.2 + 0.8;
         ctx.globalAlpha = pulse;
 
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, dotRadius, 0, Math.PI * 2);
-        ctx.fill();
+        // Render square dot which is extremely fast and pixel-like
+        ctx.fillRect(this.x - dotRadius, this.y - dotRadius, dotRadius * 2, dotRadius * 2);
       }
     }
 
@@ -1554,27 +1574,37 @@
 
     function initParticles() {
       particles = [];
-      const cols = Math.ceil(canvas.width / gridSpacing) + 2;
-      const rows = Math.ceil(canvas.height / gridSpacing) + 2;
+      const cols = Math.ceil(logicalWidth / gridSpacing) + 2;
+      const rows = Math.ceil(logicalHeight / gridSpacing) + 2;
       
-      for (let c = -1; c < cols; c++) {
-        for (let r = -1; r < rows; r++) {
+      for (let c = -1; c < cols - 1; c++) {
+        for (let r = -1; r < rows - 1; r++) {
           particles.push(new Particle(c, r));
         }
       }
     }
 
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      logicalWidth = window.innerWidth;
+      logicalHeight = window.innerHeight;
+      canvas.width = logicalWidth * dpr;
+      canvas.height = logicalHeight * dpr;
+      ctx.scale(dpr, dpr);
       initParticles();
     }
 
     window.addEventListener('resize', resizeCanvas);
 
+    let lastTime = performance.now();
+
     function tick() {
-      // 1. Accumulate auto-drift
-      currentYOffset += autoDriftSpeed * 0.1;
+      const now = performance.now();
+      const dt = (now - lastTime) / 16.666; // Normalize to standard 60fps frame time (16.66ms)
+      lastTime = now;
+
+      // 1. Accumulate auto-drift multiplied by dt
+      currentYOffset += autoDriftSpeed * 0.1 * dt;
       
       // 2. Add scroll parallax delta
       const currentScrollY = window.scrollY;
@@ -1583,10 +1613,10 @@
       lastScrollY = currentScrollY;
 
       // 3. Clear and render scene
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
       ctx.fillStyle = '#ffffff';
       
-      const time = Date.now() * 0.001;
+      const time = now * 0.001;
 
       particles.forEach(p => {
         p.update(0, currentYOffset);
