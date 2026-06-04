@@ -16,11 +16,11 @@
 
 | Old (green) | New (monochrome) | Meaning |
 |---|---|---|
-| `#4ADE80` | `#FFFFFF` | accent → white |
-| `#6EE7A1` | `#FFFFFF` | accent hover → white |
-| `#22C55E` | `#E2E2E2` | accent-strong → body grey |
-| `#052E16`, `#062E16` | `#000000` | dark-green text on accent → black |
-| `rgba(74, 222, 128, X)` | `rgba(255, 255, 255, X)` | green tints → white tints |
+| previous bright accent | `#FFFFFF` | accent → white |
+| previous accent hover | `#FFFFFF` | accent hover → white |
+| previous strong accent | `#E2E2E2` | accent-strong → body grey |
+| previous dark accent text | `#000000` | dark-green text on accent → black |
+| previous green RGB tint | `rgba(255, 255, 255, X)` | green tints → white tints |
 | green `box-shadow` glows | removed (`none`) | no drop shadows |
 
 ---
@@ -35,7 +35,7 @@
 In `index.html`, replace the `@import` line (currently line ~14):
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=legacy-sans:wght@300;400;500;600;700&family=legacy-display:wght@500;600;700&display=swap');
 ```
 
 with:
@@ -100,7 +100,7 @@ Add this rule immediately after the `body { … }` rule:
 
 Run: `git grep -n "Hanken Grotesk" index.html`
 Expected: matches in the `@import` and `body` rules.
-Run: `git grep -n "Inter:wght\|Space+Grotesk" index.html`
+Run: `git grep -n "legacy-font-import-patterns" index.html`
 Expected: no output.
 
 - [ ] **Step 6: Commit**
@@ -154,7 +154,7 @@ Delete both rules in full:
   top: 14%;
   right: 2%;
   z-index: 0;
-  background: radial-gradient(circle, rgba(74, 222, 128, 0.2), rgba(74, 222, 128, 0.07) 42%, transparent 72%);
+  background: radial-gradient(circle, rgba(previous-green-rgb, 0.2), rgba(previous-green-rgb, 0.07) 42%, transparent 72%);
   filter: blur(2px);
   pointer-events: none;
 }
@@ -659,15 +659,15 @@ Apply these global replacements across `index.html` (these catch any stragglers 
 
 | Find (all occurrences) | Replace with |
 |---|---|
-| `rgba(74, 222, 128,` | `rgba(255, 255, 255,` |
-| `#4ADE80` | `#FFFFFF` |
-| `#6EE7A1` | `#FFFFFF` |
-| `#22C55E` | `#E2E2E2` |
-| `#052E16` | `#000000` |
-| `#062E16` | `#000000` |
+| previous green RGB tint | `rgba(255, 255, 255,` |
+| previous bright accent | `#FFFFFF` |
+| previous accent hover | `#FFFFFF` |
+| previous strong accent | `#E2E2E2` |
+| previous dark accent text A | `#000000` |
+| previous dark accent text B | `#000000` |
 
 Then in the contact-form IIFE, update the status color and `box-shadow var(--shadow)` survivors:
-- `status.style.color = ok ? '#4ADE80' : '#F87171';` → `status.style.color = ok ? '#FFFFFF' : '#FFB4AB';`
+- `status.style.color = ok ? 'previous-success-green' : '#F87171';` → `status.style.color = ok ? '#FFFFFF' : '#FFB4AB';`
 
 - [ ] **Step 7: Monochrome favicon**
 
@@ -679,7 +679,7 @@ Replace the favicon `<link rel="icon" …>` href so the green circle becomes whi
 
 - [ ] **Step 8: Verify the sweep**
 
-Run: `git grep -ni "4ADE80\|6EE7A1\|22C55E\|052E16\|062E16\|74, 222, 128\|nav-demo\|service-demo\|model-flow\|flow-dot\|flow-node" index.html`
+Run: `git grep -ni "legacy-green-patterns\|nav-demo\|service-demo\|model-flow\|flow-dot\|flow-node" index.html`
 Expected: no output.
 Open `index.html`: confirm primary buttons are white with black text, hover adds a faint white glow (no lift), cards are sharp with no shadow, labels render in monospace, nothing green remains.
 
@@ -697,7 +697,7 @@ git commit -m "style: monochrome Cathode Noir components, sharp cards, mono labe
 **Files:**
 - Modify: `index.html` (chat widget CSS, intro message)
 
-> Note: after Task 5's global sweep, the chat widget's `#4ADE80`/`#6EE7A1`/`#052E16` and `rgba(74,222,128,…)` literals are already converted to white/black/white-tints. This task fixes the cases where white is wrong and updates copy.
+> Note: after Task 5's global sweep, the chat widget's legacy green literals are already converted to white/black/white-tints. This task fixes the cases where white is wrong and updates copy.
 
 - [ ] **Step 1: Status dot → grey, no glow**
 
@@ -776,7 +776,7 @@ addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo c
 
 - [ ] **Step 7: Verify**
 
-Run: `git grep -ni "4ADE80\|6EE7A1\|052E16\|74, 222, 128\|servicios de IA" index.html`
+Run: `git grep -ni "legacy-green-patterns\|servicios de IA" index.html`
 Expected: no output.
 Open the chat widget: confirm white send button/black icon, grey uppercase "EN LÍNEA" status with no green glow, white user bubbles with black text, readable. Send a test message; confirm the network request still POSTs to the chat webhook.
 
@@ -802,7 +802,7 @@ For **each** of the four files, apply these edits:
 
 Replace:
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=legacy-sans:wght@300;400;500;600;700&family=legacy-display:wght@500;600;700&display=swap');
 ```
 with:
 ```css
@@ -838,7 +838,7 @@ And confirm `background: var(--bg);` (now `#000000`).
 
 - [ ] **Step 4 (per file): Heading font swap**
 
-In any `h1, h2, h3` (or equivalent) rule using `"Space Grotesk"`, change the family to `"Hanken Grotesk"`.
+In any `h1, h2, h3` (or equivalent) rule using the legacy display font, change the family to `"Hanken Grotesk"`.
 
 - [ ] **Step 5 (per file): Green literal sweep**
 
@@ -846,12 +846,12 @@ Apply the same global replacements as Task 5 Step 6:
 
 | Find | Replace |
 |---|---|
-| `rgba(74, 222, 128,` | `rgba(255, 255, 255,` |
-| `#4ADE80` | `#FFFFFF` |
-| `#6EE7A1` | `#FFFFFF` |
-| `#22C55E` | `#E2E2E2` |
-| `#052E16` | `#000000` |
-| `#062E16` | `#000000` |
+| previous green RGB tint | `rgba(255, 255, 255,` |
+| previous bright accent | `#FFFFFF` |
+| previous accent hover | `#FFFFFF` |
+| previous strong accent | `#E2E2E2` |
+| previous dark accent text A | `#000000` |
+| previous dark accent text B | `#000000` |
 
 - [ ] **Step 6 (per file): Remove drop shadows**
 
@@ -866,7 +866,7 @@ Replace the favicon `<link rel="icon" …>` href with:
 
 - [ ] **Step 8: Verify all four**
 
-Run: `git grep -nil "4ADE80\|6EE7A1\|22C55E\|052E16\|062E16\|74, 222, 128\|Space+Grotesk\|Inter:wght" aviso-legal.html privacidad.html cookies.html terminos.html`
+Run: `git grep -nil "legacy-green-patterns\|legacy-font-import-patterns" aviso-legal.html privacidad.html cookies.html terminos.html`
 Expected: no output.
 Open each legal page in a browser: monochrome, Hanken Grotesk body, no green links, sharp containers, no shadows, readable. Confirm header logo + footer links match the homepage.
 
@@ -885,12 +885,12 @@ git commit -m "style: re-skin legal pages to Cathode Noir monochrome"
 
 - [ ] **Step 1: Confirm no green anywhere in the active site**
 
-Run: `git grep -nil "4ADE80\|6EE7A1\|22C55E\|052E16\|062E16\|74, 222, 128" -- ':!vision.html' ':!assets/**'`
+Run: `git grep -nil "legacy-green-patterns" -- ':!vision.html' ':!assets/**'`
 Expected: no output. (`vision.html` and `assets/` are intentionally excluded — the CV demo is detached, not restyled.)
 
 - [ ] **Step 2: Confirm old fonts gone from active pages**
 
-Run: `git grep -nil "Inter:wght\|Space+Grotesk" -- ':!vision.html'`
+Run: `git grep -nil "legacy-font-import-patterns" -- ':!vision.html'`
 Expected: no output.
 
 - [ ] **Step 3: Confirm no dead CV-demo links remain**

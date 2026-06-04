@@ -17,8 +17,8 @@ static HTML with inline `<style>` and `<script>` per page:
 - `vision.html` + `assets/cv/` (YOLOv8) + `assets/js/cv-detector.js` — a Computer Vision
   live demo.
 
-Current visual identity: dark `#0A0A0A` base, a bright green accent `#4ADE80`, animated
-particle network, ambient green glow, Inter + Space Grotesk fonts.
+Current visual identity: dark `#0A0A0A` base, a bright green accent token, animated
+particle network, ambient green glow, legacy sans + legacy display fonts.
 
 The owner provided a design system, **"Cathode Noir"** (`DESIGN.md`): a high-end,
 monochrome, editorial-minimalist look — pure black, white/grey only, JetBrains Mono
@@ -93,12 +93,12 @@ removed.
 - `--text: #FFFFFF` (headings/primary), `--body: #E2E2E2` (paragraph text),
   `--muted: #8E9192` (mono micro-labels, meta, inactive)
 - **Remove** `--accent`, `--accent-strong`, and all `--shadow` drop shadows.
-- Sweep all hardcoded greens (`#4ADE80`, `#22C55E`, `#6EE7A1`, `#052E16`, `#062E16`,
-  `rgba(74, 222, 128, …)`) to monochrome equivalents.
+- Sweep all hardcoded greens (legacy accent hex values and green RGB tints) to
+  monochrome equivalents.
 
 **Typography:**
 
-- Replace the Google Fonts import (Inter + Space Grotesk) with **Hanken Grotesk**
+- Replace the Google Fonts import (legacy sans + legacy display) with **Hanken Grotesk**
   (weights 300/400/500) + **JetBrains Mono** (500).
 - Headings use Hanken Grotesk light (300) with tight tracking (≈ -0.02em to -0.04em),
   per `display-xl` / `headline-lg`. Hero H1 large and light.
@@ -172,7 +172,7 @@ footer markup in these pages is restyled consistently with the homepage.
   sharp cards / soft buttons, hovers brighten (no lift), 3 service cards, no demo links.
 - Confirm no console errors after removing the canvas JS (no dangling references).
 - Confirm contact form and chat widget still POST to their webhooks (network tab).
-- Grep the repo for residual `4ADE80`, `22C55E`, `Inter`, `Space Grotesk`, `network-canvas`,
+- Grep the repo for residual legacy color/font markers, `network-canvas`,
   `ambient-glow`, `LIVE DEMO` to ensure a clean sweep.
 
 ## 8. Open questions
