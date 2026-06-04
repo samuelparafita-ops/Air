@@ -100,6 +100,7 @@
     @media (prefers-reduced-motion: reduce) {
       .crt-flicker {
         animation: none;
+        opacity: 0.005;
       }
     }
 
@@ -1462,62 +1463,79 @@
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
+    // Accessibility check
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Physics & Rendering Constants
     const gridSpacing = 20;
     const dotRadius = 1.8;
-    const repulsionRadius = 150;
-    const repulsionForce = 25;
     const springConstant = 0.08;
     const friction = 0.80;
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const autoDriftSpeed = prefersReducedMotion ? 0 : 0.1;
     const parallaxSpeed = prefersReducedMotion ? 0 : 0.2;
 
-    // Movement offsets (initialize with current scroll)
+    // Ripple wave properties
+    const maxRipples = 5;
+    const maxWaveRadius = 180;
+    const waveSpeed = 4;
+    const waveWidth = 30;
+    const waveAmplitude = 8;
+    let ripples = [];
+
+    // Movement offsets
     let currentYOffset = -window.scrollY * parallaxSpeed;
     let lastScrollY = window.scrollY;
 
-    // Mouse coordinates (start off screen)
-    let mouse = { x: -1000, y: -1000 };
+    // Last registered ripple coordinates
+    let lastRippleMouse = { x: -1000, y: -1000 };
 
+    function triggerRipple(x, y) {
+      if (prefersReducedMotion) return;
+      
+      // Calculate distance to last ripple to prevent over-triggering
+      const dx = x - lastRippleMouse.x;
+      const dy = y - lastRippleMouse.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      
+      if (dist > 40 || lastRippleMouse.x < 0) {
+        lastRippleMouse.x = x;
+        lastRippleMouse.y = y;
+        
+        ripples.push({
+          x: x,
+          y: y,
+          radius: 0
+        });
+
+        // Enforce maximum concurrent ripples
+        if (ripples.length > maxRipples) {
+          ripples.shift();
+        }
+      }
+    }
+
+    // Input interaction listeners
     window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-
-    window.addEventListener('mouseleave', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
+      triggerRipple(e.clientX, e.clientY);
     });
 
     window.addEventListener('touchstart', (e) => {
-      if (!prefersReducedMotion && e.touches.length > 0) {
-        mouse.x = e.touches[0].clientX;
-        mouse.y = e.touches[0].clientY;
+      if (e.touches.length > 0) {
+        triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
       }
     }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
-      if (!prefersReducedMotion && e.touches.length > 0) {
-        mouse.x = e.touches[0].clientX;
-        mouse.y = e.touches[0].clientY;
+      if (e.touches.length > 0) {
+        triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
       }
     }, { passive: true });
 
-    window.addEventListener('touchend', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
-
-    window.addEventListener('touchcancel', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
-
-    // Logical dimensions for physics simulation
+    // Logical dimensions for scale tracking
     let logicalWidth = window.innerWidth;
     let logicalHeight = window.innerHeight;
+    let cols = Math.ceil(logicalWidth / gridSpacing) + 2;
+    let rows = Math.ceil(logicalHeight / gridSpacing) + 2;
 
     class Particle {
       constructor(gx, gy) {
@@ -1531,7 +1549,7 @@
         this.baseY = this.y;
       }
 
-      update(xOffset, yOffset, dt) {
+      update(xOffset, yOffset, dt, activeRipples) {
         const wrapW = cols * gridSpacing;
         const wrapH = rows * gridSpacing;
 
@@ -1548,31 +1566,40 @@
           this.vy = 0;
         }
 
-        this.baseX = targetX;
-        this.baseY = targetY;
+        // Calculate Concentric Ripple shifts
+        let shiftX = 0;
+        let shiftY = 0;
+
+        if (!prefersReducedMotion) {
+          activeRipples.forEach(r => {
+            let dx = targetX - r.x;
+            let dy = targetY - r.y;
+            let distSq = dx * dx + dy * dy;
+            
+            if (distSq > 0) {
+              let dist = Math.sqrt(distSq);
+              let diff = Math.abs(dist - r.radius);
+              
+              if (diff < waveWidth) {
+                let strength = (waveWidth - diff) / waveWidth;
+                let angle = Math.atan2(dy, dx);
+                let wavePush = Math.sin((r.radius - dist) * 0.15) * waveAmplitude * strength;
+                
+                shiftX += Math.cos(angle) * wavePush;
+                shiftY += Math.sin(angle) * wavePush;
+              }
+            }
+          });
+        }
+
+        this.baseX = targetX + shiftX;
+        this.baseY = targetY + shiftY;
 
         // 1. Spring force pull to grid target (scaled by dt)
         let ax = (this.baseX - this.x) * springConstant * dt;
         let ay = (this.baseY - this.y) * springConstant * dt;
 
-        // 2. Mouse repulsion force with squared distance checks
-        if (!prefersReducedMotion) {
-          let dx = this.x - mouse.x;
-          let dy = this.y - mouse.y;
-          let distSq = dx * dx + dy * dy;
-          const rSq = repulsionRadius * repulsionRadius;
-
-          if (distSq < rSq && distSq > 0) {
-            let dist = Math.sqrt(distSq);
-            let force = (repulsionRadius - dist) / repulsionRadius;
-            force = force * force; // Quadratic curves for soft push
-            
-            ax += (dx / dist) * force * repulsionForce * 0.08 * dt;
-            ay += (dy / dist) * force * repulsionForce * 0.08 * dt;
-          }
-        }
-
-        // 3. Euler integration with continuous friction damping
+        // 2. Euler integration with continuous friction damping
         this.vx = (this.vx + ax) * Math.pow(friction, dt);
         this.vy = (this.vy + ay) * Math.pow(friction, dt);
         this.x += this.vx * dt;
@@ -1590,13 +1617,11 @@
     }
 
     let particles = [];
-    let cols = 0;
-    let rows = 0;
 
     function initParticles() {
+      particles = [];
       cols = Math.ceil(logicalWidth / gridSpacing) + 2;
       rows = Math.ceil(logicalHeight / gridSpacing) + 2;
-      particles = [];
       
       for (let c = -1; c < cols - 1; c++) {
         for (let r = -1; r < rows - 1; r++) {
@@ -1625,23 +1650,33 @@
       const dt = Math.min((now - lastTime) / 16.666, 4.0);
       lastTime = now;
 
-      // 1. Accumulate auto-drift multiplied by dt
+      // 1. Step active ripples
+      if (!prefersReducedMotion) {
+        ripples.forEach(r => {
+          r.radius += waveSpeed * dt;
+        });
+        
+        // Remove ripples that finished propagation
+        ripples = ripples.filter(r => r.radius <= maxWaveRadius);
+      }
+
+      // 2. Accumulate auto-drift multiplied by dt
       currentYOffset += autoDriftSpeed * 0.1 * dt;
       
-      // 2. Add scroll parallax delta (subtracting scrollDiff to match content scroll direction)
+      // 3. Add scroll parallax delta (subtracting scrollDiff to match content scroll direction)
       const currentScrollY = window.scrollY;
       const scrollDiff = currentScrollY - lastScrollY;
       currentYOffset -= scrollDiff * parallaxSpeed;
       lastScrollY = currentScrollY;
 
-      // 3. Clear and render scene
+      // 4. Clear and render scene
       ctx.clearRect(0, 0, logicalWidth, logicalHeight);
       ctx.fillStyle = '#ffffff';
       
       const time = now * 0.001;
 
       particles.forEach(p => {
-        p.update(0, currentYOffset, dt);
+        p.update(0, currentYOffset, dt, ripples);
         p.draw(time);
       });
 
