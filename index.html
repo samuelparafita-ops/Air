@@ -1541,8 +1541,10 @@
       constructor(gx, gy) {
         this.gx = gx; // Grid column index
         this.gy = gy; // Grid row index
-        this.x = gx * gridSpacing;
-        this.y = gy * gridSpacing;
+        const wrapW = cols * gridSpacing;
+        const wrapH = rows * gridSpacing;
+        this.x = ((gx * gridSpacing) % wrapW + wrapW) % wrapW - gridSpacing;
+        this.y = ((gy * gridSpacing + currentYOffset) % wrapH + wrapH) % wrapH - gridSpacing;
         this.vx = 0;
         this.vy = 0;
         this.baseX = this.x;
@@ -1582,11 +1584,10 @@
               
               if (diff < waveWidth) {
                 let strength = (waveWidth - diff) / waveWidth;
-                let angle = Math.atan2(dy, dx);
                 let wavePush = Math.sin((r.radius - dist) * 0.15) * waveAmplitude * strength;
                 
-                shiftX += Math.cos(angle) * wavePush;
-                shiftY += Math.sin(angle) * wavePush;
+                shiftX += (dx / dist) * wavePush;
+                shiftY += (dy / dist) * wavePush;
               }
             }
           });
@@ -1607,9 +1608,13 @@
       }
 
       draw(time) {
-        // Brightness wave computed dynamically from coordinates + time
-        const pulse = Math.sin((this.x * 0.005) + (this.y * 0.005) + time) * 0.2 + 0.8;
-        ctx.globalAlpha = pulse;
+        if (prefersReducedMotion) {
+          ctx.globalAlpha = 0.8;
+        } else {
+          // Brightness wave computed dynamically from coordinates + time
+          const pulse = Math.sin((this.x * 0.005) + (this.y * 0.005) + time) * 0.2 + 0.8;
+          ctx.globalAlpha = pulse;
+        }
 
         // Render square dot which is extremely fast and pixel-like
         ctx.fillRect(this.x - dotRadius, this.y - dotRadius, dotRadius * 2, dotRadius * 2);
@@ -1630,6 +1635,16 @@
       }
     }
 
+    function drawStaticFrame() {
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+      ctx.fillStyle = '#ffffff';
+      particles.forEach(p => {
+        p.update(0, currentYOffset, 0, ripples);
+        p.draw(0);
+      });
+      ctx.globalAlpha = 1.0;
+    }
+
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
       logicalWidth = window.innerWidth;
@@ -1638,6 +1653,9 @@
       canvas.height = logicalHeight * dpr;
       ctx.scale(dpr, dpr);
       initParticles();
+      if (prefersReducedMotion) {
+        drawStaticFrame();
+      }
     }
 
     window.addEventListener('resize', resizeCanvas);
@@ -1686,7 +1704,11 @@
 
     // Startup
     resizeCanvas();
-    tick();
+    if (prefersReducedMotion) {
+      drawStaticFrame();
+    } else {
+      tick();
+    }
   })();
   </script>
 </body>
