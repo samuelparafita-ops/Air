@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a minimal, highly responsive CRT-style dot-matrix background animation with spring-mass physics cursor repulsion and scroll parallax to the Air homepage.
+**Goal:** Add a minimal, highly responsive CRT-style dot-matrix background animation with concentric ripple waves and scroll parallax to the Air homepage.
 
-**Architecture:** We will create a fixed full-screen canvas background positioned under the main content. A vanilla JS particle engine will simulate a grid of dot coordinates attracted via springs to their moving grid targets, which drift continuously and shift with scroll offsets. Nearby mouse movements will apply quadratic repulsion forces to dots, creating a smooth organic repulsion and elastic bounce-back.
+**Architecture:** We will create a fixed full-screen canvas background positioned under the main content. A vanilla JS particle engine will simulate a grid of dot coordinates attracted via springs to their moving grid targets. Mouse/touch movements trigger expanding ripple wave objects that offset the spring targets, causing dots to sway in concentric ripples.
 
 **Tech Stack:** HTML5 Canvas, Vanilla Javascript, CSS Custom Properties
 
@@ -43,7 +43,7 @@ In `index.html`, locate the `:root` styling block (around lines 16-30) and add t
 
 - [ ] **Step 2: Add CSS rules for canvas, scanlines, and flicker**
 
-Locate the styling block near the `.film-grain` styling (around lines 51-58) and add the following rules.
+Locate the styling block near the `.film-grain` styling (around lines 51-58) and add the following rules (with `will-change` compositor hints and prefers-reduced-motion triggers).
 
 ```css
     .film-grain {
@@ -84,12 +84,20 @@ Locate the styling block near the `.film-grain` styling (around lines 51-58) and
       z-index: 96;
       background: rgba(255, 255, 255, 0.005);
       animation: crtFlicker 0.15s infinite;
+      will-change: opacity;
     }
 
     @keyframes crtFlicker {
       0% { opacity: 0.97; }
       50% { opacity: 1; }
       100% { opacity: 0.98; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .crt-flicker {
+        animation: none;
+        opacity: 0.005;
+      }
     }
 ```
 
@@ -114,14 +122,14 @@ git commit -m "style: add crt background elements and css properties to index.ht
 
 ---
 
-### Task 2: Implement the Particle Physics Engine in index.html
+### Task 2: Implement the Concentric Ripple Particle Engine in index.html
 
 **Files:**
 - Modify: `c:\Users\agrille\Documents\Air\index.html`
 
 - [ ] **Step 1: Write Javascript block at the bottom of the body**
 
-Locate the closing `</body>` tag (around line 1409). Just before it, insert the script block containing the physics configuration, `Particle` class, listeners, and animation loop.
+In `index.html`, locate the closing `</body>` tag (around line 1409). Just before it, insert the script block containing the physics configuration, ripple event listeners, `Particle` class, and animation loop.
 
 ```html
   <script>
@@ -130,32 +138,79 @@ Locate the closing `</body>` tag (around line 1409). Just before it, insert the 
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
+    // Accessibility check
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Physics & Rendering Constants
     const gridSpacing = 20;
     const dotRadius = 1.8;
-    const repulsionRadius = 150;
-    const repulsionForce = 25;
     const springConstant = 0.08;
     const friction = 0.80;
-    const autoDriftSpeed = 0.1;
-    const parallaxSpeed = 0.2;
+    const autoDriftSpeed = prefersReducedMotion ? 0 : 0.1;
+    const parallaxSpeed = prefersReducedMotion ? 0 : 0.2;
+
+    // Ripple wave properties
+    const maxRipples = 5;
+    const maxWaveRadius = 180;
+    const waveSpeed = 4;
+    const waveWidth = 30;
+    const waveAmplitude = 8;
+    let ripples = [];
 
     // Movement offsets
-    let currentYOffset = 0;
+    let currentYOffset = -window.scrollY * parallaxSpeed;
     let lastScrollY = window.scrollY;
 
-    // Mouse coordinates (start off screen)
-    let mouse = { x: -1000, y: -1000 };
+    // Last registered ripple coordinates
+    let lastRippleMouse = { x: -1000, y: -1000 };
 
+    function triggerRipple(x, y) {
+      if (prefersReducedMotion) return;
+      
+      // Calculate distance to last ripple to prevent over-triggering
+      const dx = x - lastRippleMouse.x;
+      const dy = y - lastRippleMouse.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      
+      if (dist > 40 || lastRippleMouse.x < 0) {
+        lastRippleMouse.x = x;
+        lastRippleMouse.y = y;
+        
+        ripples.push({
+          x: x,
+          y: y,
+          radius: 0
+        });
+
+        // Enforce maximum concurrent ripples
+        if (ripples.length > maxRipples) {
+          ripples.shift();
+        }
+      }
+    }
+
+    // Input interaction listeners
     window.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      triggerRipple(e.clientX, e.clientY);
     });
 
-    window.addEventListener('mouseleave', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
+    window.addEventListener('touchstart', (e) => {
+      if (e.touches.length > 0) {
+        triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    // Logical dimensions for scale tracking
+    let logicalWidth = window.innerWidth;
+    let logicalHeight = window.innerHeight;
+    let cols = Math.ceil(logicalWidth / gridSpacing) + 2;
+    let rows = Math.ceil(logicalHeight / gridSpacing) + 2;
 
     class Particle {
       constructor(gx, gy) {
@@ -169,48 +224,61 @@ Locate the closing `</body>` tag (around line 1409). Just before it, insert the 
         this.baseY = this.y;
       }
 
-      update(xOffset, yOffset) {
-        const wrapW = canvas.width + gridSpacing * 2;
-        const wrapH = canvas.height + gridSpacing * 2;
+      update(xOffset, yOffset, dt, activeRipples) {
+        const wrapW = cols * gridSpacing;
+        const wrapH = rows * gridSpacing;
 
         let targetX = ((this.gx * gridSpacing + xOffset) % wrapW + wrapW) % wrapW - gridSpacing;
         let targetY = ((this.gy * gridSpacing + yOffset) % wrapH + wrapH) % wrapH - gridSpacing;
 
         // Snap coordinates if wrapped around screen boundary to prevent massive spring tension pull
-        if (Math.abs(targetX - this.x) > canvas.width / 2) {
+        if (Math.abs(targetX - this.x) > logicalWidth / 2) {
           this.x = targetX;
           this.vx = 0;
         }
-        if (Math.abs(targetY - this.y) > canvas.height / 2) {
+        if (Math.abs(targetY - this.y) > logicalHeight / 2) {
           this.y = targetY;
           this.vy = 0;
         }
 
-        this.baseX = targetX;
-        this.baseY = targetY;
+        // Calculate Concentric Ripple shifts
+        let shiftX = 0;
+        let shiftY = 0;
 
-        // 1. Spring force pull to grid target
-        let ax = (this.baseX - this.x) * springConstant;
-        let ay = (this.baseY - this.y) * springConstant;
-
-        // 2. Mouse repulsion force (quadratic falloff)
-        let dx = this.x - mouse.x;
-        let dy = this.y - mouse.y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < repulsionRadius && dist > 0) {
-          let force = (repulsionRadius - dist) / repulsionRadius;
-          force = force * force; // Quadratic curves for soft push
-          
-          ax += (dx / dist) * force * repulsionForce * 0.08;
-          ay += (dy / dist) * force * repulsionForce * 0.08;
+        if (!prefersReducedMotion) {
+          activeRipples.forEach(r => {
+            let dx = targetX - r.x;
+            let dy = targetY - r.y;
+            let distSq = dx * dx + dy * dy;
+            
+            if (distSq > 0) {
+              let dist = Math.sqrt(distSq);
+              let diff = Math.abs(dist - r.radius);
+              
+              if (diff < waveWidth) {
+                let strength = (waveWidth - diff) / waveWidth;
+                let angle = Math.atan2(dy, dx);
+                let wavePush = Math.sin((r.radius - dist) * 0.15) * waveAmplitude * strength;
+                
+                shiftX += Math.cos(angle) * wavePush;
+                shiftY += Math.sin(angle) * wavePush;
+              }
+            }
+          });
         }
 
-        // 3. Euler integration with dampening
-        this.vx = (this.vx + ax) * friction;
-        this.vy = (this.vy + ay) * friction;
-        this.x += this.vx;
-        this.y += this.vy;
+        this.baseX = targetX + shiftX;
+        this.baseY = targetY + shiftY;
+
+        // 1. Spring force pull to grid target (scaled by dt)
+        let ax = (this.baseX - this.x) * springConstant * dt;
+        let ay = (this.baseY - this.y) * springConstant * dt;
+
+        // 2. Euler integration with continuous friction damping
+        this.vx = (this.vx + ax) * Math.pow(friction, dt);
+        this.vy = (this.vy + ay) * Math.pow(friction, dt);
+        this.x += this.vx * dt;
+        this.y += this.vy * dt;
       }
 
       draw(time) {
@@ -218,9 +286,8 @@ Locate the closing `</body>` tag (around line 1409). Just before it, insert the 
         const pulse = Math.sin((this.x * 0.005) + (this.y * 0.005) + time) * 0.2 + 0.8;
         ctx.globalAlpha = pulse;
 
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, dotRadius, 0, Math.PI * 2);
-        ctx.fill();
+        // Render square dot which is extremely fast and pixel-like
+        ctx.fillRect(this.x - dotRadius, this.y - dotRadius, dotRadius * 2, dotRadius * 2);
       }
     }
 
@@ -228,42 +295,63 @@ Locate the closing `</body>` tag (around line 1409). Just before it, insert the 
 
     function initParticles() {
       particles = [];
-      const cols = Math.ceil(canvas.width / gridSpacing) + 2;
-      const rows = Math.ceil(canvas.height / gridSpacing) + 2;
+      cols = Math.ceil(logicalWidth / gridSpacing) + 2;
+      rows = Math.ceil(logicalHeight / gridSpacing) + 2;
       
-      for (let c = -1; c < cols; c++) {
-        for (let r = -1; r < rows; r++) {
+      for (let c = -1; c < cols - 1; c++) {
+        for (let r = -1; r < rows - 1; r++) {
           particles.push(new Particle(c, r));
         }
       }
     }
 
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
+      logicalWidth = window.innerWidth;
+      logicalHeight = window.innerHeight;
+      canvas.width = logicalWidth * dpr;
+      canvas.height = logicalHeight * dpr;
+      ctx.scale(dpr, dpr);
       initParticles();
     }
 
     window.addEventListener('resize', resizeCanvas);
 
+    let lastTime = performance.now();
+
     function tick() {
-      // 1. Accumulate auto-drift
-      currentYOffset += autoDriftSpeed * 0.1;
+      const now = performance.now();
+      // Cap dt to prevent particle flinging when backgrounded
+      const dt = Math.min((now - lastTime) / 16.666, 4.0);
+      lastTime = now;
+
+      // 1. Step active ripples
+      if (!prefersReducedMotion) {
+        ripples.forEach(r => {
+          r.radius += waveSpeed * dt;
+        });
+        
+        // Remove ripples that finished propagation
+        ripples = ripples.filter(r => r.radius <= maxWaveRadius);
+      }
+
+      // 2. Accumulate auto-drift multiplied by dt
+      currentYOffset += autoDriftSpeed * 0.1 * dt;
       
-      // 2. Add scroll parallax delta
+      // 3. Add scroll parallax delta (subtracting scrollDiff to match content scroll direction)
       const currentScrollY = window.scrollY;
       const scrollDiff = currentScrollY - lastScrollY;
-      currentYOffset += scrollDiff * parallaxSpeed;
+      currentYOffset -= scrollDiff * parallaxSpeed;
       lastScrollY = currentScrollY;
 
-      // 3. Clear and render scene
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // 4. Clear and render scene
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
       ctx.fillStyle = '#ffffff';
       
-      const time = Date.now() * 0.001;
+      const time = now * 0.001;
 
       particles.forEach(p => {
-        p.update(0, currentYOffset);
+        p.update(0, currentYOffset, dt, ripples);
         p.draw(time);
       });
 
@@ -279,10 +367,9 @@ Locate the closing `</body>` tag (around line 1409). Just before it, insert the 
 ```
 
 - [ ] **Step 2: Commit particle engine implementation**
-
 ```bash
 git add index.html
-git commit -m "feat: implement interactive dot-matrix physics canvas background"
+git commit -m "feat: implement interactive dot-matrix background with concentric ripples"
 ```
 
 ---
@@ -292,16 +379,14 @@ git commit -m "feat: implement interactive dot-matrix physics canvas background"
 - [ ] **Step 1: Start local test server and check browser rendering**
 
 Start local HTTP server:
-`python -m http.server 8000` (or similar available web server)
+`python -m http.server 8000`
 
 Expected behavior in browser:
 1. Open `http://localhost:8000`.
-2. Verify that the faint dot-matrix background is visible on the landing page.
-3. Verify that the breathing brightness pulse of the dots is visible and working.
-4. Verify that moving the mouse cursor pushes the dots away fluidly and they bounce back softly.
-5. Verify that scrolling down the landing page shifts the grid position dynamically slower than content.
-6. Check developer tools console (F12) to confirm there are zero Javascript syntax or runtime errors.
+2. Confirm the background dot-matrix is visible.
+3. Confirm that moving the mouse cursor triggers beautiful ripples expanding outwards, making the dots wave.
+4. Verify scroll down moves dots upwards slower than content (scroll parallax).
+5. Verify no console errors.
 
 - [ ] **Step 2: Stop local server**
-
 Terminate the local server process.
