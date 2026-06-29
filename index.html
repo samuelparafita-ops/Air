@@ -3,32 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Air | Soluciones tecnológicas</title>
-  <meta name="description" content="Air diseña, desarrolla e implementa soluciones tecnológicas a medida para empresas: software, integraciones e inteligencia artificial con resultados medibles.">
-  <meta property="og:title" content="Air | Soluciones tecnológicas">
-  <meta property="og:description" content="Soluciones tecnológicas a medida: software, automatización e inteligencia artificial para empresas.">
+  <title>Air | Consultoría en IA</title>
+  <meta name="description" content="Air diseña, desarrolla e implementa soluciones de Inteligencia Artificial para empresas con resultados medibles.">
+  <meta property="og:title" content="Air | Consultoría en IA">
+  <meta property="og:description" content="Soluciones reales de IA para automatizar procesos, integrar modelos y generar impacto en negocio.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000000'/%3E%3Ctext x='12' y='42' font-family='Arial' font-size='25' font-weight='700' fill='white'%3EAir%3C/text%3E%3Ccircle cx='52' cy='43' r='5' fill='%23FFFFFF'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A0A0A'/%3E%3Ctext x='12' y='42' font-family='Arial' font-size='25' font-weight='700' fill='white'%3EAir%3C/text%3E%3Ccircle cx='52' cy='43' r='5' fill='%234ADE80'/%3E%3C/svg%3E">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
     :root {
-      --bg: #000000;
-      --surface: #0A0A0A;
-      --surface-2: #1A1A1A;
+      --bg: #0A0A0A;
+      --surface: #141414;
+      --surface-soft: #101010;
       --text: #FFFFFF;
-      --body: #E2E2E2;
-      --muted: #8E9192;
-      /* accent kept as white so cascading var(--accent) usages render monochrome */
-      --accent: #FFFFFF;
-      --accent-strong: #E2E2E2;
-      --border: #222222;
+      --muted: #A0A0A0;
+      --accent: #4ADE80;
+      --accent-strong: #22C55E;
+      --border: #262626;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
       --max-width: 1200px;
-      --radius: 0;            /* cards & layout containers: sharp */
-      --radius-control: 0.25rem; /* buttons & inputs: soft */
-      --grid-opacity: 0.095;
-      --scanline-opacity: 0.07;
+      --radius: 14px;
     }
 
     * {
@@ -45,63 +41,31 @@
       min-height: 100vh;
       background: var(--bg);
       color: var(--text);
-      font-family: "Hanken Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
       text-rendering: optimizeLegibility;
     }
 
-    .film-grain {
+    .network-canvas {
       position: fixed;
       inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0.04;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    #crt-canvas {
-      position: fixed;
-      inset: 0;
+      z-index: 0;
       width: 100%;
       height: 100%;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .ambient-glow {
+      position: fixed;
+      width: min(48vw, 640px);
+      aspect-ratio: 1;
+      top: 14%;
+      right: 2%;
       z-index: 0;
+      background: radial-gradient(circle, rgba(74, 222, 128, 0.2), rgba(74, 222, 128, 0.07) 42%, transparent 72%);
+      filter: blur(2px);
       pointer-events: none;
-      opacity: var(--grid-opacity);
-      transition: opacity 0.2s ease;
-    }
-
-    .crt-scanlines {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 97; /* Just below film grain, above content & canvas */
-      opacity: var(--scanline-opacity);
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                  linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-      background-size: 100% 4px, 3px 100%;
-    }
-
-    .crt-flicker {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 96;
-      background: rgba(255, 255, 255, 0.005);
-      animation: crtFlicker 0.15s infinite;
-      will-change: opacity;
-    }
-
-    @keyframes crtFlicker {
-      0% { opacity: 0.97; }
-      50% { opacity: 1; }
-      100% { opacity: 0.98; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .crt-flicker {
-        animation: none;
-        opacity: 0.005;
-      }
     }
 
     a {
@@ -170,7 +134,8 @@
       margin-left: 0.08em;
       margin-top: 0.48em;
       border-radius: 999px;
-      background: var(--text);
+      background: var(--accent);
+      box-shadow: 0 0 26px rgba(74, 222, 128, 0.45);
       flex: 0 0 auto;
     }
 
@@ -211,8 +176,8 @@
     }
 
     .menu-toggle:hover {
-      border-color: rgba(255, 255, 255, 0.45);
-      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(74, 222, 128, 0.6);
+      background: rgba(74, 222, 128, 0.08);
     }
 
     .menu-toggle svg {
@@ -252,6 +217,19 @@
       isolation: isolate;
     }
 
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.75), transparent 72%);
+      pointer-events: none;
+      z-index: -3;
+    }
+
     .hero-inner {
       max-width: 100%;
     }
@@ -260,28 +238,35 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      color: var(--muted);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(74, 222, 128, 0.7);
     }
 
     h1,
     h2,
     h3 {
-      font-family: "Hanken Grotesk", sans-serif;
-      letter-spacing: -0.02em;
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: 0;
       line-height: 1.05;
     }
 
     h1 {
       max-width: 100%;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
-      font-weight: 300;
-      letter-spacing: -0.03em;
+      font-size: clamp(2.45rem, 8vw, 4rem);
+      font-weight: 700;
       margin-bottom: 22px;
     }
 
@@ -306,35 +291,40 @@
       justify-content: center;
       gap: 10px;
       padding: 13px 22px;
-      border-radius: var(--radius-control);
-      font-weight: 500;
-      transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
     }
 
-    .btn:focus-visible { outline: none; }
+    .btn:hover,
+    .btn:focus-visible {
+      transform: translateY(-2px);
+      outline: none;
+    }
 
     .btn-primary {
-      background: var(--text);
-      color: #000000;
-      border: 1px solid var(--text);
+      background: var(--accent);
+      color: #052E16;
+      border: 1px solid var(--accent);
+      box-shadow: 0 14px 40px rgba(74, 222, 128, 0.22);
     }
 
     .btn-primary:hover,
     .btn-primary:focus-visible {
-      background: var(--text);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      background: #6EE7A1;
+      border-color: #6EE7A1;
     }
 
     .btn-secondary {
       color: var(--text);
       border: 1px solid rgba(255, 255, 255, 0.45);
-      background: transparent;
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .btn-secondary:hover,
     .btn-secondary:focus-visible {
       border-color: var(--text);
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .section {
@@ -372,18 +362,17 @@
       gap: 10px;
       padding: 11px 15px;
       color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      background: rgba(74, 222, 128, 0.08);
+      border: 1px solid rgba(74, 222, 128, 0.28);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
       white-space: nowrap;
     }
 
-    .impact-badge span { color: var(--muted); }
+    .impact-badge span {
+      color: var(--accent);
+    }
 
     .services-grid {
       display: grid;
@@ -397,15 +386,17 @@
       display: flex;
       flex-direction: column;
       padding: 26px;
-      background: var(--surface);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)), var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      transition: border-color 0.3s ease, background 0.3s ease;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     }
 
     .service-card:hover {
-      border-color: rgba(255, 255, 255, 0.4);
-      background: var(--surface-2);
+      transform: translateY(-6px);
+      border-color: rgba(74, 222, 128, 0.5);
+      background: linear-gradient(180deg, rgba(74, 222, 128, 0.06), rgba(255, 255, 255, 0.015)), var(--surface);
     }
 
     .service-icon {
@@ -415,10 +406,10 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 22px;
-      color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-control);
+      color: var(--accent);
+      background: rgba(74, 222, 128, 0.09);
+      border: 1px solid rgba(74, 222, 128, 0.24);
+      border-radius: 12px;
     }
 
     .service-icon svg {
@@ -431,13 +422,6 @@
       font-size: 1.45rem;
       font-weight: 700;
       margin-bottom: 18px;
-    }
-
-    .service-copy {
-      color: var(--muted);
-      font-size: 0.98rem;
-      line-height: 1.7;
-      margin-bottom: 20px;
     }
 
     .feature-list {
@@ -456,8 +440,8 @@
     }
 
     .feature-list .check {
-      color: var(--body);
-      font-weight: 500;
+      color: var(--accent);
+      font-weight: 800;
       line-height: 1.3;
     }
 
@@ -481,27 +465,26 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      transition: border-color 0.3s ease, background 0.3s ease;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
 
     .process-card:hover {
-      border-color: rgba(255, 255, 255, 0.4);
-      background: var(--surface-2);
+      transform: translateY(-4px);
+      border-color: rgba(74, 222, 128, 0.42);
     }
 
     .step-badge {
       width: fit-content;
       display: inline-flex;
       padding: 7px 11px;
-      color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
+      color: #062E16;
+      background: var(--accent);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
     }
 
     .process-card h3 {
@@ -524,10 +507,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-control);
-      background: var(--surface-2);
+      color: var(--accent);
+      border: 1px solid rgba(74, 222, 128, 0.32);
+      border-radius: 999px;
+      background: rgba(74, 222, 128, 0.08);
     }
 
     .contact-layout {
@@ -551,6 +534,7 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
 
     .field {
@@ -561,11 +545,8 @@
     .field label,
     .privacy-check label {
       color: var(--text);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: 0.94rem;
+      font-weight: 600;
     }
 
     .field input {
@@ -573,15 +554,16 @@
       min-height: 50px;
       padding: 13px 14px;
       color: var(--text);
-      background: var(--surface);
+      background: #0F0F0F;
       border: 1px solid var(--border);
-      border-radius: var(--radius-control);
+      border-radius: 12px;
       outline: none;
-      transition: border-color 0.3s ease;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .field input:focus {
-      border-color: rgba(255, 255, 255, 0.55);
+      border-color: rgba(74, 222, 128, 0.65);
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.1);
     }
 
     .privacy-check {
@@ -600,7 +582,7 @@
 
     .privacy-check a {
       color: var(--accent);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+      border-bottom: 1px solid rgba(74, 222, 128, 0.45);
     }
 
     .submit-status {
@@ -634,12 +616,11 @@
 
     .footer-column h2 {
       margin-bottom: 14px;
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
+      font-family: "Inter", sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
     }
 
     .footer-column ul {
@@ -679,7 +660,7 @@
     .social-link:hover,
     .social-link:focus-visible {
       color: var(--accent);
-      border-color: rgba(255, 255, 255, 0.5);
+      border-color: rgba(74, 222, 128, 0.5);
       transform: translateY(-2px);
       outline: none;
     }
@@ -710,6 +691,7 @@
       background: rgba(20, 20, 20, 0.96);
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
     }
 
@@ -819,15 +801,15 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #000000;
-      background: #FFFFFF;
+      color: #052E16;
+      background: #4ADE80;
       border: none;
       border-radius: 999px;
       cursor: pointer;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 14px 40px rgba(74, 222, 128, 0.35);
       transition: transform 0.25s ease, background 0.25s ease;
     }
-    #air-chat-toggle:hover { box-shadow: 0 0 15px rgba(255, 255, 255, 0.12); }
+    #air-chat-toggle:hover { transform: translateY(-3px); background: #6EE7A1; }
     #air-chat-toggle svg { width: 26px; height: 26px; }
     #air-chat-panel {
       position: absolute;
@@ -856,12 +838,12 @@
     #air-chat-avatar {
       width: 32px; height: 32px;
       display: inline-flex; align-items: center; justify-content: center;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
+      background: rgba(74, 222, 128, 0.12);
+      border: 1px solid rgba(74, 222, 128, 0.3);
       border-radius: 999px;
-      color: var(--text);
-      font-family: "JetBrains Mono", monospace;
-      font-weight: 500;
+      color: #4ADE80;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
       font-size: 0.85rem;
     }
     #air-chat-header-title {
@@ -872,18 +854,16 @@
     }
     #air-chat-header-status {
       display: inline-flex; align-items: center; gap: 6px;
-      color: var(--muted);
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      color: #A0A0A0;
+      font-size: 0.75rem;
       margin-top: 2px;
     }
     #air-chat-header-status::before {
       content: "";
       width: 7px; height: 7px;
       border-radius: 999px;
-      background: var(--muted);
+      background: #4ADE80;
+      box-shadow: 0 0 8px rgba(74, 222, 128, 0.7);
     }
     #air-chat-close {
       width: 32px; height: 32px;
@@ -895,7 +875,7 @@
       cursor: pointer;
       transition: color 0.2s, border-color 0.2s;
     }
-    #air-chat-close:hover { color: #FFFFFF; border-color: #FFFFFF; }
+    #air-chat-close:hover { color: #FFFFFF; border-color: #4ADE80; }
     #air-chat-close svg { width: 14px; height: 14px; }
     #air-chat-messages {
       flex: 1;
@@ -927,8 +907,8 @@
     }
     .air-msg-user {
       align-self: flex-end;
-      background: #FFFFFF;
-      color: #000000;
+      background: #4ADE80;
+      color: #052E16;
       font-weight: 500;
       border-bottom-right-radius: 4px;
     }
@@ -936,7 +916,7 @@
     .air-msg-typing span {
       width: 6px; height: 6px;
       border-radius: 999px;
-      background: #FFFFFF;
+      background: #4ADE80;
       opacity: 0.4;
       animation: airDot 1.2s infinite ease-in-out;
     }
@@ -966,19 +946,19 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    #air-chat-input:focus { border-color: rgba(255, 255, 255, 0.65); }
+    #air-chat-input:focus { border-color: rgba(74, 222, 128, 0.65); }
     #air-chat-input:disabled { opacity: 0.5; cursor: not-allowed; }
     #air-chat-send {
       width: 42px; height: 42px;
       display: inline-flex; align-items: center; justify-content: center;
-      color: #000000;
-      background: #FFFFFF;
+      color: #052E16;
+      background: #4ADE80;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       transition: background 0.2s, opacity 0.2s;
     }
-    #air-chat-send:hover { background: #FFFFFF; }
+    #air-chat-send:hover { background: #6EE7A1; }
     #air-chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
     #air-chat-send svg { width: 18px; height: 18px; }
     #air-chat-disclaimer {
@@ -1000,10 +980,8 @@
   </style>
 </head>
 <body>
-  <div class="film-grain" aria-hidden="true"></div>
-  <canvas id="crt-canvas"></canvas>
-  <div class="crt-scanlines" aria-hidden="true"></div>
-  <div class="crt-flicker" aria-hidden="true"></div>
+  <div class="ambient-glow" aria-hidden="true"></div>
+  <canvas class="network-canvas" id="network-canvas" aria-hidden="true"></canvas>
 
   <header class="site-header" id="site-header">
     <div class="container">
@@ -1035,9 +1013,9 @@
     <section class="hero" id="inicio">
       <div class="container">
         <div class="hero-inner">
-          <p class="eyebrow">Soluciones tecnológicas</p>
-          <h1>Tecnología a medida para tu negocio</h1>
-          <p class="hero-copy">Diseñamos, desarrollamos e implementamos soluciones tecnológicas para empresas: desde software e integraciones hasta inteligencia artificial. Tecnología práctica, con resultados reales.</p>
+          <p class="eyebrow">Consultoría en IA</p>
+          <h1>Inteligencia Artificial aplicada a tu negocio</h1>
+          <p class="hero-copy">Diseñamos, desarrollamos e implementamos soluciones de IA a medida para empresas que quieren resultados reales.</p>
           <div class="actions" aria-label="Acciones principales">
             <a class="btn btn-primary" href="#contacto">Hablemos</a>
             <a class="btn btn-secondary" href="#servicios">Ver servicios</a>
@@ -1052,7 +1030,7 @@
           <div>
             <p class="eyebrow">Servicios</p>
             <h2 class="section-title">Qué hacemos</h2>
-            <p class="section-description">Ayudamos a empresas a aprovechar la tecnología de forma práctica y rentable. Nos encargamos de todo el proceso: desde la idea inicial hasta el despliegue, integración con tus sistemas actuales y mantenimiento continuo.</p>
+            <p class="section-description">Ayudamos a empresas a aprovechar la Inteligencia Artificial de forma práctica y rentable. Nos encargamos de todo el proceso: desde la idea inicial hasta el despliegue, integración con tus sistemas actuales y mantenimiento continuo.</p>
           </div>
           <div class="impact-badge"><span aria-hidden="true">●</span> Tecnología que trabaja por ti</div>
         </div>
@@ -1061,33 +1039,35 @@
           <article class="service-card">
             <div class="service-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="m8 9-3 3 3 3M16 9l3 3-3 3M13 7l-2 10" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke-linejoin="round"></path>
+                <path d="M8 9h8M8 13h5" stroke-linecap="round"></path>
               </svg>
             </div>
-            <h3>Software y Desarrollo Web</h3>
+            <h3>Soluciones con LLMs</h3>
             <ul class="feature-list">
-              <li><span class="check" aria-hidden="true">✓</span><span>Software a medida y aplicaciones web</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Herramientas internas y paneles de gestión</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Integraciones con tus sistemas actuales</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Planificación, calendarios y flujos de trabajo</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Mantenimiento y evolución continua</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Chatbots inteligentes internos o de atención al cliente</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Automatización de procesos con lenguaje natural</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Análisis y resumen de documentos</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Sistemas RAG sobre datos propios</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Asistentes empresariales personalizados</span></li>
             </ul>
           </article>
 
           <article class="service-card">
             <div class="service-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M12 3a4 4 0 0 0-4 4 4 4 0 0 0-1 7.9A3.5 3.5 0 0 0 10 21a3 3 0 0 0 2-1 3 3 0 0 0 2 1 3.5 3.5 0 0 0 3-6.1A4 4 0 0 0 16 7a4 4 0 0 0-4-4Z" stroke-linejoin="round"></path>
-                <path d="M12 7v14" stroke-linecap="round"></path>
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" stroke-linejoin="round"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M18 5.5 20 3M4 21l2-2.5" stroke-linecap="round"></path>
               </svg>
             </div>
-            <h3>Inteligencia Artificial y Datos</h3>
+            <h3>Computer Vision</h3>
             <ul class="feature-list">
-              <li><span class="check" aria-hidden="true">✓</span><span>Soluciones con LLMs y asistentes a medida</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Visión por computador y análisis de imagen</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Modelos predictivos, scoring y recomendación</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Análisis avanzado de datos y forecasting</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Sistemas RAG sobre tus propios datos</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Análisis de imágenes y vídeo</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Detección de objetos, defectos o anomalías</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Control de calidad automatizado</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Reconocimiento visual en tiempo real</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Monitorización y análisis visual</span></li>
             </ul>
           </article>
 
@@ -1098,13 +1078,31 @@
                 <path d="M9 11h3a3 3 0 0 0 3-3V5M15 13h-3a3 3 0 0 0-3 3v3" stroke-linecap="round"></path>
               </svg>
             </div>
-            <h3>Automatización e Integraciones</h3>
+            <h3>Automatización inteligente</h3>
             <ul class="feature-list">
               <li><span class="check" aria-hidden="true">✓</span><span>Automatización de procesos internos</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Integración con CRM, ERP, email y herramientas actuales</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Agentes y flujos automáticos basados en decisiones</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Integración con CRM, ERP, emails y herramientas actuales</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Agentes de IA para operaciones, ventas o soporte</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Flujos automáticos basados en decisiones inteligentes</span></li>
               <li><span class="check" aria-hidden="true">✓</span><span>Despliegue en la nube o on-premise</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Monitorización y mejora continua</span></li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M4 19V5M4 19h16" stroke-linecap="round"></path>
+                <path d="m7 15 3.5-4 3 3L19 7" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M17 7h2v2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <h3>Modelos a medida y Data Science</h3>
+            <ul class="feature-list">
+              <li><span class="check" aria-hidden="true">✓</span><span>Modelos predictivos y scoring</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Sistemas de recomendación</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Optimización de procesos</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Análisis avanzado de datos y forecasting</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Escalabilidad, seguridad y monitorización continua</span></li>
             </ul>
           </article>
         </div>
@@ -1122,7 +1120,7 @@
           <article class="process-card">
             <span class="step-badge">Paso 1</span>
             <h3>Descubrimiento</h3>
-            <p>Analizamos tu negocio, procesos y objetivos para identificar dónde la tecnología puede generar mayor impacto.</p>
+            <p>Analizamos tu negocio, procesos y objetivos para identificar dónde la IA puede generar mayor impacto.</p>
             <span class="corner-check" aria-hidden="true">✓</span>
           </article>
           <article class="process-card">
@@ -1198,7 +1196,7 @@
           <a class="logo" href="index.html" aria-label="Air, inicio">
             <span>Air</span><span class="logo-dot" aria-hidden="true"></span>
           </a>
-          <p>Soluciones tecnológicas aplicadas a negocio.</p>
+          <p>Soluciones de Inteligencia Artificial aplicadas a negocio.</p>
         </div>
         <div class="footer-column">
           <h2>Contacto</h2>
@@ -1250,15 +1248,107 @@
   </div>
 
   <script>
+    const networkCanvas = document.getElementById('network-canvas');
+    const networkContext = networkCanvas.getContext('2d');
     const header = document.getElementById('site-header');
     const menuToggle = document.querySelector('.menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const cookieBanner = document.getElementById('cookie-banner');
     const acceptCookies = document.getElementById('accept-cookies');
 
+    const networkNodes = [];
+    const maxDistance = 150;
+    let canvasWidth = 0;
+    let canvasHeight = 0;
+    let pixelRatio = 1;
+
+    function randomVelocity() {
+      const speed = 0.2 + Math.random() * 0.3;
+      return (Math.random() < 0.5 ? -1 : 1) * speed;
+    }
+
+    function resizeNetworkCanvas() {
+      pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      canvasWidth = window.innerWidth;
+      canvasHeight = window.innerHeight;
+      networkCanvas.width = canvasWidth * pixelRatio;
+      networkCanvas.height = canvasHeight * pixelRatio;
+      networkCanvas.style.width = `${canvasWidth}px`;
+      networkCanvas.style.height = `${canvasHeight}px`;
+      networkContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    }
+
+    function createNetworkNodes() {
+      networkNodes.length = 0;
+      const nodeCount = Math.min(30, Math.max(25, Math.round((canvasWidth * canvasHeight) / 65000)));
+
+      for (let index = 0; index < nodeCount; index += 1) {
+        networkNodes.push({
+          x: Math.random() * canvasWidth,
+          y: Math.random() * canvasHeight,
+          vx: randomVelocity(),
+          vy: randomVelocity(),
+          radius: 2 + Math.random()
+        });
+      }
+    }
+
+    function drawNetwork() {
+      networkContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+      for (let i = 0; i < networkNodes.length; i += 1) {
+        const node = networkNodes[i];
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x <= node.radius || node.x >= canvasWidth - node.radius) {
+          node.vx *= -1;
+          node.x = Math.min(Math.max(node.x, node.radius), canvasWidth - node.radius);
+        }
+
+        if (node.y <= node.radius || node.y >= canvasHeight - node.radius) {
+          node.vy *= -1;
+          node.y = Math.min(Math.max(node.y, node.radius), canvasHeight - node.radius);
+        }
+
+        for (let j = i + 1; j < networkNodes.length; j += 1) {
+          const otherNode = networkNodes[j];
+          const distanceX = node.x - otherNode.x;
+          const distanceY = node.y - otherNode.y;
+          const distance = Math.hypot(distanceX, distanceY);
+
+          if (distance < maxDistance) {
+            const lineOpacity = (1 - distance / maxDistance) * 0.7;
+            networkContext.beginPath();
+            networkContext.moveTo(node.x, node.y);
+            networkContext.lineTo(otherNode.x, otherNode.y);
+            networkContext.strokeStyle = `rgba(74, 222, 128, ${lineOpacity})`;
+            networkContext.lineWidth = 1;
+            networkContext.stroke();
+          }
+        }
+
+        networkContext.beginPath();
+        networkContext.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        networkContext.fillStyle = '#4ADE80';
+        networkContext.fill();
+      }
+
+      requestAnimationFrame(drawNetwork);
+    }
+
     function updateHeader() {
       header.classList.toggle('is-scrolled', window.scrollY > 8);
     }
+
+    resizeNetworkCanvas();
+    createNetworkNodes();
+    requestAnimationFrame(drawNetwork);
+
+    window.addEventListener('resize', () => {
+      resizeNetworkCanvas();
+      createNetworkNodes();
+    });
 
     updateHeader();
     window.addEventListener('scroll', updateHeader, { passive: true });
@@ -1295,7 +1385,7 @@
       function setStatus(msg, ok) {
         status.hidden = false;
         status.textContent = msg;
-        status.style.color = ok ? '#FFFFFF' : '#FFB4AB';
+        status.style.color = ok ? '#4ADE80' : '#F87171';
       }
 
       form.addEventListener('submit', async function (e) {
@@ -1410,7 +1500,7 @@
     function openPanel() {
       panel.classList.add('is-open');
       if (!messages.children.length) {
-        addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo contarte sobre nuestros servicios de tecnología, nuestro proceso de trabajo o cómo contactar con el equipo.', 'bot');
+        addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo contarte sobre nuestros servicios de IA, nuestro proceso de trabajo o cómo contactar con el equipo.', 'bot');
       }
       setTimeout(() => input.focus(), 100);
     }
@@ -1454,261 +1544,6 @@
         input.focus();
       }
     });
-  })();
-  </script>
-
-  <script>
-  (function () {
-    const canvas = document.getElementById('crt-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-
-    // Accessibility check
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Physics & Rendering Constants
-    const gridSpacing = 20;
-    const dotRadius = 1.8;
-    const springConstant = 0.08;
-    const friction = 0.80;
-    const autoDriftSpeed = prefersReducedMotion ? 0 : 0.1;
-    const parallaxSpeed = prefersReducedMotion ? 0 : 0.2;
-
-    // Ripple wave properties
-    const maxRipples = 5;
-    const maxWaveRadius = 180;
-    const waveSpeed = 4;
-    const waveWidth = 30;
-    const waveAmplitude = 8;
-    let ripples = [];
-
-    // Movement offsets
-    let currentYOffset = -window.scrollY * parallaxSpeed;
-    let lastScrollY = window.scrollY;
-
-    // Last registered ripple coordinates
-    let lastRippleMouse = { x: -1000, y: -1000 };
-
-    function triggerRipple(x, y) {
-      if (prefersReducedMotion) return;
-      
-      // Calculate distance to last ripple to prevent over-triggering
-      const dx = x - lastRippleMouse.x;
-      const dy = y - lastRippleMouse.y;
-      const dist = Math.sqrt(dx*dx + dy*dy);
-      
-      if (dist > 40 || lastRippleMouse.x < 0) {
-        lastRippleMouse.x = x;
-        lastRippleMouse.y = y;
-        
-        ripples.push({
-          x: x,
-          y: y,
-          radius: 0
-        });
-
-        // Enforce maximum concurrent ripples
-        if (ripples.length > maxRipples) {
-          ripples.shift();
-        }
-      }
-    }
-
-    // Input interaction listeners
-    window.addEventListener('mousemove', (e) => {
-      triggerRipple(e.clientX, e.clientY);
-    });
-
-    window.addEventListener('touchstart', (e) => {
-      if (e.touches.length > 0) {
-        triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) {
-        triggerRipple(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
-
-    // Logical dimensions for scale tracking
-    let logicalWidth = window.innerWidth;
-    let logicalHeight = window.innerHeight;
-    let cols = Math.ceil(logicalWidth / gridSpacing) + 2;
-    let rows = Math.ceil(logicalHeight / gridSpacing) + 2;
-
-    class Particle {
-      constructor(gx, gy) {
-        this.gx = gx; // Grid column index
-        this.gy = gy; // Grid row index
-        const wrapW = cols * gridSpacing;
-        const wrapH = rows * gridSpacing;
-        this.x = ((gx * gridSpacing) % wrapW + wrapW) % wrapW - gridSpacing;
-        this.y = ((gy * gridSpacing + currentYOffset) % wrapH + wrapH) % wrapH - gridSpacing;
-        this.vx = 0;
-        this.vy = 0;
-        this.baseX = this.x;
-        this.baseY = this.y;
-      }
-
-      update(xOffset, yOffset, dt, activeRipples) {
-        const wrapW = cols * gridSpacing;
-        const wrapH = rows * gridSpacing;
-
-        let targetX = ((this.gx * gridSpacing + xOffset) % wrapW + wrapW) % wrapW - gridSpacing;
-        let targetY = ((this.gy * gridSpacing + yOffset) % wrapH + wrapH) % wrapH - gridSpacing;
-
-        // Snap coordinates if wrapped around screen boundary to prevent massive spring tension pull
-        if (Math.abs(targetX - this.x) > logicalWidth / 2) {
-          this.x = targetX;
-          this.vx = 0;
-        }
-        if (Math.abs(targetY - this.y) > logicalHeight / 2) {
-          this.y = targetY;
-          this.vy = 0;
-        }
-
-        // Calculate Concentric Ripple shifts
-        let shiftX = 0;
-        let shiftY = 0;
-
-        if (!prefersReducedMotion) {
-          activeRipples.forEach(r => {
-            let dx = targetX - r.x;
-            let dy = targetY - r.y;
-            let distSq = dx * dx + dy * dy;
-            
-            if (distSq > 0) {
-              let dist = Math.sqrt(distSq);
-              let diff = Math.abs(dist - r.radius);
-              
-              if (diff < waveWidth) {
-                let strength = (waveWidth - diff) / waveWidth;
-                let wavePush = Math.sin((r.radius - dist) * 0.15) * waveAmplitude * strength;
-                
-                shiftX += (dx / dist) * wavePush;
-                shiftY += (dy / dist) * wavePush;
-              }
-            }
-          });
-        }
-
-        this.baseX = targetX + shiftX;
-        this.baseY = targetY + shiftY;
-
-        // 1. Spring force pull to grid target (scaled by dt)
-        let ax = (this.baseX - this.x) * springConstant * dt;
-        let ay = (this.baseY - this.y) * springConstant * dt;
-
-        // 2. Euler integration with continuous friction damping
-        this.vx = (this.vx + ax) * Math.pow(friction, dt);
-        this.vy = (this.vy + ay) * Math.pow(friction, dt);
-        this.x += this.vx * dt;
-        this.y += this.vy * dt;
-      }
-
-      draw(time) {
-        if (prefersReducedMotion) {
-          ctx.globalAlpha = 0.8;
-        } else {
-          // Brightness wave computed dynamically from coordinates + time
-          const pulse = Math.sin((this.x * 0.005) + (this.y * 0.005) + time) * 0.2 + 0.8;
-          ctx.globalAlpha = pulse;
-        }
-
-        // Render square dot which is extremely fast and pixel-like
-        ctx.fillRect(this.x - dotRadius, this.y - dotRadius, dotRadius * 2, dotRadius * 2);
-      }
-    }
-
-    let particles = [];
-
-    function initParticles() {
-      particles = [];
-      cols = Math.ceil(logicalWidth / gridSpacing) + 2;
-      rows = Math.ceil(logicalHeight / gridSpacing) + 2;
-      
-      for (let c = -1; c < cols - 1; c++) {
-        for (let r = -1; r < rows - 1; r++) {
-          particles.push(new Particle(c, r));
-        }
-      }
-    }
-
-    function drawStaticFrame() {
-      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
-      ctx.fillStyle = '#ffffff';
-      particles.forEach(p => {
-        p.update(0, currentYOffset, 0, ripples);
-        p.draw(0);
-      });
-      ctx.globalAlpha = 1.0;
-    }
-
-    function resizeCanvas() {
-      const dpr = window.devicePixelRatio || 1;
-      logicalWidth = window.innerWidth;
-      logicalHeight = window.innerHeight;
-      canvas.width = logicalWidth * dpr;
-      canvas.height = logicalHeight * dpr;
-      ctx.scale(dpr, dpr);
-      initParticles();
-      if (prefersReducedMotion) {
-        drawStaticFrame();
-      }
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-
-    let lastTime = performance.now();
-
-    function tick() {
-      const now = performance.now();
-      // Cap dt to prevent particle flinging when backgrounded
-      const dt = Math.min((now - lastTime) / 16.666, 4.0);
-      lastTime = now;
-
-      // 1. Step active ripples
-      if (!prefersReducedMotion) {
-        ripples.forEach(r => {
-          r.radius += waveSpeed * dt;
-        });
-        
-        // Remove ripples that finished propagation
-        ripples = ripples.filter(r => r.radius <= maxWaveRadius);
-      }
-
-      // 2. Accumulate auto-drift multiplied by dt
-      currentYOffset += autoDriftSpeed * 0.1 * dt;
-      
-      // 3. Add scroll parallax delta (subtracting scrollDiff to match content scroll direction)
-      const currentScrollY = window.scrollY;
-      const scrollDiff = currentScrollY - lastScrollY;
-      currentYOffset -= scrollDiff * parallaxSpeed;
-      lastScrollY = currentScrollY;
-
-      // 4. Clear and render scene
-      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
-      ctx.fillStyle = '#ffffff';
-      
-      const time = now * 0.001;
-
-      particles.forEach(p => {
-        p.update(0, currentYOffset, dt, ripples);
-        p.draw(time);
-      });
-
-      ctx.globalAlpha = 1.0;
-      requestAnimationFrame(tick);
-    }
-
-    // Startup
-    resizeCanvas();
-    if (prefersReducedMotion) {
-      drawStaticFrame();
-    } else {
-      tick();
-    }
   })();
   </script>
 </body>
