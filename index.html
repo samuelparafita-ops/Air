@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Air | Consultoría en IA</title>
-  <meta name="description" content="Air diseña, desarrolla e implementa soluciones de Inteligencia Artificial para empresas con resultados medibles.">
-  <meta property="og:title" content="Air | Consultoría en IA">
-  <meta property="og:description" content="Soluciones reales de IA para automatizar procesos, integrar modelos y generar impacto en negocio.">
+  <title>Air | Tecnología a medida</title>
+  <meta name="description"
+    content="Air diseña, desarrolla e implementa soluciones de Inteligencia Artificial para empresas con resultados medibles.">
+  <meta property="og:title" content="Air | Tecnología a medida">
+  <meta property="og:description"
+    content="Soluciones reales de IA para automatizar procesos, integrar modelos y generar impacto en negocio.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A0A0A'/%3E%3Ctext x='12' y='42' font-family='Arial' font-size='25' font-weight='700' fill='white'%3EAir%3C/text%3E%3Ccircle cx='52' cy='43' r='5' fill='%234ADE80'/%3E%3C/svg%3E">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A0A0A'/%3E%3Ctext x='12' y='42' font-family='Arial' font-size='25' font-weight='700' fill='white'%3EAir%3C/text%3E%3Ccircle cx='52' cy='43' r='5' fill='%234ADE80'/%3E%3C/svg%3E">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
@@ -421,6 +425,15 @@
     .service-card h3 {
       font-size: 1.45rem;
       font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .service-tag {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
       margin-bottom: 18px;
     }
 
@@ -428,7 +441,6 @@
       display: grid;
       gap: 12px;
       color: var(--muted);
-      margin-top: auto;
     }
 
     .feature-list li {
@@ -795,6 +807,7 @@
       z-index: 100;
       font-family: "Inter", system-ui, -apple-system, sans-serif;
     }
+
     #air-chat-toggle {
       width: 60px;
       height: 60px;
@@ -809,8 +822,17 @@
       box-shadow: 0 14px 40px rgba(74, 222, 128, 0.35);
       transition: transform 0.25s ease, background 0.25s ease;
     }
-    #air-chat-toggle:hover { transform: translateY(-3px); background: #6EE7A1; }
-    #air-chat-toggle svg { width: 26px; height: 26px; }
+
+    #air-chat-toggle:hover {
+      transform: translateY(-3px);
+      background: #6EE7A1;
+    }
+
+    #air-chat-toggle svg {
+      width: 26px;
+      height: 26px;
+    }
+
     #air-chat-panel {
       position: absolute;
       right: 0;
@@ -825,7 +847,11 @@
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
       overflow: hidden;
     }
-    #air-chat-panel.is-open { display: flex; }
+
+    #air-chat-panel.is-open {
+      display: flex;
+    }
+
     #air-chat-header {
       display: flex;
       align-items: center;
@@ -834,10 +860,19 @@
       background: #0F0F0F;
       border-bottom: 1px solid #262626;
     }
-    #air-chat-header-info { display: flex; align-items: center; gap: 10px; }
+
+    #air-chat-header-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     #air-chat-avatar {
-      width: 32px; height: 32px;
-      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: rgba(74, 222, 128, 0.12);
       border: 1px solid rgba(74, 222, 128, 0.3);
       border-radius: 999px;
@@ -846,28 +881,38 @@
       font-weight: 700;
       font-size: 0.85rem;
     }
+
     #air-chat-header-title {
       color: #FFFFFF;
       font-size: 0.95rem;
       font-weight: 600;
       line-height: 1.2;
     }
+
     #air-chat-header-status {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       color: #A0A0A0;
       font-size: 0.75rem;
       margin-top: 2px;
     }
+
     #air-chat-header-status::before {
       content: "";
-      width: 7px; height: 7px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
       background: #4ADE80;
       box-shadow: 0 0 8px rgba(74, 222, 128, 0.7);
     }
+
     #air-chat-close {
-      width: 32px; height: 32px;
-      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: transparent;
       border: 1px solid #262626;
       border-radius: 8px;
@@ -875,8 +920,17 @@
       cursor: pointer;
       transition: color 0.2s, border-color 0.2s;
     }
-    #air-chat-close:hover { color: #FFFFFF; border-color: #4ADE80; }
-    #air-chat-close svg { width: 14px; height: 14px; }
+
+    #air-chat-close:hover {
+      color: #FFFFFF;
+      border-color: #4ADE80;
+    }
+
+    #air-chat-close svg {
+      width: 14px;
+      height: 14px;
+    }
+
     #air-chat-messages {
       flex: 1;
       padding: 16px;
@@ -887,8 +941,16 @@
       scrollbar-width: thin;
       scrollbar-color: #262626 transparent;
     }
-    #air-chat-messages::-webkit-scrollbar { width: 6px; }
-    #air-chat-messages::-webkit-scrollbar-thumb { background: #262626; border-radius: 999px; }
+
+    #air-chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #air-chat-messages::-webkit-scrollbar-thumb {
+      background: #262626;
+      border-radius: 999px;
+    }
+
     .air-msg {
       max-width: 85%;
       padding: 10px 13px;
@@ -898,6 +960,7 @@
       word-wrap: break-word;
       white-space: pre-wrap;
     }
+
     .air-msg-bot {
       align-self: flex-start;
       background: #1A1A1A;
@@ -905,6 +968,7 @@
       color: #E8E8E8;
       border-bottom-left-radius: 4px;
     }
+
     .air-msg-user {
       align-self: flex-end;
       background: #4ADE80;
@@ -912,20 +976,45 @@
       font-weight: 500;
       border-bottom-right-radius: 4px;
     }
-    .air-msg-typing { display: inline-flex; gap: 4px; align-items: center; }
+
+    .air-msg-typing {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+    }
+
     .air-msg-typing span {
-      width: 6px; height: 6px;
+      width: 6px;
+      height: 6px;
       border-radius: 999px;
       background: #4ADE80;
       opacity: 0.4;
       animation: airDot 1.2s infinite ease-in-out;
     }
-    .air-msg-typing span:nth-child(2) { animation-delay: 0.2s; }
-    .air-msg-typing span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes airDot {
-      0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
-      30% { opacity: 1; transform: translateY(-3px); }
+
+    .air-msg-typing span:nth-child(2) {
+      animation-delay: 0.2s;
     }
+
+    .air-msg-typing span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes airDot {
+
+      0%,
+      60%,
+      100% {
+        opacity: 0.3;
+        transform: translateY(0);
+      }
+
+      30% {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
     #air-chat-form {
       display: flex;
       gap: 8px;
@@ -933,6 +1022,7 @@
       background: #0F0F0F;
       border-top: 1px solid #262626;
     }
+
     #air-chat-input {
       flex: 1;
       min-height: 42px;
@@ -946,11 +1036,22 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    #air-chat-input:focus { border-color: rgba(74, 222, 128, 0.65); }
-    #air-chat-input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    #air-chat-input:focus {
+      border-color: rgba(74, 222, 128, 0.65);
+    }
+
+    #air-chat-input:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
     #air-chat-send {
-      width: 42px; height: 42px;
-      display: inline-flex; align-items: center; justify-content: center;
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       color: #052E16;
       background: #4ADE80;
       border: none;
@@ -958,9 +1059,21 @@
       cursor: pointer;
       transition: background 0.2s, opacity 0.2s;
     }
-    #air-chat-send:hover { background: #6EE7A1; }
-    #air-chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
-    #air-chat-send svg { width: 18px; height: 18px; }
+
+    #air-chat-send:hover {
+      background: #6EE7A1;
+    }
+
+    #air-chat-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #air-chat-send svg {
+      width: 18px;
+      height: 18px;
+    }
+
     #air-chat-disclaimer {
       padding: 8px 12px 10px;
       color: #707070;
@@ -969,16 +1082,22 @@
       background: #0F0F0F;
       border-top: 1px solid #1A1A1A;
     }
+
     @media (max-width: 480px) {
       #air-chat-panel {
         width: calc(100vw - 24px);
         height: calc(100vh - 110px);
         right: -8px;
       }
-      #air-chat-widget { right: 16px; bottom: 16px; }
+
+      #air-chat-widget {
+        right: 16px;
+        bottom: 16px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="ambient-glow" aria-hidden="true"></div>
   <canvas class="network-canvas" id="network-canvas" aria-hidden="true"></canvas>
@@ -995,7 +1114,8 @@
           <a href="#proceso">Proceso</a>
           <a href="#contacto">Contacto</a>
         </div>
-        <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+        <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"
+          aria-controls="mobile-menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
             <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round" stroke-width="2"></path>
           </svg>
@@ -1013,9 +1133,9 @@
     <section class="hero" id="inicio">
       <div class="container">
         <div class="hero-inner">
-          <p class="eyebrow">Consultoría en IA</p>
-          <h1>Inteligencia Artificial aplicada a tu negocio</h1>
-          <p class="hero-copy">Diseñamos, desarrollamos e implementamos soluciones de IA a medida para empresas que quieren resultados reales.</p>
+          <h1>Tecnología a medida para tu negocio</h1>
+          <p class="hero-copy">Diseñamos, desarrollamos e implementamos soluciones tecnológicas: desde
+            software e integraciones hasta inteligencia artificial. Nos enfocamos en los resultados, no en decorar. </p>
           <div class="actions" aria-label="Acciones principales">
             <a class="btn btn-primary" href="#contacto">Hablemos</a>
             <a class="btn btn-secondary" href="#servicios">Ver servicios</a>
@@ -1030,7 +1150,9 @@
           <div>
             <p class="eyebrow">Servicios</p>
             <h2 class="section-title">Qué hacemos</h2>
-            <p class="section-description">Ayudamos a empresas a aprovechar la Inteligencia Artificial de forma práctica y rentable. Nos encargamos de todo el proceso: desde la idea inicial hasta el despliegue, integración con tus sistemas actuales y mantenimiento continuo.</p>
+            <p class="section-description">Ayudamos a empresas a aprovechar la Inteligencia Artificial de forma práctica
+              y rentable. Nos encargamos de todo el proceso: desde la idea inicial hasta el despliegue, integración con
+              tus sistemas actuales y mantenimiento continuo.</p>
           </div>
           <div class="impact-badge"><span aria-hidden="true">●</span> Tecnología que trabaja por ti</div>
         </div>
@@ -1039,17 +1161,24 @@
           <article class="service-card">
             <div class="service-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke-linejoin="round"></path>
+                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke-linejoin="round">
+                </path>
                 <path d="M8 9h8M8 13h5" stroke-linecap="round"></path>
               </svg>
             </div>
-            <h3>Soluciones con LLMs</h3>
+            <h3>Atención y conocimiento que no descansan</h3>
+            <p class="service-tag">Soluciones con LLMs</p>
             <ul class="feature-list">
-              <li><span class="check" aria-hidden="true">✓</span><span>Chatbots inteligentes internos o de atención al cliente</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Automatización de procesos con lenguaje natural</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Análisis y resumen de documentos</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Sistemas RAG sobre datos propios</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Asistentes empresariales personalizados</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Responde a cada cliente al instante, las 24
+                  horas, sin ampliar plantilla</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Da órdenes en lenguaje normal y deja que el
+                  sistema haga el trabajo</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Convierte horas de documentos en resúmenes
+                  claros en segundos</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Obtén respuestas basadas en la información de tu
+                  empresa, no en internet</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Pon un asistente experto al lado de cada persona
+                  del equipo</span></li>
             </ul>
           </article>
 
@@ -1061,13 +1190,19 @@
                 <path d="M18 5.5 20 3M4 21l2-2.5" stroke-linecap="round"></path>
               </svg>
             </div>
-            <h3>Computer Vision</h3>
+            <h3>Detecta lo que el ojo humano se pierde</h3>
+            <p class="service-tag">Computer Vision</p>
             <ul class="feature-list">
-              <li><span class="check" aria-hidden="true">✓</span><span>Análisis de imágenes y vídeo</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Detección de objetos, defectos o anomalías</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Control de calidad automatizado</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Reconocimiento visual en tiempo real</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Monitorización y análisis visual</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Inspecciona el 100% de tu producción, no solo
+                  una muestra</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Detecta defectos y anomalías antes de que
+                  lleguen al cliente</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Reduce devoluciones, reclamaciones y costes de
+                  no calidad</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Reacciona en tiempo real, cuando todavía puedes
+                  corregir</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Vigila tus procesos sin tener a nadie pendiente
+                  de una pantalla</span></li>
             </ul>
           </article>
 
@@ -1078,13 +1213,19 @@
                 <path d="M9 11h3a3 3 0 0 0 3-3V5M15 13h-3a3 3 0 0 0-3 3v3" stroke-linecap="round"></path>
               </svg>
             </div>
-            <h3>Automatización inteligente</h3>
+            <h3>El trabajo repetitivo, hecho solo</h3>
+            <p class="service-tag">Automatización inteligente</p>
             <ul class="feature-list">
-              <li><span class="check" aria-hidden="true">✓</span><span>Automatización de procesos internos</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Integración con CRM, ERP, emails y herramientas actuales</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Agentes de IA para operaciones, ventas o soporte</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Flujos automáticos basados en decisiones inteligentes</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Despliegue en la nube o on-premise</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Recupera las horas que tu equipo pierde en
+                  tareas manuales</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Conecta la IA con tu CRM, ERP y correo, sin
+                  cambiar tus herramientas</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Pon agentes a trabajar en ventas, soporte y
+                  operaciones sin descanso</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Automatiza decisiones repetitivas con criterio y
+                  sin cuellos de botella</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Despliega donde quieras, nube o servidor propio,
+                  con tus datos bajo control</span></li>
             </ul>
           </article>
 
@@ -1096,13 +1237,19 @@
                 <path d="M17 7h2v2" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
             </div>
-            <h3>Modelos a medida y Data Science</h3>
+            <h3>Decide con datos, no con intuición</h3>
+            <p class="service-tag">Modelos a medida y Data Science</p>
             <ul class="feature-list">
-              <li><span class="check" aria-hidden="true">✓</span><span>Modelos predictivos y scoring</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Sistemas de recomendación</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Optimización de procesos</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Análisis avanzado de datos y forecasting</span></li>
-              <li><span class="check" aria-hidden="true">✓</span><span>Escalabilidad, seguridad y monitorización continua</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Anticipa qué clientes compran, fallan o se van, y
+                  actúa antes</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Recomienda a cada cliente justo lo que busca y
+                  sube el ticket medio</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Exprime al máximo cada recurso, ruta o turno de
+                  producción</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Convierte tu histórico en previsiones fiables de
+                  demanda y ventas</span></li>
+              <li><span class="check" aria-hidden="true">✓</span><span>Crece con tranquilidad: seguro, escalable y
+                  monitorizado en continuo</span></li>
             </ul>
           </article>
         </div>
@@ -1220,7 +1367,8 @@
           <div class="social-links">
             <a class="social-link" href="#" aria-label="LinkedIn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" stroke-linejoin="round"></path>
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" stroke-linejoin="round">
+                </path>
                 <path d="M2 9h4v12H2z" stroke-linejoin="round"></path>
                 <circle cx="4" cy="4" r="2"></circle>
               </svg>
@@ -1240,7 +1388,8 @@
   </footer>
 
   <div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
-    <p>Usamos cookies técnicas para el funcionamiento de la web. Consulta nuestra Política de Cookies para más información.</p>
+    <p>Usamos cookies técnicas para el funcionamiento de la web. Consulta nuestra Política de Cookies para más
+      información.</p>
     <div class="cookie-actions">
       <button class="btn btn-primary" type="button" id="accept-cookies">Aceptar</button>
       <a class="btn btn-secondary" href="cookies.html">Más información</a>
@@ -1378,8 +1527,8 @@
 
     (function () {
       const N8N_WEBHOOK = 'https://n8n.airconsulting.es/webhook/contacto';
-      const form   = document.getElementById('contact-form');
-      const btn    = document.getElementById('submit-btn');
+      const form = document.getElementById('contact-form');
+      const btn = document.getElementById('submit-btn');
       const status = document.getElementById('submit-status');
 
       function setStatus(msg, ok) {
@@ -1397,19 +1546,19 @@
         status.hidden = true;
 
         const payload = {
-          nombre:   document.getElementById('nombre').value.trim(),
-          empresa:  document.getElementById('empresa').value.trim(),
-          email:    document.getElementById('email').value.trim(),
+          nombre: document.getElementById('nombre').value.trim(),
+          empresa: document.getElementById('empresa').value.trim(),
+          email: document.getElementById('email').value.trim(),
           telefono: document.getElementById('telefono').value.trim(),
-          fecha:    new Date().toISOString(),
-          origen:   window.location.href
+          fecha: new Date().toISOString(),
+          origen: window.location.href
         };
 
         try {
           const res = await fetch(N8N_WEBHOOK, {
-            method:  'POST',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify(payload)
+            body: JSON.stringify(payload)
           });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           btn.textContent = '✓ Solicitud enviada';
@@ -1427,7 +1576,8 @@
   <!-- CHAT WIDGET -->
   <div id="air-chat-widget">
     <button id="air-chat-toggle" aria-label="Abrir chat">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" aria-hidden="true">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
       </svg>
     </button>
@@ -1441,7 +1591,8 @@
           </div>
         </div>
         <button id="air-chat-close" aria-label="Cerrar chat">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            aria-hidden="true">
             <path d="M18 6 6 18M6 6l12 12"></path>
           </svg>
         </button>
@@ -1450,101 +1601,104 @@
       <form id="air-chat-form" autocomplete="off">
         <input id="air-chat-input" type="text" placeholder="Escribe tu mensaje…" maxlength="500" required>
         <button id="air-chat-send" type="submit" aria-label="Enviar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
             <path d="m22 2-7 20-4-9-9-4Z"></path>
             <path d="M22 2 11 13"></path>
           </svg>
         </button>
       </form>
-      <div id="air-chat-disclaimer">Asistente IA — puede cometer errores. Para detalles concretos, contacta con el equipo.</div>
+      <div id="air-chat-disclaimer">Asistente IA — puede cometer errores. Para detalles concretos, contacta con el
+        equipo.</div>
     </div>
   </div>
 
   <script>
-  (function () {
-    const CHAT_WEBHOOK = 'https://n8n.airconsulting.es/webhook/chat';
-    const STORAGE_KEY  = 'airChatSessionId';
+    (function () {
+      const CHAT_WEBHOOK = 'https://n8n.airconsulting.es/webhook/chat';
+      const STORAGE_KEY = 'airChatSessionId';
 
-    const toggle   = document.getElementById('air-chat-toggle');
-    const panel    = document.getElementById('air-chat-panel');
-    const closeBtn = document.getElementById('air-chat-close');
-    const form     = document.getElementById('air-chat-form');
-    const input    = document.getElementById('air-chat-input');
-    const sendBtn  = document.getElementById('air-chat-send');
-    const messages = document.getElementById('air-chat-messages');
+      const toggle = document.getElementById('air-chat-toggle');
+      const panel = document.getElementById('air-chat-panel');
+      const closeBtn = document.getElementById('air-chat-close');
+      const form = document.getElementById('air-chat-form');
+      const input = document.getElementById('air-chat-input');
+      const sendBtn = document.getElementById('air-chat-send');
+      const messages = document.getElementById('air-chat-messages');
 
-    let sessionId = localStorage.getItem(STORAGE_KEY);
-    if (!sessionId) {
-      sessionId = 'air-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
-      localStorage.setItem(STORAGE_KEY, sessionId);
-    }
-
-    function addMessage(text, role) {
-      const div = document.createElement('div');
-      div.className = 'air-msg air-msg-' + role;
-      div.textContent = text;
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-      return div;
-    }
-
-    function addTyping() {
-      const div = document.createElement('div');
-      div.className = 'air-msg air-msg-bot';
-      div.innerHTML = '<span class="air-msg-typing"><span></span><span></span><span></span></span>';
-      messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
-      return div;
-    }
-
-    function openPanel() {
-      panel.classList.add('is-open');
-      if (!messages.children.length) {
-        addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo contarte sobre nuestros servicios de IA, nuestro proceso de trabajo o cómo contactar con el equipo.', 'bot');
+      let sessionId = localStorage.getItem(STORAGE_KEY);
+      if (!sessionId) {
+        sessionId = 'air-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+        localStorage.setItem(STORAGE_KEY, sessionId);
       }
-      setTimeout(() => input.focus(), 100);
-    }
 
-    function closePanel() { panel.classList.remove('is-open'); }
-
-    toggle.addEventListener('click', () => {
-      panel.classList.contains('is-open') ? closePanel() : openPanel();
-    });
-    closeBtn.addEventListener('click', closePanel);
-
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      const text = input.value.trim();
-      if (!text) return;
-
-      addMessage(text, 'user');
-      input.value = '';
-      input.disabled = true;
-      sendBtn.disabled = true;
-
-      const typing = addTyping();
-
-      try {
-        const res = await fetch(CHAT_WEBHOOK, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ sessionId: sessionId, message: text })
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        typing.remove();
-        addMessage(data.reply || 'No he podido procesar tu mensaje. Inténtalo de nuevo.', 'bot');
-      } catch (err) {
-        console.error('Chat error:', err);
-        typing.remove();
-        addMessage('Hay un problema de conexión. Puedes escribirnos a air@airconsulting.es y te atendemos lo antes posible.', 'bot');
-      } finally {
-        input.disabled = false;
-        sendBtn.disabled = false;
-        input.focus();
+      function addMessage(text, role) {
+        const div = document.createElement('div');
+        div.className = 'air-msg air-msg-' + role;
+        div.textContent = text;
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+        return div;
       }
-    });
-  })();
+
+      function addTyping() {
+        const div = document.createElement('div');
+        div.className = 'air-msg air-msg-bot';
+        div.innerHTML = '<span class="air-msg-typing"><span></span><span></span><span></span></span>';
+        messages.appendChild(div);
+        messages.scrollTop = messages.scrollHeight;
+        return div;
+      }
+
+      function openPanel() {
+        panel.classList.add('is-open');
+        if (!messages.children.length) {
+          addMessage('Hola 👋 Soy el asistente de Air. ¿En qué puedo ayudarte? Puedo contarte sobre nuestros servicios de IA, nuestro proceso de trabajo o cómo contactar con el equipo.', 'bot');
+        }
+        setTimeout(() => input.focus(), 100);
+      }
+
+      function closePanel() { panel.classList.remove('is-open'); }
+
+      toggle.addEventListener('click', () => {
+        panel.classList.contains('is-open') ? closePanel() : openPanel();
+      });
+      closeBtn.addEventListener('click', closePanel);
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        input.value = '';
+        input.disabled = true;
+        sendBtn.disabled = true;
+
+        const typing = addTyping();
+
+        try {
+          const res = await fetch(CHAT_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId: sessionId, message: text })
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          typing.remove();
+          addMessage(data.reply || 'No he podido procesar tu mensaje. Inténtalo de nuevo.', 'bot');
+        } catch (err) {
+          console.error('Chat error:', err);
+          typing.remove();
+          addMessage('Hay un problema de conexión. Puedes escribirnos a air@airconsulting.es y te atendemos lo antes posible.', 'bot');
+        } finally {
+          input.disabled = false;
+          sendBtn.disabled = false;
+          input.focus();
+        }
+      });
+    })();
   </script>
 </body>
+
 </html>
