@@ -61,7 +61,7 @@
       --tinta: #101410;
       --piedra: #535B55;
       --esmeralda: #4ADE80;
-      --esmeralda-osc: #15803D;
+      --esmeralda-osc: #166534;
       --esmeralda-tinta: #052E16;
       --aviso: #F87171;
 
@@ -120,8 +120,10 @@
     }
 
     .wrap {
-      width: min(100% - (var(--gutter) * 2), var(--max));
+      width: 100%;
+      max-width: calc(var(--max) + (var(--gutter) * 2));
       margin-inline: auto;
+      padding-inline: var(--gutter);
     }
 
     .skip {
@@ -538,7 +540,6 @@
       font-weight: 500;
       letter-spacing: 0.12em;
       transform: rotate(-9deg);
-      opacity: .75;
     }
 
     .demo-flow {
@@ -1647,11 +1648,10 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
         <div>
-          <p class="label">Carballo · A Coruña</p>
           <h1 id="hero-title">Que nadie vuelva a teclear un <em>albarán</em>.</h1>
           <p class="lead">Ni un pedido que llega por email, ni una factura de proveedor. Conectamos el correo, los PDF y
             los Excel de tu empresa con tu ERP para que el trabajo administrativo repetitivo se haga solo.</p>
-          <p class="hero-note">Somos un equipo de ingenieros de aquí. Vamos a tu empresa, vemos cómo trabajáis y
+          <p class="hero-note">Somos un equipo de ingenieros de Carballo y A Coruña. Vamos a tu empresa, vemos cómo trabajáis y
             empezamos por una tarea concreta, con precio cerrado.</p>
           <div class="hero-actions">
             <a class="btn btn--primary" href="tel:+34634055428">
@@ -1893,8 +1893,8 @@
         <div class="band-head" data-reveal>
           <p class="label">Cómo empezamos</p>
           <h2 class="h2" id="como-title">Primero una tarea. Luego, si funciona, la siguiente.</h2>
-          <p class="lead">No empezamos con un proyecto grande. Empezamos por lo que más os cuesta hoy, y lo dejamos
-            funcionando antes de hablar de nada más.</p>
+          <p class="lead">Empezamos por lo que más os cuesta hoy y lo dejamos funcionando antes de hablar de proyectos
+            más grandes.</p>
         </div>
 
         <ol class="steps">

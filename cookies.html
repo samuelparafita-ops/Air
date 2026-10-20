@@ -15,7 +15,7 @@
     @font-face { font-family: "JetBrains Mono"; src: url("fonts/jetbrains-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
     :root {
       --carbon: #0A0A0A; --linea-osc: #2A2E2A; --niebla: #9AA39C; --hormigon: #EEF1EE; --linea-clara: #D5DBD6;
-      --papel: #FFFFFF; --tinta: #101410; --piedra: #535B55; --esmeralda: #4ADE80; --esmeralda-osc: #15803D; --esmeralda-tinta: #052E16;
+      --papel: #FFFFFF; --tinta: #101410; --piedra: #535B55; --esmeralda: #4ADE80; --esmeralda-osc: #166534; --esmeralda-tinta: #052E16;
       --f-display: "Space Grotesk", system-ui, sans-serif; --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
       --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace; --gutter: 16px;
     }
@@ -23,7 +23,7 @@
     body { background: var(--hormigon); color: var(--tinta); font-family: var(--f-body); line-height: 1.65; -webkit-font-smoothing: antialiased; }
     a { color: inherit; }
     :focus-visible { outline: 2px solid var(--esmeralda-osc); outline-offset: 3px; }
-    .wrap { width: min(100% - (var(--gutter) * 2), 1180px); margin-inline: auto; }
+    .wrap { width: 100%; max-width: calc(1180px + (var(--gutter) * 2)); margin-inline: auto; padding-inline: var(--gutter); }
     .header { background: var(--carbon); color: #F3F6F4; }
     .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
     .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: #F3F6F4; }
