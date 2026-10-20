@@ -1324,8 +1324,8 @@
       }
 
       .extras ul {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 32px;
       }
 
       .step {
@@ -1522,92 +1522,92 @@
         <div class="band-head" data-reveal>
           <p class="label">Qué automatizamos</p>
           <h2 class="h2" id="tareas-title">¿Os suena alguna de estas?</h2>
-          <p class="lead">Son tareas que en casi todas las empresas hace una persona a mano, todos los días. No hace
-            falta cambiar de programa para dejar de hacerlas: las conectamos a lo que ya usáis.</p>
+          <p class="lead">Son las tareas que más nos han repetido en nuestras visitas a empresas del polígono de Bértoa.
+            En casi todas, una persona las hace a mano cada día. No hace falta cambiar de programa para dejar de
+            hacerlas: las conectamos a lo que ya usáis.</p>
         </div>
 
         <div class="tasks">
           <article class="task" data-reveal>
-            <h3>Pedidos que llegan por email</h3>
+            <h3>Partes de obra y de trabajo</h3>
             <dl>
               <div class="hoy">
                 <dt>Hoy</dt>
-                <dd>Alguien los abre uno a uno y los copia línea a línea en el ERP.</dd>
+                <dd>Se rellenan a mano en la obra o en el almacén, cuesta que el personal los entregue y alguien en la oficina los vuelve a teclear en el Excel o en el ERP.</dd>
               </div>
               <div class="air">
                 <dt>Con Air</dt>
-                <dd>El pedido se lee y se da de alta solo. Una persona revisa únicamente lo que no cuadra.</dd>
+                <dd>El parte se rellena en el móvil, o se hace una foto al de papel, y llega solo al ERP. La oficina revisa en lugar de teclear.</dd>
               </div>
             </dl>
           </article>
 
           <article class="task" data-reveal>
-            <h3>Albaranes y facturas de proveedor</h3>
+            <h3>Almacén, obra y oficina, cada uno por su lado</h3>
             <dl>
               <div class="hoy">
                 <dt>Hoy</dt>
-                <dd>Se teclean a mano y se comprueban contra el pedido, a ojo.</dd>
+                <dd>La misma información está en tres sitios y nunca coincide a la vez. Para saber cómo va algo hay que llamar a alguien.</dd>
               </div>
               <div class="air">
                 <dt>Con Air</dt>
-                <dd>Se leen del PDF o de una foto, se cruzan con el pedido y os avisa de cualquier diferencia.</dd>
+                <dd>Un único registro que se actualiza en cuanto alguien mete un dato, esté donde esté.</dd>
               </div>
             </dl>
           </article>
 
           <article class="task" data-reveal>
-            <h3>El Excel de producción</h3>
+            <h3>Fichajes y gastos del personal</h3>
             <dl>
               <div class="hoy">
                 <dt>Hoy</dt>
-                <dd>Solo lo entiende una persona y se rehace cada semana copiando datos.</dd>
+                <dd>Tickets de comida, transporte y alojamiento en papel, y una app de fichar que nadie usa a gusto.</dd>
               </div>
               <div class="air">
                 <dt>Con Air</dt>
-                <dd>Se actualiza solo con los pedidos y los datos del ERP, y cualquiera del equipo lo puede consultar.
-                </dd>
+                <dd>Fichaje y gastos desde el móvil, con una foto del ticket. La oficina lo recibe ordenado por persona y por obra.</dd>
               </div>
             </dl>
           </article>
 
           <article class="task" data-reveal>
-            <h3>Presupuestos</h3>
+            <h3>Stock e inventario</h3>
             <dl>
               <div class="hoy">
                 <dt>Hoy</dt>
-                <dd>Se parte de uno anterior y se ajustan precios y cantidades a mano.</dd>
+                <dd>El stock se cuadra a mano, los pedidos se descuentan tarde y, si compráis fuera, los plazos de entrega complican saber cuándo pedir.</dd>
               </div>
               <div class="air">
                 <dt>Con Air</dt>
-                <dd>Se preparan a partir de vuestras tarifas y del histórico, listos para revisar y enviar.</dd>
+                <dd>Cada pedido descuenta del inventario al momento y os avisa de cuándo reponer, contando con el plazo de cada proveedor.</dd>
               </div>
             </dl>
           </article>
 
           <article class="task" data-reveal>
-            <h3>Cobros y vencimientos</h3>
+            <h3>Fichas y documentación de las máquinas</h3>
             <dl>
               <div class="hoy">
                 <dt>Hoy</dt>
-                <dd>Se revisan cuando alguien se acuerda, y los impagos se detectan tarde.</dd>
+                <dd>Manuales, fichas y registros de mantenimiento repartidos entre papel, carpetas y el ordenador de alguien.</dd>
               </div>
               <div class="air">
                 <dt>Con Air</dt>
-                <dd>Avisos automáticos de cada vencimiento, al cliente y a vosotros, antes de que sea un problema.</dd>
+                <dd>Toda la documentación de cada máquina en un mismo sitio, fácil de encontrar desde el taller o la oficina.</dd>
               </div>
             </dl>
           </article>
 
           <article class="task" data-reveal>
-            <h3>«¿Cómo va el pedido de…?»</h3>
+            <h3>Una hora al día leyendo correo</h3>
             <dl>
               <div class="hoy">
                 <dt>Hoy</dt>
-                <dd>Para saberlo hay que preguntar a dos o tres personas.</dd>
+                <dd>Hay que abrir todos los correos para encontrar los dos o tres que de verdad importan.</dd>
               </div>
               <div class="air">
                 <dt>Con Air</dt>
-                <dd>Un solo sitio con el estado de cada pedido, actualizado sin que nadie lo toque.</dd>
+                <dd>Un resumen cada mañana con lo urgente primero y marcado lo que necesita respuesta.</dd>
               </div>
             </dl>
           </article>
@@ -1734,6 +1734,8 @@
                 vuestro programa no cubre.</span></li>
             <li><span><strong>Cuadros de mando.</strong> Las cifras que ya generáis, en una pantalla y al día, sin
                 montar informes a mano.</span></li>
+            <li><span><strong>Migraciones y cargas de datos.</strong> Pasar vuestros datos de un ERP antiguo a uno
+                nuevo, o miles de referencias a una tienda online.</span></li>
           </ul>
         </div>
       </div>
