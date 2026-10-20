@@ -1016,6 +1016,20 @@
       margin: 16px 0 28px;
     }
 
+    .contact-person {
+      display: grid;
+      gap: 4px;
+      justify-items: start;
+    }
+
+    .contact-name {
+      font-family: var(--f-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #F3F6F4;
+    }
+
     .phone {
       display: inline-block;
       font-family: var(--f-display);
@@ -1748,7 +1762,10 @@
           <h2 class="h2" id="contacto-title" style="margin-top:16px">Cuéntanos qué tarea os quita más tiempo.</h2>
           <p class="lead">Llámanos o escríbenos y nos acercamos a veros. Si lo prefieres, déjanos tus datos y te
             llamamos en menos de 24 horas.</p>
-          <a class="phone" href="tel:+34634055428">634 055 428</a>
+          <div class="contact-person">
+            <p class="contact-name">Samuel Parafita</p>
+            <a class="phone" href="tel:+34634055428" aria-label="Llamar a Samuel Parafita al 634 055 428">634 055 428</a>
+          </div>
           <div class="contact-ways">
             <a href="https://wa.me/34634055428" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
