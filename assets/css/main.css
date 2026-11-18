@@ -385,27 +385,6 @@ h2 {
   background: var(--line);
 }
 
-.hero-foot {
-  display: grid;
-  gap: 12px;
-  padding-block: 22px 28px;
-}
-
-.hero-foot-title {
-  font: 500 .75rem var(--f-display);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.hero-areas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 22px;
-  font: 500 .95rem var(--f-display);
-  color: var(--text-2);
-}
-
 @media (min-width: 960px) {
   .hero-inner { padding-bottom: 48px; }
 
@@ -421,8 +400,6 @@ h2 {
       linear-gradient(0deg, rgba(10, 14, 13, .95) 0%, rgba(10, 14, 13, 0) 22%);
   }
 
-  .hero-foot { grid-template-columns: auto 1fr; align-items: center; gap: 32px; }
-  .hero-areas { justify-content: flex-end; }
 }
 
 /* ── Consultoría ── */

@@ -102,7 +102,7 @@
       // Banda bajo el texto (la portada reserva 220 px de aire inferior)
       N = 22; target = W * 0.78; CX = W * 0.5; CY = H - 235;
     } else {
-      N = 18; target = W * 0.94; CX = W * 0.5; CY = H - 225;
+      N = 18; target = W * 0.94; CX = W * 0.5; CY = H - 112; // centro de los 220 px libres bajo los botones
     }
     half = (N - 1) / 2;
     S = target / (2 * (N - 1) * COS);
