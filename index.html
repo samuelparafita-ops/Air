@@ -2,1359 +2,69 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Air | Automatización e IA para empresas industriales en A Coruña</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIR · Consultoría tecnológica e inteligencia artificial</title>
   <meta name="description"
-    content="Automatizamos las tareas manuales y repetitivas de empresas industriales: partes de obra, stock, documentación, correo y migraciones de datos. Ingenieros en Carballo.">
-  <meta property="og:title" content="Air | Ahorra tiempo y dinero en tareas manuales y repetitivas">
-  <meta property="og:description"
-    content="Ingenieros en Carballo que ayudan a empresas industriales a optimizar sus procesos, empezando por una tarea de alto impacto.">
+    content="Consultoría tecnológica e IA para empresas de toda España: analizamos tus procesos, diseñamos la mejor solución y la implantamos. Diagnóstico sin coste.">
+  <link rel="canonical" href="https://airconsulting.es/">
+  <meta name="theme-color" content="#0A0E0D">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="AIR Consulting">
   <meta property="og:url" content="https://airconsulting.es/">
-  <meta name="theme-color" content="#0A0A0A">
-  <link rel="icon"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A0A0A'/%3E%3Cg transform='translate(6 18) scale(0.3)'%3E%3Cpath d='M34.67 19.83 L53.33 11.67 L106.67 35 L53.33 58.33 L34.67 50.17 L69.33 35 Z' fill='%234ADE80'/%3E%3Cg fill='none' stroke='%234ADE80' stroke-width='8'%3E%3Cpath d='M0 35 L80 0 L160 35 L80 70 Z'/%3E%3Cpath d='M34.67 19.83 L69.33 35 L34.67 50.17'/%3E%3Cpath d='M53.33 11.67 L106.67 35 L53.33 58.33'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
-  <link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-  <style>
-    /* ── Fuentes alojadas en la propia web (sin llamadas a Google) ── */
-    @font-face {
-      font-family: "Space Grotesk";
-      src: url("fonts/space-grotesk.woff2") format("woff2");
-      font-weight: 300 700;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "Inter";
-      src: url("fonts/inter.woff2") format("woff2");
-      font-weight: 100 900;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "JetBrains Mono";
-      src: url("fonts/jetbrains-mono-400.woff2") format("woff2");
-      font-weight: 400;
-      font-display: swap;
-    }
-
-    @font-face {
-      font-family: "JetBrains Mono";
-      src: url("fonts/jetbrains-mono-500.woff2") format("woff2");
-      font-weight: 500;
-      font-display: swap;
-    }
-
-    /* ── Tokens ── */
-    :root {
-      --carbon: #0A0A0A;
-      --grafito: #141614;
-      --grafito-2: #1B1E1B;
-      --linea-osc: #2A2E2A;
-      --niebla: #9AA39C;
-      --hormigon: #EEF1EE;
-      --linea-clara: #D5DBD6;
-      --papel: #FFFFFF;
-      --tinta: #101410;
-      --piedra: #535B55;
-      --esmeralda: #4ADE80;
-      --esmeralda-osc: #166534;
-      --esmeralda-tinta: #052E16;
-      --aviso: #F87171;
-
-      --f-display: "Space Grotesk", system-ui, sans-serif;
-      --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-      --f-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-
-      --max: 1180px;
-      --gutter: 16px;
-      --radio: 10px;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 80px;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      background: var(--carbon);
-      color: #F3F6F4;
-      font-family: var(--f-body);
-      font-size: 1rem;
-      line-height: 1.6;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    ul,
-    ol {
-      list-style: none;
-    }
-
-    button,
-    input {
-      font: inherit;
-      color: inherit;
-    }
-
-    :focus-visible {
-      outline: 2px solid var(--esmeralda);
-      outline-offset: 3px;
-    }
-
-    .wrap {
-      width: 100%;
-      max-width: calc(var(--max) + (var(--gutter) * 2));
-      margin-inline: auto;
-      padding-inline: var(--gutter);
-    }
-
-    .skip {
-      position: absolute;
-      left: -9999px;
-      top: 8px;
-      z-index: 200;
-      padding: 10px 14px;
-      background: var(--esmeralda);
-      color: var(--esmeralda-tinta);
-      font-weight: 700;
-      border-radius: 8px;
-    }
-
-    .skip:focus {
-      left: 8px;
-    }
-
-    /* ── Tipografía base ── */
-    h1,
-    h2,
-    h3 {
-      font-family: var(--f-display);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.05;
-    }
-
-    .label {
-      font-family: var(--f-mono);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .h2 {
-      font-size: clamp(2rem, 5.2vw, 3.4rem);
-      max-width: 18ch;
-    }
-
-    .lead {
-      font-size: clamp(1.05rem, 1.6vw, 1.2rem);
-      line-height: 1.65;
-      max-width: 62ch;
-    }
-
-    /* ── Botones ── */
-    .btn {
-      min-height: 50px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 12px 20px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-      font-weight: 600;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
-    }
-
-    .btn svg {
-      width: 18px;
-      height: 18px;
-      flex: 0 0 auto;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .btn--primary {
-      background: var(--esmeralda);
-      color: var(--esmeralda-tinta);
-    }
-
-    .btn--primary:hover {
-      background: #6EE7A1;
-    }
-
-    .btn--ghost {
-      border-color: rgba(243, 246, 244, 0.35);
-      color: #F3F6F4;
-    }
-
-    .btn--ghost:hover {
-      border-color: #F3F6F4;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .btn--sm {
-      min-height: 40px;
-      padding: 8px 14px;
-      font-size: 0.92rem;
-    }
-
-    /* ── Cabecera ── */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 60;
-      background: rgba(10, 10, 10, 0.86);
-      border-bottom: 1px solid transparent;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      transition: border-color .2s ease;
-    }
-
-    .header.is-scrolled {
-      border-color: var(--linea-osc);
-    }
-
-    .nav {
-      min-height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: #F3F6F4;
-    }
-
-    .brand svg {
-      width: 46px;
-      height: 21px;
-      color: var(--esmeralda);
-      flex: 0 0 auto;
-    }
-
-    .brand span {
-      font-family: var(--f-display);
-      font-weight: 600;
-      font-size: 1.45rem;
-      letter-spacing: 0.04em;
-      line-height: 1;
-    }
-
-    .nav-links {
-      display: none;
-      gap: 4px;
-    }
-
-    .nav-links a {
-      white-space: nowrap;
-      padding: 8px 12px;
-      border-radius: 8px;
-      color: var(--niebla);
-      font-size: 0.93rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: color .2s ease, background-color .2s ease;
-    }
-
-    .nav-links a:hover {
-      color: #F3F6F4;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-cta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .menu-toggle {
-      width: 42px;
-      height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: transparent;
-      border: 1px solid var(--linea-osc);
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .menu-toggle svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .mobile-menu {
-      display: none;
-      padding-bottom: 14px;
-    }
-
-    .mobile-menu.is-open {
-      display: block;
-    }
-
-    .mobile-menu a {
-      display: block;
-      padding: 12px 0;
-      border-top: 1px solid var(--linea-osc);
-      color: #F3F6F4;
-      font-weight: 500;
-      text-decoration: none;
-    }
-
-    /* ── Hero ── */
-    .hero {
-      position: relative;
-      padding: 40px 0 64px;
-      overflow: hidden;
-    }
-
-    .hero-grid {
-      display: grid;
-      gap: 44px;
-      align-items: center;
-    }
-
-    .hero .label {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--esmeralda);
-      margin-bottom: 20px;
-    }
-
-    .hero .label::before {
-      content: "";
-      width: 18px;
-      height: 1px;
-      background: currentColor;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.1rem, 5vw, 3.5rem);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-      max-width: 15ch;
-      text-wrap: balance;
-      margin-bottom: 24px;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--esmeralda);
-    }
-
-    .hero .lead {
-      color: #C9D0CA;
-      margin-bottom: 14px;
-    }
-
-    .hero .hero-lead {
-      max-width: 52ch;
-      margin-bottom: 30px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    /* ── Demo: albarán → ERP (elemento firma) ── */
-    .demo {
-      position: relative;
-      display: grid;
-      gap: 0;
-      font-family: var(--f-mono);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .demo-caption {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-      color: var(--niebla);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .demo-stage {
-      position: relative;
-      height: 252px;
-    }
-
-    .doc {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: min(100%, 340px);
-      padding: 16px 18px 14px;
-      background: var(--papel);
-      color: #1F2420;
-      border-radius: 4px;
-      box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 18px 40px rgba(0, 0, 0, .45);
-      transform: rotate(-1.6deg);
-      overflow: hidden;
-      transition: opacity .45s ease, transform .45s ease;
-    }
-
-    .doc.is-out {
-      opacity: 0;
-      transform: rotate(-1.6deg) translateY(16px);
-    }
-
-    .doc-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding-bottom: 8px;
-      margin-bottom: 8px;
-      border-bottom: 1.5px solid #1F2420;
-    }
-
-    .doc-type {
-      font-weight: 500;
-      font-size: 13px;
-      letter-spacing: 0.12em;
-    }
-
-    .doc-meta {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 2px 12px;
-      margin-bottom: 8px;
-    }
-
-    .doc-meta dt {
-      color: #6B736D;
-    }
-
-    .doc-lines {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 11px;
-    }
-
-    .doc-lines th {
-      text-align: left;
-      font-weight: 500;
-      color: #6B736D;
-      border-bottom: 1px dashed #B9C0BA;
-      padding: 3px 0;
-    }
-
-    .doc-lines td {
-      padding: 3px 0;
-      border-bottom: 1px dashed #E1E5E2;
-    }
-
-    .doc-lines .num {
-      text-align: right;
-    }
-
-    .doc-total {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
-      font-weight: 500;
-    }
-
-    .doc [data-f] {
-      border-radius: 2px;
-      transition: background-color .25s ease, box-shadow .25s ease;
-    }
-
-    .doc [data-f].is-read {
-      background: rgba(74, 222, 128, .32);
-    }
-
-    .doc-scan {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: -10%;
-      height: 2px;
-      background: var(--esmeralda-osc);
-      opacity: 0;
-    }
-
-    .doc.is-scanning .doc-scan {
-      animation: scan 1.3s ease-in-out forwards;
-    }
-
-    @keyframes scan {
-      0% {
-        top: 0;
-        opacity: 1;
-      }
-
-      90% {
-        opacity: 1;
-      }
-
-      100% {
-        top: 100%;
-        opacity: 0;
-      }
-    }
-
-    .doc-stamp {
-      position: absolute;
-      left: 36%;
-      bottom: 10px;
-      padding: 2px 8px;
-      border: 2px solid #B42318;
-      color: #B42318;
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      transform: rotate(-9deg);
-    }
-
-    .demo-flow {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 14px 0 12px;
-      color: var(--esmeralda);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .demo-flow svg {
-      width: 16px;
-      height: 16px;
-      flex: 0 0 auto;
-    }
-
-    .demo-flow .flow-line {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--esmeralda) 50%, transparent 50%) 0 0 / 8px 1px repeat-x;
-    }
-
-    .demo.is-live .flow-line {
-      animation: flow 1s linear infinite;
-    }
-
-    @keyframes flow {
-      to {
-        background-position: 8px 0;
-      }
-    }
-
-    .erp {
-      background: var(--grafito);
-      border: 1px solid var(--linea-osc);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .erp-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      background: var(--grafito-2);
-      border-bottom: 1px solid var(--linea-osc);
-      color: var(--niebla);
-      font-size: 11px;
-    }
-
-    .erp-bar i {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--linea-osc);
-    }
-
-    .erp-bar b {
-      margin-left: 6px;
-      font-weight: 500;
-      color: #C9D0CA;
-    }
-
-    .erp table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-    }
-
-    .erp th,
-    .erp td {
-      padding: 7px 10px;
-      text-align: left;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .erp th {
-      color: var(--niebla);
-      font-weight: 400;
-      font-size: 10.5px;
-      border-bottom: 1px solid var(--linea-osc);
-    }
-
-    .erp td {
-      color: #8D958F;
-      border-bottom: 1px solid rgba(42, 46, 42, .6);
-    }
-
-    .erp tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .erp tr.is-new td {
-      color: #F3F6F4;
-      background: rgba(74, 222, 128, .07);
-    }
-
-    .erp .col-imp {
-      text-align: right;
-    }
-
-    .erp .w-fecha {
-      width: 82px;
-    }
-
-    .erp .w-doc {
-      width: 74px;
-    }
-
-    .erp .w-imp {
-      width: 104px;
-    }
-
-    .erp .w-est {
-      width: 104px;
-    }
-
-    .erp td:last-child {
-      overflow: visible;
-    }
-
-    .erp .col-hide {
-      display: none;
-    }
-
-    .chip {
-      display: inline-block;
-      padding: 1px 7px;
-      border-radius: 99px;
-      font-size: 10px;
-      border: 1px solid var(--linea-osc);
-      color: var(--niebla);
-    }
-
-    .chip--ok {
-      border-color: rgba(74, 222, 128, .45);
-      color: var(--esmeralda);
-    }
-
-    .chip--wait {
-      border-color: rgba(250, 204, 21, .4);
-      color: #FACC15;
-    }
-
-    /* ── Bandas (secciones) ── */
-    .band {
-      padding: 72px 0;
-    }
-
-    .band--light {
-      background: var(--hormigon);
-      color: var(--tinta);
-    }
-
-    .band--light .label {
-      color: var(--esmeralda-osc);
-    }
-
-    .band--dark .label {
-      color: var(--esmeralda);
-    }
-
-    .band-head {
-      display: grid;
-      gap: 16px;
-      margin-bottom: 40px;
-    }
-
-    .band--light .lead {
-      color: var(--piedra);
-    }
-
-    .band--dark .lead {
-      color: var(--niebla);
-    }
-
-    /* ── Tareas (Hoy / Con Air) ── */
-    .tasks {
-      display: grid;
-      gap: 14px;
-    }
-
-    .task {
-      display: grid;
-      align-content: start;
-      gap: 14px;
-      padding: 22px;
-      background: var(--papel);
-      border: 1px solid var(--linea-clara);
-      border-radius: var(--radio);
-    }
-
-    .task h3 {
-      font-size: 1.3rem;
-      letter-spacing: -0.015em;
-      line-height: 1.15;
-    }
-
-    .task dl {
-      display: grid;
-      gap: 10px;
-    }
-
-    .task dt {
-      font-family: var(--f-mono);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-
-    .task dd {
-      font-size: 0.97rem;
-      line-height: 1.55;
-    }
-
-    .task .hoy dt {
-      color: #69716B;
-    }
-
-    .task .hoy dd {
-      color: var(--piedra);
-    }
-
-    .task .air {
-      padding-top: 10px;
-      border-top: 1px solid var(--linea-clara);
-    }
-
-    .task .air dt {
-      color: var(--esmeralda-osc);
-    }
-
-    /* ── Franja factura electrónica ── */
-    .einvoice {
-      background: var(--esmeralda);
-      color: var(--esmeralda-tinta);
-      padding: 44px 0;
-    }
-
-    .einvoice-grid {
-      display: grid;
-      gap: 22px;
-      align-items: center;
-    }
-
-    .einvoice .label {
-      color: var(--esmeralda-tinta);
-      opacity: .75;
-      margin-bottom: 10px;
-    }
-
-    .einvoice h2 {
-      font-size: clamp(1.6rem, 3.6vw, 2.3rem);
-      max-width: 24ch;
-      margin-bottom: 10px;
-    }
-
-    .einvoice p {
-      max-width: 64ch;
-    }
-
-    .einvoice-dates {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .einvoice-dates div {
-      padding: 14px 16px;
-      background: rgba(5, 46, 22, .08);
-      border: 1px solid rgba(5, 46, 22, .2);
-      border-radius: 8px;
-    }
-
-    .einvoice-dates strong {
-      display: block;
-      font-family: var(--f-display);
-      font-size: 1.35rem;
-      letter-spacing: -0.01em;
-    }
-
-    .einvoice-dates span {
-      font-size: 0.88rem;
-    }
-
-    .einvoice .btn {
-      background: var(--esmeralda-tinta);
-      color: #F3F6F4;
-    }
-
-    .einvoice .btn:hover {
-      background: #0B4A24;
-    }
-
-    .einvoice-source {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      opacity: .75;
-    }
-
-    .einvoice-source a {
-      text-underline-offset: 2px;
-    }
-
-    /* ── Cómo empezamos ── */
-    .steps {
-      display: grid;
-      gap: 0;
-      counter-reset: paso;
-      border-top: 1px solid var(--linea-osc);
-    }
-
-    .step {
-      display: grid;
-      grid-template-columns: 56px 1fr;
-      gap: 6px 16px;
-      padding: 26px 0;
-      border-bottom: 1px solid var(--linea-osc);
-    }
-
-    .step-n {
-      grid-row: span 2;
-      font-family: var(--f-mono);
-      font-size: 0.9rem;
-      color: var(--esmeralda);
-      padding-top: 6px;
-    }
-
-    .step h3 {
-      font-size: clamp(1.4rem, 3vw, 1.9rem);
-    }
-
-    .step p {
-      color: var(--niebla);
-      max-width: 60ch;
-    }
-
-    .step .tag {
-      display: inline-block;
-      margin-left: 10px;
-      padding: 2px 8px;
-      vertical-align: middle;
-      border: 1px solid rgba(74, 222, 128, .45);
-      border-radius: 99px;
-      color: var(--esmeralda);
-      font-family: var(--f-mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .crew-note {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      margin-top: 32px;
-      padding: 18px 20px;
-      background: var(--grafito);
-      border: 1px solid var(--linea-osc);
-      border-radius: var(--radio);
-      color: #C9D0CA;
-      max-width: 760px;
-    }
-
-    .crew-note svg {
-      width: 22px;
-      height: 22px;
-      color: var(--esmeralda);
-      flex: 0 0 auto;
-      margin-top: 2px;
-    }
-
-    /* ── Sistemas ── */
-    .systems {
-      display: grid;
-      gap: 40px;
-    }
-
-    .stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 22px;
-    }
-
-    .stack li {
-      padding: 7px 12px;
-      background: var(--papel);
-      border: 1px solid var(--linea-clara);
-      border-radius: 6px;
-      font-family: var(--f-mono);
-      font-size: 0.85rem;
-      color: var(--tinta);
-    }
-
-    .stack-note {
-      margin-top: 14px;
-      font-size: 0.92rem;
-      color: var(--piedra);
-      max-width: 56ch;
-    }
-
-    .promises {
-      display: grid;
-      gap: 0;
-      border-top: 1px solid var(--linea-clara);
-    }
-
-    .promise {
-      padding: 20px 0;
-      border-bottom: 1px solid var(--linea-clara);
-    }
-
-    .promise h3 {
-      font-size: 1.2rem;
-      margin-bottom: 6px;
-    }
-
-    .promise p {
-      color: var(--piedra);
-    }
-
-    .extras {
-      margin-top: 56px;
-      padding-top: 28px;
-      border-top: 1px solid var(--linea-clara);
-      display: grid;
-      gap: 18px;
-    }
-
-    .extras ul {
-      display: grid;
-      gap: 12px;
-    }
-
-    .extras li {
-      display: grid;
-      grid-template-columns: 14px 1fr;
-      gap: 10px;
-      color: var(--piedra);
-    }
-
-    .extras li::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      margin-top: 9px;
-      background: var(--esmeralda-osc);
-      transform: rotate(45deg);
-    }
-
-    .extras strong {
-      color: var(--tinta);
-      font-weight: 600;
-    }
-
-    /* ── Contacto ── */
-    .contact {
-      display: grid;
-      gap: 40px;
-      align-items: start;
-    }
-
-    .contact .lead {
-      margin: 16px 0 28px;
-    }
-
-    .contact-person {
-      display: grid;
-      gap: 4px;
-      justify-items: start;
-    }
-
-    .contact-name {
-      font-family: var(--f-display);
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: #F3F6F4;
-    }
-
-    .phone {
-      display: inline-block;
-      font-family: var(--f-display);
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      color: var(--esmeralda);
-      text-decoration: none;
-      line-height: 1.1;
-    }
-
-    .phone:hover {
-      text-decoration: underline;
-      text-underline-offset: 6px;
-      text-decoration-thickness: 2px;
-    }
-
-    .contact-ways {
-      display: grid;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .contact-ways a {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: fit-content;
-      color: #F3F6F4;
-      text-decoration: none;
-      border-bottom: 1px solid var(--linea-osc);
-      padding-bottom: 2px;
-    }
-
-    .contact-ways a:hover {
-      border-color: var(--esmeralda);
-    }
-
-    .contact-ways svg {
-      width: 18px;
-      height: 18px;
-      color: var(--esmeralda);
-    }
-
-    .form {
-      display: grid;
-      gap: 16px;
-      padding: 24px;
-      background: var(--grafito);
-      border: 1px solid var(--linea-osc);
-      border-radius: var(--radio);
-    }
-
-    .form h3 {
-      font-size: 1.25rem;
-    }
-
-    .form-intro {
-      color: var(--niebla);
-      font-size: 0.95rem;
-      margin-top: -8px;
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-    }
-
-    .field label {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-    .field input {
-      width: 100%;
-      min-height: 48px;
-      padding: 12px 14px;
-      background: var(--carbon);
-      border: 1px solid var(--linea-osc);
-      border-radius: 8px;
-      transition: border-color .2s ease, box-shadow .2s ease;
-    }
-
-    .field input:focus {
-      outline: none;
-      border-color: var(--esmeralda);
-      box-shadow: inset 0 0 0 1px var(--esmeralda);
-    }
-
-    .check {
-      display: grid;
-      grid-template-columns: 18px 1fr;
-      gap: 10px;
-      align-items: start;
-      font-size: 0.9rem;
-      color: #C9D0CA;
-    }
-
-    .check input {
-      width: 18px;
-      height: 18px;
-      margin-top: 3px;
-      accent-color: var(--esmeralda);
-    }
-
-    .check a {
-      color: var(--esmeralda);
-    }
-
-    .form-legal {
-      font-size: 0.78rem;
-      color: var(--niebla);
-      line-height: 1.5;
-    }
-
-    .form-legal a {
-      color: inherit;
-    }
-
-    .submit-status {
-      font-weight: 600;
-    }
-
-    /* ── Pie ── */
-    .footer {
-      padding: 48px 0 28px;
-      background: #070707;
-      border-top: 1px solid var(--linea-osc);
-      color: var(--niebla);
-      font-size: 0.93rem;
-    }
-
-    .footer-grid {
-      display: grid;
-      gap: 28px;
-      margin-bottom: 32px;
-    }
-
-    .footer .brand {
-      margin-bottom: 12px;
-    }
-
-    .footer h2 {
-      margin-bottom: 10px;
-      font-family: var(--f-mono);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #C9D0CA;
-    }
-
-    .footer ul {
-      display: grid;
-      gap: 6px;
-    }
-
-    .footer a {
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      color: var(--esmeralda);
-    }
-
-    .footer-bottom {
-      padding-top: 20px;
-      border-top: 1px solid var(--linea-osc);
-      font-size: 0.85rem;
-    }
-
-    /* ── Aviso de cookies ── */
-    .cookie {
-      position: fixed;
-      left: 12px;
-      bottom: 12px;
-      z-index: 80;
-      width: min(calc(100% - 24px), 520px);
-      display: none;
-      gap: 12px;
-      align-items: center;
-      padding: 10px 12px;
-      background: rgba(20, 22, 20, .97);
-      border: 1px solid var(--linea-osc);
-      border-radius: var(--radio);
-      font-size: 0.8rem;
-      color: #C9D0CA;
-    }
-
-    .cookie.is-visible {
-      display: grid;
-      grid-template-columns: 1fr auto;
-    }
-
-    .cookie p {
-      line-height: 1.45;
-    }
-
-    .cookie a {
-      color: var(--esmeralda);
-    }
-
-    /* ── Revelado suave al hacer scroll ── */
-    .js [data-reveal] {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-
-    .js [data-reveal].is-in {
-      opacity: 1;
-      transform: none;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .js [data-reveal] {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-
-      .doc,
-      .btn {
-        transition: none;
-      }
-
-      .demo.is-live .flow-line {
-        animation: none;
-      }
-    }
-
-    /* ── Responsive ── */
-    @media (min-width: 560px) {
-      .demo {
-        font-size: 12.5px;
-      }
-
-      .erp .col-hide {
-        display: table-cell;
-      }
-
-      .tasks {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 768px) {
-      :root {
-        --gutter: 28px;
-      }
-
-      .hero {
-        padding: 64px 0 96px;
-      }
-
-      .band {
-        padding: 104px 0;
-      }
-
-      .einvoice-grid {
-        grid-template-columns: 1.4fr 1fr;
-      }
-
-      .contact {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .form {
-        padding: 30px;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1.4fr 1fr 1fr;
-      }
-    }
-
-    @media (min-width: 1000px) {
-      .nav-links {
-        display: flex;
-      }
-
-      .menu-toggle,
-      .mobile-menu {
-        display: none !important;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1.05fr 1fr;
-        gap: 56px;
-      }
-
-      .tasks {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .systems {
-        grid-template-columns: 1.1fr 1fr;
-        gap: 72px;
-      }
-
-      .extras {
-        grid-template-columns: 220px 1fr;
-      }
-
-      .extras ul {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 20px 32px;
-      }
-
-      .step {
-        grid-template-columns: 90px 1fr;
-      }
-    }
-  </style>
+  <meta property="og:title" content="AIR · Consultoría tecnológica e inteligencia artificial">
+  <meta property="og:description"
+    content="Llevamos la inteligencia artificial a los procesos de tu empresa. Diagnóstico y propuesta sin coste, en toda España.">
+  <meta property="og:image" content="https://airconsulting.es/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AIR: Llevamos la inteligencia artificial a los procesos de tu empresa.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/barlow-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/source-serif-4.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
+  <script>document.documentElement.classList.add('js');</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "AIR Consulting",
+    "description": "Consultoría tecnológica e inteligencia artificial para empresas: diagnóstico de procesos, automatización e implantación de soluciones de IA.",
+    "url": "https://airconsulting.es/",
+    "logo": "https://airconsulting.es/assets/img/apple-touch-icon.png",
+    "image": "https://airconsulting.es/assets/img/og-image.png",
+    "email": "air@airconsulting.es",
+    "telephone": "+34634055428",
+    "areaServed": { "@type": "Country", "name": "ES" },
+    "knowsAbout": [
+      "Automatización de procesos",
+      "Procesamiento del lenguaje natural",
+      "Generación aumentada por recuperación (RAG)",
+      "Visión artificial",
+      "Agentes de inteligencia artificial",
+      "Análisis predictivo y machine learning",
+      "Procesamiento inteligente de documentos",
+      "Reconocimiento de voz"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Servicios",
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consultoría tecnológica y de IA para grandes empresas" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Consultoría tecnológica y de IA para pymes" } },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "De la idea al producto: enfoque, validación, prototipo y desarrollo" } }
+      ]
+    }
+  }
+  </script>
 </head>
 
 <body>
-  <script>document.documentElement.classList.add('js');</script>
-
-  <!-- Símbolo Facetas, reutilizable -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <svg class="sprite" aria-hidden="true">
     <symbol id="air-mark" viewBox="-8 -5 176 80">
       <path d="M34.67 19.83 L53.33 11.67 L106.67 35 L53.33 58.33 L34.67 50.17 L69.33 35 Z" fill="currentColor" />
       <g fill="none" stroke="currentColor" stroke-linejoin="miter" stroke-miterlimit="4">
@@ -1363,717 +73,814 @@
         <path d="M53.33 11.67 L106.67 35 L53.33 58.33" stroke-width="5" />
       </g>
     </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="i-down" viewBox="0 0 24 24">
+      <path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
   </svg>
 
   <a class="skip" href="#main">Saltar al contenido</a>
 
-  <header class="header" id="header">
-    <div class="wrap">
-      <nav class="nav" aria-label="Navegación principal">
-        <a class="brand" href="index.html" aria-label="Air, inicio">
-          <svg aria-hidden="true">
-            <use href="#air-mark" />
-          </svg>
-          <span>AIR</span>
-        </a>
-        <div class="nav-links">
-          <a href="#tareas">Qué automatizamos</a>
-          <a href="#como">Cómo empezamos</a>
-          <a href="#sistemas">Vuestros sistemas</a>
-          <a href="#contacto">Contacto</a>
-        </div>
-        <div class="nav-cta">
-          <a class="btn btn--primary btn--sm" href="tel:+34634055428">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <path
-                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
-            </svg>
-            Llamar
-          </a>
-          <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"
-            aria-controls="mobile-menu">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          </button>
-        </div>
-      </nav>
-      <div class="mobile-menu" id="mobile-menu">
-        <a href="#tareas">Qué automatizamos</a>
-        <a href="#como">Cómo empezamos</a>
-        <a href="#sistemas">Vuestros sistemas</a>
+  <header class="site-header" id="header">
+    <div class="wrap nav">
+      <a class="brand" href="#inicio" aria-label="AIR, inicio">
+        <svg aria-hidden="true"><use href="#air-mark" /></svg>
+        <span>AIR</span>
+      </a>
+      <nav class="nav-links" aria-label="Principal">
+        <a href="#consultoria">Consultoría</a>
+        <a href="#metodo">Método</a>
+        <a href="#ia">Inteligencia artificial</a>
         <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn--primary btn--sm nav-cta" href="#contacto">Solicitar diagnóstico</a>
+        <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"
+          aria-controls="mobile-menu">
+          <span class="menu-toggle-bars" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Principal en móvil" hidden>
+      <div class="wrap">
+        <a href="#consultoria">Consultoría</a>
+        <a href="#metodo">Método</a>
+        <a href="#ia">Inteligencia artificial</a>
+        <a href="#contacto">Contacto</a>
+        <a class="btn btn--primary" href="#contacto">Solicitar diagnóstico</a>
+      </div>
+    </nav>
   </header>
 
   <main id="main">
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="wrap hero-grid">
-        <div>
-          <h1 id="hero-title">Ahorra <em>tiempo y dinero</em> en tareas manuales y repetitivas.</h1>
-          <p class="lead hero-lead">Somos un equipo de ingenieros de Carballo. Visitamos tu empresa, vemos cómo trabajáis
-            y os ayudamos a optimizar vuestros procesos empezando por una tarea de alto impacto.</p>
+
+    <!-- PORTADA -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-visual" aria-hidden="true">
+        <canvas class="hero-field" id="hero-field" aria-hidden="true"></canvas>
+      </div>
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="label">Consultoría tecnológica e inteligencia artificial</p>
+          <h1 id="hero-title">Llevamos la inteligencia artificial a los procesos de tu empresa.</h1>
+          <p class="hero-lead">Analizamos cómo trabaja tu empresa, diseñamos la solución que más valor aporta y la
+            implantamos hasta que funciona.</p>
           <div class="hero-actions">
-            <a class="btn btn--primary" href="tel:+34634055428">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z" />
-              </svg>
-              Llamar al 634 055 428
-            </a>
-            <a class="btn btn--ghost" href="https://wa.me/34634055428" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
-                <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
-              </svg>
-              Escribir por WhatsApp
-            </a>
-          </div>
-        </div>
-
-        <!-- Demo: un documento se lee y se registra solo en el ERP -->
-        <div class="demo" id="demo" role="img"
-          aria-label="Ejemplo animado: un albarán en papel se lee automáticamente y aparece registrado en el ERP de la empresa.">
-          <div class="demo-caption" aria-hidden="true">
-            <span id="demo-source">Llega por email · PDF</span>
-            <span>Datos de ejemplo</span>
-          </div>
-          <div class="demo-stage" aria-hidden="true">
-            <article class="doc" id="doc">
-              <div class="doc-scan"></div>
-              <div class="doc-head">
-                <span class="doc-type" id="doc-type">ALBARÁN</span>
-                <span data-f="num" id="doc-num">Nº A-2611</span>
-              </div>
-              <dl class="doc-meta">
-                <dt id="doc-party-label">Proveedor</dt>
-                <dd><span data-f="party" id="doc-party">Tornillería Industrial (ej.)</span></dd>
-                <dt>Fecha</dt>
-                <dd><span data-f="date" id="doc-date">14/10/2026</span></dd>
-              </dl>
-              <table class="doc-lines">
-                <thead>
-                  <tr>
-                    <th>Ref.</th>
-                    <th>Descripción</th>
-                    <th class="num">Cant.</th>
-                  </tr>
-                </thead>
-                <tbody id="doc-lines" data-f="lines">
-                  <tr>
-                    <td>M8-40</td>
-                    <td>Tornillo DIN 933</td>
-                    <td class="num">500</td>
-                  </tr>
-                  <tr>
-                    <td>T-M8</td>
-                    <td>Tuerca autoblocante</td>
-                    <td class="num">500</td>
-                  </tr>
-                  <tr>
-                    <td>AR-8</td>
-                    <td>Arandela plana</td>
-                    <td class="num">1.000</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="doc-total"><span>Total</span><span data-f="total" id="doc-total">286,40 €</span></div>
-              <span class="doc-stamp" id="doc-stamp">RECIBIDO</span>
-            </article>
-          </div>
-          <div class="demo-flow" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round">
-              <path d="M12 5v14M5 12l7 7 7-7" />
-            </svg>
-            <span id="demo-step">Air lee y comprueba</span>
-            <span class="flow-line"></span>
-          </div>
-          <div class="erp" aria-hidden="true">
-            <div class="erp-bar"><i></i><i></i><i></i><b id="erp-title">ERP · Entradas de material</b></div>
-            <table>
-              <thead>
-                <tr>
-                  <th class="w-fecha">Fecha</th>
-                  <th class="w-doc">Doc.</th>
-                  <th>Proveedor / cliente</th>
-                  <th class="w-imp col-imp col-hide">Importe</th>
-                  <th class="w-est">Estado</th>
-                </tr>
-              </thead>
-              <tbody id="erp-rows">
-                <tr>
-                  <td>13/10/26</td>
-                  <td>F-0981</td>
-                  <td>Pinturas (ej.)</td>
-                  <td class="col-imp col-hide">1.204,00 €</td>
-                  <td><span class="chip chip--ok">Registrado</span></td>
-                </tr>
-                <tr>
-                  <td>13/10/26</td>
-                  <td>P-5502</td>
-                  <td>Cliente (ej.)</td>
-                  <td class="col-imp col-hide">3.870,15 €</td>
-                  <td><span class="chip chip--ok">Registrado</span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+            <a class="btn btn--primary" href="#contacto">Solicitar diagnóstico
+              <svg aria-hidden="true"><use href="#i-arrow" /></svg></a>
+            <a class="btn btn--ghost" href="#metodo">Ver cómo trabajamos</a>
+          </div>        </div>
+      </div>
+      <div class="wrap hero-foot rule-top">
+        <p class="hero-foot-title">Áreas de experiencia</p>
+        <ul class="hero-areas">
+          <li>Lenguaje natural</li>
+          <li>RAG</li>
+          <li>Visión artificial</li>
+          <li>Agentes</li>
+          <li>Análisis predictivo</li>
+          <li>Documentos</li>
+          <li>Voz</li>
+        </ul>
       </div>
     </section>
 
-    <!-- TAREAS -->
-    <section class="band band--light" id="tareas" aria-labelledby="tareas-title">
+    <!-- CONSULTORÍA -->
+    <section class="band" id="consultoria" aria-labelledby="consultoria-title">
       <div class="wrap">
-        <div class="band-head" data-reveal>
-          <p class="label">Qué automatizamos</p>
-          <h2 class="h2" id="tareas-title">¿Os suena alguna de estas?</h2>
-          <p class="lead">Son las tareas que más nos han repetido en nuestras visitas a empresas del polígono de Bértoa.
-            En casi todas, una persona las hace a mano cada día. No hace falta cambiar de programa para dejar de
-            hacerlas: las conectamos a lo que ya usáis.</p>
-        </div>
+        <header class="section-head" data-reveal>
+          <p class="label"><span class="label-n">01</span>Consultoría</p>
+          <h2 id="consultoria-title">Tecnología con un objetivo: que tu empresa funcione mejor.</h2>
+          <p class="lead">Analizamos tus procesos, detectamos dónde la automatización y la IA aportan más y lo
+            implantamos. El método es el mismo para todos; el enfoque se adapta al tamaño de tu empresa.</p>
+        </header>
 
-        <div class="tasks">
-          <article class="task" data-reveal>
-            <h3>Partes de obra y de trabajo</h3>
-            <dl>
-              <div class="hoy">
-                <dt>Hoy</dt>
-                <dd>Se rellenan a mano en la obra o en el almacén, cuesta que el personal los entregue y alguien en la oficina los vuelve a teclear en el Excel o en el ERP.</dd>
-              </div>
-              <div class="air">
-                <dt>Con Air</dt>
-                <dd>El parte se rellena en el móvil, o se hace una foto al de papel, y llega solo al ERP. La oficina revisa en lugar de teclear.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="task" data-reveal>
-            <h3>Almacén, obra y oficina, cada uno por su lado</h3>
-            <dl>
-              <div class="hoy">
-                <dt>Hoy</dt>
-                <dd>La misma información está en tres sitios y nunca coincide a la vez. Para saber cómo va algo hay que llamar a alguien.</dd>
-              </div>
-              <div class="air">
-                <dt>Con Air</dt>
-                <dd>Un único registro que se actualiza en cuanto alguien mete un dato, esté donde esté.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="task" data-reveal>
-            <h3>Fichajes y gastos del personal</h3>
-            <dl>
-              <div class="hoy">
-                <dt>Hoy</dt>
-                <dd>Tickets de comida, transporte y alojamiento en papel, y una app de fichar que nadie usa a gusto.</dd>
-              </div>
-              <div class="air">
-                <dt>Con Air</dt>
-                <dd>Fichaje y gastos desde el móvil, con una foto del ticket. La oficina lo recibe ordenado por persona y por obra.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="task" data-reveal>
-            <h3>Stock e inventario</h3>
-            <dl>
-              <div class="hoy">
-                <dt>Hoy</dt>
-                <dd>El stock se cuadra a mano, los pedidos se descuentan tarde y, si compráis fuera, los plazos de entrega complican saber cuándo pedir.</dd>
-              </div>
-              <div class="air">
-                <dt>Con Air</dt>
-                <dd>Cada pedido descuenta del inventario al momento y os avisa de cuándo reponer, contando con el plazo de cada proveedor.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="task" data-reveal>
-            <h3>Fichas y documentación de las máquinas</h3>
-            <dl>
-              <div class="hoy">
-                <dt>Hoy</dt>
-                <dd>Manuales, fichas y registros de mantenimiento repartidos entre papel, carpetas y el ordenador de alguien.</dd>
-              </div>
-              <div class="air">
-                <dt>Con Air</dt>
-                <dd>Toda la documentación de cada máquina en un mismo sitio, fácil de encontrar desde el taller o la oficina.</dd>
-              </div>
-            </dl>
-          </article>
-
-          <article class="task" data-reveal>
-            <h3>Una hora al día leyendo correo</h3>
-            <dl>
-              <div class="hoy">
-                <dt>Hoy</dt>
-                <dd>Hay que abrir todos los correos para encontrar los dos o tres que de verdad importan.</dd>
-              </div>
-              <div class="air">
-                <dt>Con Air</dt>
-                <dd>Un resumen cada mañana con lo urgente primero y marcado lo que necesita respuesta.</dd>
-              </div>
-            </dl>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- FACTURA ELECTRÓNICA -->
-    <section class="einvoice" aria-labelledby="factura-title">
-      <div class="wrap einvoice-grid">
-        <div data-reveal>
-          <p class="label">Factura electrónica obligatoria</p>
-          <h2 id="factura-title">La factura electrónica entre empresas ya tiene fecha.</h2>
-          <p>Es buen momento para ordenar el circuito de facturas de una vez: que las que recibís se registren solas y
-            las que emitís salgan en el formato correcto, no solo para cumplir.</p>
-          <p class="einvoice-source">Plazos según la Orden HAC/1028/2026, que desarrolla el Real Decreto 238/2026.
-            <a href="https://www.garrigues.com/es_ES/noticia/comienza-computo-plazos-aplicacion-factura-electronica-obligatoria-empresarios"
-              target="_blank" rel="noopener">Ver resumen</a>
-          </p>
-        </div>
-        <div data-reveal>
-          <div class="einvoice-dates">
-            <div><strong>Oct. 2027</strong><span>Empresas que facturan más de 8 M€</span></div>
-            <div><strong>Oct. 2028</strong><span>Resto de empresas y autónomos</span></div>
+        <div class="consult" data-tabs data-reveal>
+          <div class="segmented" role="tablist" aria-label="Tamaño de empresa">
+            <button type="button" role="tab" id="tab-empresas" aria-controls="panel-empresas"
+              aria-selected="true">Grandes empresas</button>
+            <button type="button" role="tab" id="tab-pymes" aria-controls="panel-pymes" aria-selected="false"
+              tabindex="-1">Pymes</button>
           </div>
-          <p style="margin-top:16px"><a class="btn" href="#contacto">Hablar de vuestra facturación</a></p>
+
+          <div class="consult-panel" role="tabpanel" id="panel-empresas" aria-labelledby="tab-empresas" tabindex="0">
+            <p class="panel-lead">Una hoja de ruta de IA y automatización con impacto medible, integrada en tu
+              arquitectura y alineada con tus equipos.</p>
+            <ul class="points">
+              <li><strong>Hoja de ruta por áreas.</strong> Priorizamos los casos de uso por impacto, viabilidad y
+                riesgo, para invertir primero donde más se gana.</li>
+              <li><strong>Integración corporativa.</strong> Trabajamos sobre el ERP, el CRM, los almacenes de datos y
+                la nube que ya usas.</li>
+              <li><strong>Gobierno del dato y seguridad.</strong> Control de accesos, trazabilidad y cumplimiento del
+                RGPD y del Reglamento europeo de IA.</li>
+              <li><strong>Con tu equipo de IT.</strong> Documentación y transferencia de conocimiento para que la
+                solución sea vuestra.</li>
+            </ul>
+          </div>
+
+          <div class="consult-panel" role="tabpanel" id="panel-pymes" aria-labelledby="tab-pymes" tabindex="0"
+            hidden>
+            <p class="panel-lead">Soluciones concretas que te ahorran horas desde el primer mes, sin cambiar de
+              programas y con presupuesto cerrado.</p>
+            <ul class="points">
+              <li><strong>Empezamos por lo que más cuesta.</strong> Primero, el proceso que más horas consume cada
+                semana.</li>
+              <li><strong>Con los programas que ya usas.</strong> Nos conectamos a tu ERP, tu correo y tus hojas de
+                cálculo, sin cambiar tu forma de trabajar.</li>
+              <li><strong>Por fases y con precio cerrado.</strong> Cada fase tiene alcance y presupuesto por
+                escrito antes de empezar.</li>
+              <li><strong>Resultados en semanas.</strong> Las primeras mejoras funcionan en semanas, no en meses.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CÓMO EMPEZAMOS -->
-    <section class="band band--dark" id="como" aria-labelledby="como-title">
+    <!-- MÉTODO -->
+    <section class="band band--paper" id="metodo" aria-labelledby="metodo-title">
       <div class="wrap">
-        <div class="band-head" data-reveal>
-          <p class="label">Cómo empezamos</p>
-          <h2 class="h2" id="como-title">Primero una tarea. Luego, si funciona, la siguiente.</h2>
-          <p class="lead">Empezamos por lo que más os cuesta hoy y lo dejamos funcionando antes de hablar de proyectos
-            más grandes.</p>
-        </div>
+        <header class="section-head" data-reveal>
+          <p class="label"><span class="label-n">02</span>Método</p>
+          <h2 id="metodo-title">Un método claro, de la primera visita a la entrega.</h2>
+          <p class="lead">La fase de diagnóstico termina con una propuesta concreta y un presupuesto.</p>
+        </header>
 
-        <ol class="steps">
-          <li class="step" data-reveal>
-            <span class="step-n">01</span>
-            <h3>Visita y diagnóstico <span class="tag">Sin coste</span></h3>
-            <p>Vamos a vuestra empresa y hablamos con dirección y con quien hace el trabajo cada día. Salís con una
-              lista por escrito de las tareas que se pueden automatizar, ordenadas por lo que os ahorran.</p>
+        <div class="method">
+          <div class="method-line" aria-hidden="true"><span></span></div>
+
+          <div class="phase">
+            <div class="phase-head" data-reveal>
+              <h3 class="phase-name">Fase 1 <span aria-hidden="true">·</span> Diagnóstico</h3>
+              <span class="badge">Sin coste</span>
+            </div>
+            <ol class="steps">
+              <li class="step" data-reveal>
+                <span class="step-n" aria-hidden="true">01</span>
+                <h4>Primera visita</h4>
+                <p>Una reunión corta con el responsable, presencial o por videollamada, para entender la empresa y
+                  preparar la consultoría.</p>
+              </li>
+              <li class="step" data-reveal>
+                <span class="step-n" aria-hidden="true">02</span>
+                <h4>Consultoría</h4>
+                <p>Analizamos los procesos con las personas que los hacen cada día: qué se hace, con qué
+                  herramientas y dónde se pierde tiempo o dinero.</p>
+              </li>
+              <li class="step" data-reveal>
+                <span class="step-n" aria-hidden="true">03</span>
+                <h4>Propuesta y presupuesto</h4>
+                <p>Te entregamos la mejor solución que podemos aportar, con el impacto esperado, el plan de trabajo
+                  y el presupuesto.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="phase">
+            <div class="phase-head" data-reveal>
+              <h3 class="phase-name">Fase 2 <span aria-hidden="true">·</span> Implantación</h3>
+            </div>
+            <ol class="steps" start="4">
+              <li class="step" data-reveal>
+                <span class="step-n" aria-hidden="true">04</span>
+                <h4>Implementación</h4>
+                <p>Construimos la solución y la integramos con tus sistemas, primero en un entorno de pruebas.</p>
+              </li>
+              <li class="step" data-reveal>
+                <span class="step-n" aria-hidden="true">05</span>
+                <h4>Iteración</h4>
+                <p>La probamos con tu equipo y ajustamos hasta cumplir los objetivos acordados en la propuesta.</p>
+              </li>
+              <li class="step" data-reveal>
+                <span class="step-n" aria-hidden="true">06</span>
+                <h4>Entrega final</h4>
+                <p>Puesta en producción, formación a quienes la van a usar y documentación. Seguimos a tu lado para
+                  el mantenimiento.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTELIGENCIA ARTIFICIAL -->
+    <section class="band" id="ia" aria-labelledby="ia-title">
+      <div class="wrap">
+        <header class="section-head" data-reveal>
+          <p class="label"><span class="label-n">03</span>Inteligencia artificial</p>
+          <h2 id="ia-title">Experiencia en todas las áreas de la IA aplicada.</h2>
+          <p class="lead">Elegimos la técnica adecuada para cada problema.</p>
+        </header>
+
+        <div class="ai" data-tabs data-reveal>
+          <div class="ai-tabs" role="tablist" aria-label="Áreas de inteligencia artificial"
+            aria-orientation="vertical">
+            <button type="button" role="tab" id="tab-nlp" aria-controls="panel-nlp" aria-selected="true">
+              <span class="tab-n" aria-hidden="true">01</span>Lenguaje natural</button>
+            <button type="button" role="tab" id="tab-rag" aria-controls="panel-rag" aria-selected="false"
+              tabindex="-1"><span class="tab-n" aria-hidden="true">02</span>Asistentes RAG</button>
+            <button type="button" role="tab" id="tab-vision" aria-controls="panel-vision" aria-selected="false"
+              tabindex="-1"><span class="tab-n" aria-hidden="true">03</span>Visión artificial</button>
+            <button type="button" role="tab" id="tab-agentes" aria-controls="panel-agentes" aria-selected="false"
+              tabindex="-1"><span class="tab-n" aria-hidden="true">04</span>Agentes</button>
+            <button type="button" role="tab" id="tab-prediccion" aria-controls="panel-prediccion"
+              aria-selected="false" tabindex="-1"><span class="tab-n" aria-hidden="true">05</span>Análisis
+              predictivo</button>
+            <button type="button" role="tab" id="tab-documentos" aria-controls="panel-documentos"
+              aria-selected="false" tabindex="-1"><span class="tab-n" aria-hidden="true">06</span>Documentos</button>
+            <button type="button" role="tab" id="tab-voz" aria-controls="panel-voz" aria-selected="false"
+              tabindex="-1"><span class="tab-n" aria-hidden="true">07</span>Voz</button>
+          </div>
+
+          <div class="ai-panels" data-demo-host>
+            <div class="ai-panel" role="tabpanel" id="panel-nlp" aria-labelledby="tab-nlp" tabindex="0">
+              <div class="ai-panel-head">
+                <h3>Lenguaje natural (NLP)</h3>
+                <p>Clasificación de correos y tickets, extracción de datos, resúmenes, análisis de sentimiento y
+                  traducción.</p>
+              </div>
+              <ul class="chips" aria-label="Técnicas">
+                <li>Modelos de lenguaje (LLM)</li>
+                <li>Clasificación</li>
+                <li>Extracción de entidades</li>
+                <li>Resumen</li>
+                <li>Sentimiento</li>
+              </ul>
+              <div class="demo demo--nlp" data-demo="nlp" data-state="idle" role="img"
+                aria-label="Ejemplo animado: un correo entrante en el que la IA marca el cliente, la fecha, el importe y la referencia, y lo clasifica como pedido urgente.">
+                <p class="demo-tag">Datos de ejemplo</p>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Bandeja de entrada <span>· análisis automático</span></p>
+                  <div class="nlp">
+                    <article class="mail">
+                      <p class="mail-meta"><span>De</span> compras@cliente-ejemplo.es</p>
+                      <p class="mail-meta"><span>Asunto</span> Pedido urgente ref. PX-2048</p>
+                      <p class="mail-body">Buenos días: necesitamos <span class="ent" data-kind="cantidad">400 unidades</span>
+                        del <span class="ent" data-kind="producto">soporte X200</span> antes del <span class="ent"
+                          data-kind="fecha">viernes 27</span>. El importe acordado es de <span class="ent"
+                          data-kind="importe">3.180,00 €</span>. Un saludo, <span class="ent"
+                          data-kind="cliente">Industrias Ejemplo</span>.</p>
+                    </article>
+                    <div class="nlp-out">
+                      <p class="out-title">Resultado</p>
+                      <dl class="nlp-tags">
+                        <div><dt>Intención</dt><dd>Pedido de cliente</dd></div>
+                        <div><dt>Urgencia</dt><dd class="is-hot">Alta</dd></div>
+                        <div><dt>Sentimiento</dt><dd>Neutro</dd></div>
+                        <div><dt>Destino</dt><dd>ERP · Pedidos</dd></div>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-panel" role="tabpanel" id="panel-rag" aria-labelledby="tab-rag" tabindex="0" hidden>
+              <div class="ai-panel-head">
+                <h3>Asistentes con tu conocimiento (RAG)</h3>
+                <p>Respuestas basadas en tus manuales, contratos y procedimientos, citando siempre la fuente.</p>
+              </div>
+              <ul class="chips" aria-label="Técnicas">
+                <li>Búsqueda semántica</li>
+                <li>Embeddings</li>
+                <li>Bases de datos vectoriales</li>
+                <li>Citas a la fuente</li>
+                <li>Control de permisos</li>
+              </ul>
+              <div class="demo demo--rag" data-demo="rag" data-state="idle" role="img"
+                aria-label="Ejemplo animado: una pregunta sobre la garantía de un producto, los fragmentos de documentación interna que se recuperan y la respuesta con sus fuentes citadas.">
+                <p class="demo-tag">Datos de ejemplo</p>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Asistente interno <span>· documentación técnica</span></p>
+                  <div class="rag">
+                    <div class="rag-q">
+                      <span class="out-title">Pregunta</span>
+                      <p class="rag-q-text" data-text="¿Cuál es el plazo de garantía del modelo X200?"><span
+                          class="caret"></span></p>
+                    </div>
+                    <ol class="rag-docs">
+                      <li><span class="doc-src">[1] Manual X200 · p. 14</span><span class="doc-score">0,91</span>
+                        <p>«…el equipo X200 dispone de una garantía de 24 meses desde la fecha de entrega…»</p>
+                      </li>
+                      <li><span class="doc-src">[2] Condiciones de venta · §4.2</span><span class="doc-score">0,87</span>
+                        <p>«…la garantía se amplía a 36 meses con contrato de mantenimiento…»</p>
+                      </li>
+                      <li class="is-low"><span class="doc-src">FAQ de soporte</span><span class="doc-score">0,62</span>
+                        <p>«…para tramitar una garantía, contacta con el servicio técnico…»</p>
+                      </li>
+                    </ol>
+                    <div class="rag-a">
+                      <span class="out-title">Respuesta</span>
+                      <p class="rag-a-text"><span class="w">El</span> <span class="w">modelo</span> <span
+                          class="w">X200</span> <span class="w">tiene</span> <span class="w">24</span> <span
+                          class="w">meses</span> <span class="w">de</span> <span class="w">garantía</span> <span
+                          class="w">desde</span> <span class="w">la</span> <span class="w">entrega</span><sup
+                          class="w">1</sup><span class="w">,</span> <span class="w">ampliables</span> <span
+                          class="w">a</span> <span class="w">36</span> <span class="w">meses</span> <span
+                          class="w">con</span> <span class="w">contrato</span> <span class="w">de</span> <span
+                          class="w">mantenimiento</span><sup class="w">2</sup><span class="w">.</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-panel" role="tabpanel" id="panel-vision" aria-labelledby="tab-vision" tabindex="0"
+              hidden>
+              <div class="ai-panel-head">
+                <h3>Visión artificial</h3>
+                <p>Control de calidad, detección de defectos, conteo e inventario, y seguridad en planta.</p>
+              </div>
+              <ul class="chips" aria-label="Técnicas">
+                <li>Detección de objetos</li>
+                <li>Segmentación</li>
+                <li>Inspección de calidad</li>
+                <li>OCR</li>
+                <li>Vídeo en tiempo real</li>
+              </ul>
+              <div class="demo demo--vision" data-demo="vision" data-state="idle" role="img"
+                aria-label="Ejemplo animado: una foto de cinco latas en una línea de envasado en la que la visión artificial inspecciona cada tapa y marca una lata como defectuosa.">
+                <p class="demo-tag">Datos de ejemplo</p>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Inspección de tapas <span>· línea de envasado 2</span></p>
+                  <div class="vision">
+                    <div class="vision-frame">
+                      <picture>
+                        <source type="image/avif"
+                          srcset="assets/img/latas-defecto-800.avif 800w, assets/img/latas-defecto-1264.avif 1264w"
+                          sizes="(min-width: 960px) 860px, 100vw">
+                        <source type="image/webp"
+                          srcset="assets/img/latas-defecto-800.webp 800w, assets/img/latas-defecto-1264.webp 1264w"
+                          sizes="(min-width: 960px) 860px, 100vw">
+                        <img src="assets/img/latas-defecto-800.jpg"
+                          srcset="assets/img/latas-defecto-800.jpg 800w, assets/img/latas-defecto-1264.jpg 1264w"
+                          sizes="(min-width: 960px) 860px, 100vw" width="1264" height="585" alt="" loading="lazy"
+                          decoding="async">
+                      </picture>
+                      <!-- Coordenadas sobre la foto recortada (1200 × 555): una caja por tapa; la roja abarca la abolladura -->
+                      <svg class="vision-boxes" viewBox="0 0 1200 555" preserveAspectRatio="xMidYMid slice">
+                        <rect class="det" x="2" y="34" width="130" height="122" />
+                        <rect class="det" x="138" y="68" width="200" height="136" />
+                        <rect class="det" x="358" y="108" width="208" height="144" />
+                        <rect class="det" x="590" y="178" width="214" height="162" />
+                        <rect class="det is-bad" x="846" y="203" width="234" height="222" />
+                      </svg>
+                      <span class="det-label det-label--1">correcto · 0,97</span>
+                      <span class="det-label det-label--2">correcto · 0,99</span>
+                      <span class="det-label det-label--3">correcto · 0,98</span>
+                      <span class="det-label det-label--4">correcto · 0,99</span>
+                      <span class="det-label det-label--5 is-bad">defecto · 0,91</span>
+                      <span class="scanline"></span>
+                    </div>
+                    <p class="vision-stats"><span>Latas <b class="v-count">0</b></span><span>Defectos <b
+                          class="v-bad">0</b></span><span class="v-model">Análisis de imágenes en tiempo real</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-panel" role="tabpanel" id="panel-agentes" aria-labelledby="tab-agentes" tabindex="0"
+              hidden>
+              <div class="ai-panel-head">
+                <h3>Agentes y automatización</h3>
+                <p>Agentes que hacen tareas de principio a fin entre tus sistemas, con supervisión humana donde hace
+                  falta.</p>
+              </div>
+              <ul class="chips" aria-label="Técnicas">
+                <li>Orquestación</li>
+                <li>Uso de herramientas</li>
+                <li>Integración por API</li>
+                <li>Supervisión humana</li>
+                <li>Trazabilidad</li>
+              </ul>
+              <div class="demo demo--agentes" data-demo="agentes" data-state="idle" role="img"
+                aria-label="Ejemplo animado: un agente que recibe un correo, lo clasifica, lo registra en el ERP, pide aprobación a una persona y envía el aviso.">
+                <p class="demo-tag">Datos de ejemplo</p>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Agente de pedidos <span>· ejecución</span></p>
+                  <div class="flow">
+                    <ol class="flow-nodes">
+                      <li class="node"><span class="node-dot"></span><span class="node-name">Correo</span><span
+                          class="node-sub">Pedido recibido</span></li>
+                      <li class="node"><span class="node-dot"></span><span class="node-name">Clasificar</span><span
+                          class="node-sub">Pedido · urgente</span></li>
+                      <li class="node"><span class="node-dot"></span><span class="node-name">ERP</span><span
+                          class="node-sub">Pedido P-5531 creado</span></li>
+                      <li class="node node--human"><span class="node-dot"></span><span
+                          class="node-name">Aprobación</span><span class="node-sub"><span class="sub-wait">Supervisión
+                            humana</span><span class="sub-ok">Aprobado por el responsable</span></span></li>
+                      <li class="node"><span class="node-dot"></span><span class="node-name">Aviso</span><span
+                          class="node-sub">Cliente informado</span></li>
+                    </ol>
+                    <ol class="flow-log">
+                      <li><span>09:14:02</span> correo recibido de compras@cliente-ejemplo.es</li>
+                      <li><span>09:14:03</span> intención: pedido · urgencia: alta</li>
+                      <li><span>09:14:05</span> erp.crear_pedido(cliente=C-118, líneas=3)</li>
+                      <li><span>09:14:05</span> importe superior a 3.000 € · se solicita aprobación</li>
+                      <li><span>09:21:40</span> aprobado · correo de confirmación enviado</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-panel" role="tabpanel" id="panel-prediccion" aria-labelledby="tab-prediccion"
+              tabindex="0" hidden>
+              <div class="ai-panel-head">
+                <h3>Análisis predictivo</h3>
+                <p>Previsión de demanda, mantenimiento predictivo, detección de anomalías y optimización de stock.</p>
+              </div>
+              <ul class="chips" aria-label="Técnicas">
+                <li>Series temporales</li>
+                <li>Machine learning</li>
+                <li>Detección de anomalías</li>
+                <li>Optimización</li>
+              </ul>
+              <div class="demo demo--prediccion" data-demo="prediccion" data-state="idle" role="img"
+                aria-label="Ejemplo animado: un gráfico con dos años de ventas y la previsión de los próximos seis meses con su margen de confianza.">
+                <p class="demo-tag">Datos de ejemplo</p>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Previsión de demanda <span>· referencia X200, unidades al mes</span></p>
+                  <div class="predict">
+                    <svg class="chart" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+                      <line class="ch-grid" x1="48" y1="232" x2="780" y2="232" /><text class="ch-axis" x="40" y="236"
+                        text-anchor="end">100</text>
+                      <line class="ch-grid" x1="48" y1="162" x2="780" y2="162" /><text class="ch-axis" x="40" y="166"
+                        text-anchor="end">150</text>
+                      <line class="ch-grid" x1="48" y1="92" x2="780" y2="92" /><text class="ch-axis" x="40" y="96"
+                        text-anchor="end">200</text>
+                      <text class="ch-axis" x="48" y="290" text-anchor="start">ene 2025</text>
+                      <text class="ch-axis" x="350.9" y="290" text-anchor="middle">ene 2026</text>
+                      <text class="ch-axis" x="653.8" y="290" text-anchor="middle">ene 2027</text>
+                      <line class="ch-now" x1="628.6" y1="40" x2="628.6" y2="268" /><text class="ch-axis" x="622.6"
+                        y="48" text-anchor="end">hoy</text>
+                      <g class="ch-hist">
+                        <path class="ch-line"
+                          d="M48 226.5 L73.2 221.9 L98.5 195 L123.7 172.4 L149 167.8 L174.2 166.2 L199.4 153.2 L224.7 165.6 L249.9 183.6 L275.2 183.3 L300.4 201.3 L325.7 198.1 L350.9 200.7 L376.1 175.2 L401.4 160.9 L426.6 89.2 L451.9 130.8 L477.1 115.2 L502.3 126.1 L527.6 128.7 L552.8 135.4 L578.1 160.3 L603.3 160.1 L628.6 165.4" />
+                      </g>
+                      <g class="ch-anom">
+                        <circle cx="426.6" cy="89.2" r="5" />
+                        <circle class="ch-anom-ring" cx="426.6" cy="89.2" r="12" />
+                        <text class="ch-note" x="442.6" y="78">Anomalía detectada</text>
+                      </g>
+                      <g class="ch-fc">
+                        <path class="ch-band" d="M628.6 165.4 L653.8 144.9 L679 127 L704.3 105 L729.5 83 L754.8 65.2 L780 54.5 L780 113.3 L754.8 117 L729.5 127.8 L704.3 142.8 L679 157.8 L653.8 168.7 L628.6 165.4 Z" />
+                        <path class="ch-fc-line" d="M628.6 165.4 L653.8 156.8 L679 142.4 L704.3 123.9 L729.5 105.4 L754.8 91.1 L780 83.9" />
+                      </g>
+                    </svg>
+                    <dl class="predict-stats">
+                      <div><dt>Próximo trimestre</dt><dd>+18 %</dd></div>
+                      <div><dt>Error medio del modelo</dt><dd>4,2 %</dd></div>
+                      <div><dt>Stock recomendado</dt><dd>620 uds.</dd></div>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-panel" role="tabpanel" id="panel-documentos" aria-labelledby="tab-documentos"
+              tabindex="0" hidden>
+              <div class="ai-panel-head">
+                <h3>Documentos inteligentes</h3>
+                <p>Facturas, albaranes, pedidos y contratos leídos, validados y registrados en tu ERP.</p>
+              </div>
+              <ul class="chips" aria-label="Técnicas">
+                <li>OCR</li>
+                <li>Extracción estructurada</li>
+                <li>Validación cruzada</li>
+                <li>Integración con ERP</li>
+              </ul>
+              <div class="demo demo--documentos" data-demo="documentos" data-state="idle" role="img"
+                aria-label="Ejemplo animado: un albarán que se lee automáticamente y aparece registrado como una fila nueva en el ERP.">
+                <p class="demo-tag">Datos de ejemplo</p>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Entrada de documentos <span>· llega por email en PDF</span></p>
+                  <div class="docs">
+                    <article class="albaran">
+                      <header class="alb-head">
+                        <div class="alb-from">
+                          <b data-f>Suministros Industriales Arnela, S.L.</b>
+                          <span>Av. de la Industria, 14 · Nave 3</span>
+                          <span>Parque Empresarial Norte, parcela 12</span>
+                        </div>
+                        <div class="alb-title">
+                          <b>ALBARÁN</b>
+                          <dl>
+                            <dt>Número</dt><dd><span data-f>A-2611</span></dd>
+                            <dt>Fecha</dt><dd><span data-f>14/10/2026</span></dd>
+                            <dt>Su pedido</dt><dd><span data-f>P-5502</span></dd>
+                          </dl>
+                        </div>
+                      </header>
+                      <p class="alb-to"><span>Cliente</span> Mecanizados Eira, S.L. · Entrega en almacén</p>
+                      <div class="alb-lines" data-f>
+                        <table>
+                          <thead>
+                            <tr><th>Código</th><th>Descripción</th><th class="num">Cant.</th><th class="num alb-price">Precio</th><th class="num">Importe</th></tr>
+                          </thead>
+                          <tbody>
+                            <tr><td>M8-40</td><td>Tornillo hexagonal DIN 933 M8×40</td><td class="num">500</td><td class="num alb-price">0,18</td><td class="num">90,00</td></tr>
+                            <tr><td>T-M8</td><td>Tuerca autoblocante DIN 985 M8</td><td class="num">500</td><td class="num alb-price">0,09</td><td class="num">45,00</td></tr>
+                            <tr><td>AR-8</td><td>Arandela plana DIN 125 M8</td><td class="num">1.000</td><td class="num alb-price">0,03</td><td class="num">30,00</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <dl class="alb-totals">
+                        <dt>Base imponible</dt><dd>165,00 €</dd>
+                        <dt>IVA 21 %</dt><dd>34,65 €</dd>
+                        <dt class="alb-total">Total</dt><dd class="alb-total"><span data-f>199,65 €</span></dd>
+                      </dl>
+                      <footer class="alb-sign"><span>Recibí conforme</span><span>Página 1 de 1</span></footer>
+                    </article>
+                    <div class="erp">
+                      <p class="erp-head"><b>Entradas de material</b><span>Octubre 2026</span></p>
+                      <table class="erp-table">
+                        <thead>
+                          <tr><th>Albarán</th><th>Proveedor</th><th class="num">Importe</th><th>Estado</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr class="erp-new">
+                            <td data-v="A-2611"></td><td data-v="Suministros Arnela"></td>
+                            <td class="num" data-v="199,65 €"></td>
+                            <td><span class="erp-status"><span class="s-wait">Procesando</span><span
+                                  class="s-ok">Registrado</span></span></td>
+                          </tr>
+                          <tr>
+                            <td>F-0981</td><td>Pinturas Saler</td><td class="num">1.204,00 €</td>
+                            <td><span class="erp-status is-ok"><span class="s-ok">Registrado</span></span></td>
+                          </tr>
+                          <tr>
+                            <td>A-5502</td><td>Perfiles Navia</td><td class="num">3.870,15 €</td>
+                            <td><span class="erp-status is-ok"><span class="s-ok">Registrado</span></span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-panel" role="tabpanel" id="panel-voz" aria-labelledby="tab-voz" tabindex="0" hidden>
+              <div class="ai-panel-head">
+                <h3>Voz</h3>
+                <p>Transcripción de reuniones y llamadas, actas automáticas y asistentes de voz.</p>
+              </div>
+              <ul class="chips" aria-label="Técnicas">
+                <li>Reconocimiento de voz</li>
+                <li>Identificación de hablantes</li>
+                <li>Resumen de reuniones</li>
+                <li>Síntesis de voz</li>
+              </ul>
+              <div class="demo demo--voz" data-demo="voz" data-state="idle" role="img"
+                aria-label="Ejemplo animado: la grabación de una reunión que se transcribe y de la que se extraen las tareas con su responsable.">
+                <p class="demo-tag">Datos de ejemplo</p>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Reunión de seguimiento <span>· 14 min</span></p>
+                  <div class="voice">
+                    <div class="wave-wrap">
+                      <svg class="wave" viewBox="0 0 480 60" preserveAspectRatio="none"><rect x="0" y="27" width="3.5" height="6" rx="1.5"/><rect x="7.5" y="18.5" width="3.5" height="23" rx="1.5"/><rect x="15" y="26" width="3.5" height="8" rx="1.5"/><rect x="22.5" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="30" y="24.5" width="3.5" height="11" rx="1.5"/><rect x="37.5" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="45" y="19.5" width="3.5" height="21" rx="1.5"/><rect x="52.5" y="8.5" width="3.5" height="43" rx="1.5"/><rect x="60" y="15" width="3.5" height="30" rx="1.5"/><rect x="67.5" y="20.5" width="3.5" height="19" rx="1.5"/><rect x="75" y="14.5" width="3.5" height="31" rx="1.5"/><rect x="82.5" y="14" width="3.5" height="32" rx="1.5"/><rect x="90" y="12" width="3.5" height="36" rx="1.5"/><rect x="97.5" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="105" y="18" width="3.5" height="24" rx="1.5"/><rect x="112.5" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="120" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="127.5" y="25" width="3.5" height="10" rx="1.5"/><rect x="135" y="24" width="3.5" height="12" rx="1.5"/><rect x="142.5" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="150" y="11.5" width="3.5" height="37" rx="1.5"/><rect x="157.5" y="11.5" width="3.5" height="37" rx="1.5"/><rect x="165" y="25" width="3.5" height="10" rx="1.5"/><rect x="172.5" y="15" width="3.5" height="30" rx="1.5"/><rect x="180" y="14" width="3.5" height="32" rx="1.5"/><rect x="187.5" y="10.5" width="3.5" height="39" rx="1.5"/><rect x="195" y="18" width="3.5" height="24" rx="1.5"/><rect x="202.5" y="19.5" width="3.5" height="21" rx="1.5"/><rect x="210" y="19.5" width="3.5" height="21" rx="1.5"/><rect x="217.5" y="26" width="3.5" height="8" rx="1.5"/><rect x="225" y="25.5" width="3.5" height="9" rx="1.5"/><rect x="232.5" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="240" y="25" width="3.5" height="10" rx="1.5"/><rect x="247.5" y="15.5" width="3.5" height="29" rx="1.5"/><rect x="255" y="10" width="3.5" height="40" rx="1.5"/><rect x="262.5" y="24.5" width="3.5" height="11" rx="1.5"/><rect x="270" y="16.5" width="3.5" height="27" rx="1.5"/><rect x="277.5" y="14.5" width="3.5" height="31" rx="1.5"/><rect x="285" y="10.5" width="3.5" height="39" rx="1.5"/><rect x="292.5" y="14" width="3.5" height="32" rx="1.5"/><rect x="300" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="307.5" y="17" width="3.5" height="26" rx="1.5"/><rect x="315" y="25.5" width="3.5" height="9" rx="1.5"/><rect x="322.5" y="25.5" width="3.5" height="9" rx="1.5"/><rect x="330" y="23" width="3.5" height="14" rx="1.5"/><rect x="337.5" y="26.5" width="3.5" height="7" rx="1.5"/><rect x="345" y="20" width="3.5" height="20" rx="1.5"/><rect x="352.5" y="10" width="3.5" height="40" rx="1.5"/><rect x="360" y="20" width="3.5" height="20" rx="1.5"/><rect x="367.5" y="19" width="3.5" height="22" rx="1.5"/><rect x="375" y="15.5" width="3.5" height="29" rx="1.5"/><rect x="382.5" y="11" width="3.5" height="38" rx="1.5"/><rect x="390" y="10.5" width="3.5" height="39" rx="1.5"/><rect x="397.5" y="26.5" width="3.5" height="7" rx="1.5"/><rect x="405" y="15.5" width="3.5" height="29" rx="1.5"/><rect x="412.5" y="22" width="3.5" height="16" rx="1.5"/><rect x="420" y="24.5" width="3.5" height="11" rx="1.5"/><rect x="427.5" y="22" width="3.5" height="16" rx="1.5"/><rect x="435" y="27" width="3.5" height="6" rx="1.5"/><rect x="442.5" y="24" width="3.5" height="12" rx="1.5"/><rect x="450" y="12.5" width="3.5" height="35" rx="1.5"/><rect x="457.5" y="16.5" width="3.5" height="27" rx="1.5"/><rect x="465" y="22" width="3.5" height="16" rx="1.5"/><rect x="472.5" y="16" width="3.5" height="28" rx="1.5"/></svg>
+                      <span class="wave-progress"></span>
+                    </div>
+                    <div class="voice-body">
+                      <ol class="transcript">
+                        <li><span class="spk">Ana</span><span class="ts">00:42</span>
+                          <p>Necesitamos cerrar el presupuesto de la línea 3 antes del jueves.</p>
+                        </li>
+                        <li><span class="spk">Marcos</span><span class="ts">01:15</span>
+                          <p>Yo preparo la comparativa de proveedores y la envío mañana.</p>
+                        </li>
+                        <li><span class="spk">Ana</span><span class="ts">01:38</span>
+                          <p>Perfecto. Revisamos los plazos el lunes.</p>
+                        </li>
+                      </ol>
+                      <div class="voice-tasks">
+                        <p class="out-title">Tareas detectadas</p>
+                        <ul>
+                          <li><b>Cerrar presupuesto de la línea 3</b><span>Ana · jueves</span></li>
+                          <li><b>Enviar comparativa de proveedores</b><span>Marcos · mañana</span></li>
+                          <li><b>Revisar plazos</b><span>Equipo · lunes</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DE LA IDEA AL PRODUCTO -->
+    <section class="band band--line" id="ideas" aria-labelledby="ideas-title">
+      <div class="wrap">
+        <header class="section-head" data-reveal>
+          <p class="label"><span class="label-n">04</span>De la idea al producto</p>
+          <h2 id="ideas-title">¿Tienes una idea? Te ayudamos a hacerla realidad.</h2>
+          <p class="lead">Un producto tecnológico, una herramienta interna o un servicio nuevo basado en IA: te ayudamos
+            a enfocarlo y a llevarlo a cabo.</p>
+        </header>
+
+        <ol class="idea-steps">
+          <li data-reveal>
+            <h3>Enfocar</h3>
+            <p>Definimos el problema, a quién va dirigido y qué valor aporta.</p>
           </li>
-          <li class="step" data-reveal>
-            <span class="step-n">02</span>
-            <h3>Un primer proceso, con precio cerrado</h3>
-            <p>Elegimos juntos una tarea concreta que os quite horas cada semana. Antes de empezar, dejamos por
-              escrito qué se hace, en qué plazo y cuánto cuesta.</p>
+          <li data-reveal>
+            <h3>Validar</h3>
+            <p>Comprobamos la viabilidad técnica y de negocio antes de invertir.</p>
           </li>
-          <li class="step" data-reveal>
-            <span class="step-n">03</span>
-            <h3>Funcionando y con soporte</h3>
-            <p>Lo ponemos en marcha, enseñamos a usarlo a quien lo va a usar y nos quedamos para el mantenimiento.
-              Cuando queráis, vamos a por la siguiente tarea.</p>
+          <li data-reveal>
+            <h3>Prototipar</h3>
+            <p>Construimos una primera versión funcional para probarla con usuarios reales.</p>
+          </li>
+          <li data-reveal>
+            <h3>Construir</h3>
+            <p>Desarrollamos el producto completo, listo para producción y para crecer.</p>
           </li>
         </ol>
-
-        <p class="crew-note" data-reveal>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-          </svg>
-          <span>A las visitas vamos con los ingenieros que luego lo construyen, así que lo que nos contáis no se pierde
-            por el camino.</span>
-        </p>
+        <p class="ideas-cta" data-reveal><a class="btn btn--ghost" href="#contacto">Cuéntanos tu idea
+            <svg aria-hidden="true"><use href="#i-arrow" /></svg></a></p>
       </div>
     </section>
 
-    <!-- SISTEMAS -->
-    <section class="band band--light" id="sistemas" aria-labelledby="sistemas-title">
+    <!-- CÓMO TRABAJAMOS -->
+    <section class="band band--paper" id="garantias" aria-labelledby="garantias-title">
       <div class="wrap">
-        <div class="systems">
-          <div data-reveal>
-            <p class="label">Vuestros sistemas</p>
-            <h2 class="h2" id="sistemas-title" style="margin-top:16px">Trabajamos con lo que ya tenéis.</h2>
-            <p class="lead" style="margin-top:16px">No os vamos a pedir que cambiéis de ERP ni de forma de trabajar. Nos
-              conectamos a vuestros programas, al correo y a las carpetas donde ya está la información.</p>
-            <ul class="stack" aria-label="Programas y herramientas habituales">
+        <header class="section-head" data-reveal>
+          <p class="label"><span class="label-n">05</span>Cómo trabajamos</p>
+          <h2 id="garantias-title">Ingeniería seria, de principio a fin.</h2>
+          <p class="lead">Cada proyecto se trabaja con el rigor de la ingeniería: pruebas antes de producción,
+            documentación y compromisos por escrito.</p>
+        </header>
+
+        <div class="guarantees">
+          <article class="guarantee guarantee--wide" data-reveal>
+            <h3>Se integra con lo que ya usas</h3>
+            <p>No te pedimos que cambies de ERP ni de forma de trabajar. Nos conectamos a tus programas, a tu correo
+              y a los sitios donde ya está la información.</p>
+            <ul class="stack" aria-label="Sistemas con los que trabajamos">
+              <li>SAP</li>
+              <li>Microsoft Dynamics 365</li>
+              <li>Salesforce</li>
+              <li>Odoo</li>
               <li>A3</li>
               <li>Sage</li>
               <li>Holded</li>
-              <li>Odoo</li>
-              <li>SAP Business One</li>
-              <li>Business Central</li>
-              <li>Excel</li>
-              <li>Outlook</li>
-              <li>Gmail</li>
-              <li>Carpetas compartidas</li>
-              <li>Servidor propio</li>
+              <li>Microsoft 365</li>
+              <li>Google Workspace</li>
+              <li>AWS</li>
+              <li>Azure</li>
+              <li>Google Cloud</li>
+              <li>SQL</li>
+              <li>API a medida</li>
             </ul>
-            <p class="stack-note">Si vuestro programa no está en la lista o es a medida, también: casi siempre hay una
-              forma de leer y escribir sus datos. Lo vemos en la visita.</p>
-          </div>
-
-          <div class="promises" data-reveal>
-            <div class="promise">
-              <h3>Primero en pruebas</h3>
-              <p>Todo se prueba con documentos reales en un entorno aparte antes de tocar vuestro día a día.</p>
-            </div>
-            <div class="promise">
-              <h3>Vuestros datos, bajo control</h3>
-              <p>En vuestro servidor o en la nube, cumpliendo el RGPD. Sabéis en todo momento dónde está cada dato.</p>
-            </div>
-            <div class="promise">
-              <h3>Precio y alcance por escrito</h3>
-              <p>Antes de empezar firmamos qué se hace, en qué plazo y cuánto cuesta. Sin sorpresas a mitad de
-                proyecto.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="extras" data-reveal>
-          <p class="label">También hacemos</p>
-          <ul>
-            <li><span><strong>Asistentes con vuestra información.</strong> Responden con vuestros catálogos, fichas
-                técnicas y procedimientos, no con lo que hay en internet.</span></li>
-            <li><span><strong>Herramientas internas a medida.</strong> Pequeñas aplicaciones y webs para lo que
-                vuestro programa no cubre.</span></li>
-            <li><span><strong>Cuadros de mando.</strong> Las cifras que ya generáis, en una pantalla y al día, sin
-                montar informes a mano.</span></li>
-            <li><span><strong>Migraciones y cargas de datos.</strong> Pasar vuestros datos de un ERP antiguo a uno
-                nuevo, o miles de referencias a una tienda online.</span></li>
-          </ul>
+          </article>
+          <article class="guarantee" data-reveal>
+            <h3>Primero en pruebas</h3>
+            <p>Todo se valida con datos reales en un entorno aparte antes de tocar tu día a día.</p>
+          </article>
+          <article class="guarantee" data-reveal>
+            <h3>Tus datos, bajo control</h3>
+            <p>En tus servidores o en la nube que elijas, cumpliendo el RGPD y el Reglamento europeo de IA.</p>
+          </article>
+          <article class="guarantee" data-reveal>
+            <h3>Alcance y precio por escrito</h3>
+            <p>Antes de empezar, firmamos qué se hace, en qué plazo y cuánto cuesta.</p>
+          </article>
+          <article class="guarantee" data-reveal>
+            <h3>Los mismos ingenieros de principio a fin</h3>
+            <p>Quien hace el diagnóstico es quien construye la solución. Lo que nos cuentas no se pierde por el
+              camino.</p>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- CONTACTO -->
-    <section class="band band--dark" id="contacto" aria-labelledby="contacto-title">
+    <section class="band" id="contacto" aria-labelledby="contacto-title">
       <div class="wrap contact">
-        <div data-reveal>
-          <p class="label">Contacto</p>
-          <h2 class="h2" id="contacto-title" style="margin-top:16px">Cuéntanos qué tarea os quita más tiempo.</h2>
-          <p class="lead">Llámanos o escríbenos y nos acercamos a veros. Si lo prefieres, déjanos tus datos y te
-            llamamos en menos de 24 horas.</p>
-          <div class="contact-person">
-            <p class="contact-name">Samuel Parafita</p>
-            <a class="phone" href="tel:+34634055428" aria-label="Llamar a Samuel Parafita al 634 055 428">634 055 428</a>
-          </div>
-          <div class="contact-ways">
-            <a href="https://wa.me/34634055428" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
-              </svg>
-              WhatsApp al mismo número
-            </a>
-            <a href="mailto:air@airconsulting.es">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="2" />
-                <path d="m22 7-10 6L2 7" />
-              </svg>
-              air@airconsulting.es
-            </a>
-          </div>
+        <div class="contact-info" data-reveal>
+          <p class="label"><span class="label-n">06</span>Contacto</p>
+          <h2 id="contacto-title">Hablemos de tu empresa.</h2>
+          <p class="lead">Cuéntanos qué quieres mejorar y organizamos la primera visita.</p>
+          <dl class="contact-list">
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:air@airconsulting.es">air@airconsulting.es</a></dd>
+            </div>
+            <div>
+              <dt>Teléfono</dt>
+              <dd><a href="tel:+34634055428">634&nbsp;055&nbsp;428</a></dd>
+            </div>
+            <div>
+              <dt>Respuesta</dt>
+              <dd>En menos de 24 horas en días laborables</dd>
+            </div>
+          </dl>
         </div>
 
-        <form class="form" id="contact-form" novalidate data-reveal>
-          <h3>Que te llamemos</h3>
-          <p class="form-intro">Te llamamos en menos de 24 horas en días laborables.</p>
-          <div class="field">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" name="nombre" type="text" autocomplete="name" required>
+        <form class="form" id="contact-form" novalidate
+          data-endpoint="https://n8n.airconsulting.es/webhook/contacto" data-reveal>
+          <h3>Solicitar diagnóstico</h3>
+          <p class="form-intro">Los campos sin marcar como opcionales son obligatorios.</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" name="nombre" type="text" autocomplete="name" required>
+              <p class="field-error" id="nombre-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="empresa">Empresa</label>
+              <input id="empresa" name="empresa" type="text" autocomplete="organization" required>
+              <p class="field-error" id="empresa-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              <p class="field-error" id="email-error" hidden></p>
+            </div>
+            <div class="field">
+              <label for="telefono">Teléfono <span class="optional">(opcional)</span></label>
+              <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel">
+            </div>
+
+            <div class="field field--full">
+              <label for="mensaje">¿Qué te gustaría mejorar? <span class="optional">(opcional)</span></label>
+              <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="web">Web</label>
+              <input id="web" name="web" type="text" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="field field--full">
+              <label class="check">
+                <input id="privacidad" name="privacidad" type="checkbox" required>
+                <span>He leído la <a href="privacidad.html">Política de privacidad</a> y acepto que AIR use estos
+                  datos para responderme.</span>
+              </label>
+              <p class="field-error" id="privacidad-error" hidden></p>
+            </div>
           </div>
-          <div class="field">
-            <label for="empresa">Empresa</label>
-            <input id="empresa" name="empresa" type="text" autocomplete="organization" required>
-          </div>
-          <div class="field">
-            <label for="telefono">Teléfono</label>
-            <input id="telefono" name="telefono" type="tel" autocomplete="tel" required>
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
-          </div>
-          <label class="check">
-            <input id="privacidad" name="privacidad" type="checkbox" required>
-            <span>He leído la <a href="privacidad.html">Política de Privacidad</a> y acepto que Air use estos datos
-              para contactarme.</span>
-          </label>
-          <button class="btn btn--primary" type="submit" id="submit-btn">Pedir que me llamen</button>
-          <p class="submit-status" id="submit-status" role="status" hidden></p>
-          <p class="form-legal">Responsable: Samuel Parafita Rama (Air). Finalidad: responder a tu solicitud. No se
+
+          <button class="btn btn--primary btn--block" type="submit" id="submit-btn">Solicitar diagnóstico</button>
+          <p class="form-status" id="form-status" role="status"></p>
+          <p class="form-legal">Responsable: Samuel Parafita Rama (AIR). Finalidad: responder a tu solicitud. No se
             ceden datos a terceros salvo obligación legal. Puedes ejercer tus derechos en air@airconsulting.es. Más
-            información en la <a href="privacidad.html">Política de Privacidad</a>.</p>
+            información en la <a href="privacidad.html">Política de privacidad</a>.</p>
         </form>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-grid">
-        <div>
-          <a class="brand" href="index.html" aria-label="Air, inicio">
-            <svg aria-hidden="true">
-              <use href="#air-mark" />
-            </svg>
-            <span>AIR</span>
-          </a>
-          <p>Automatización e IA para empresas industriales.<br>Carballo · A Coruña.</p>
-        </div>
-        <div>
-          <h2>Contacto</h2>
-          <ul>
-            <li><a href="tel:+34634055428">+34 634 055 428</a></li>
-            <li><a href="mailto:air@airconsulting.es">air@airconsulting.es</a></li>
-          </ul>
-        </div>
-        <div>
-          <h2>Legal</h2>
-          <ul>
-            <li><a href="aviso-legal.html">Aviso legal</a></li>
-            <li><a href="privacidad.html">Política de privacidad</a></li>
-            <li><a href="cookies.html">Política de cookies</a></li>
-            <li><a href="terminos.html">Términos de uso</a></li>
-          </ul>
-        </div>
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#inicio" aria-label="AIR, inicio">
+          <svg aria-hidden="true"><use href="#air-mark" /></svg>
+          <span>AIR</span>
+        </a>
+        <p>Consultoría tecnológica e inteligencia artificial <span aria-hidden="true">·</span> España</p>
       </div>
-      <p class="footer-bottom">© <span id="year">2026</span> Air. Todos los derechos reservados.</p>
+      <div>
+        <h2 class="footer-title">Contacto</h2>
+        <ul>
+          <li><a href="mailto:air@airconsulting.es">air@airconsulting.es</a></li>
+          <li><a href="tel:+34634055428">+34&nbsp;634&nbsp;055&nbsp;428</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="footer-title">Legal</h2>
+        <ul>
+          <li><a href="aviso-legal.html">Aviso legal</a></li>
+          <li><a href="privacidad.html">Política de privacidad</a></li>
+          <li><a href="cookies.html">Política de cookies</a></li>
+          <li><a href="terminos.html">Términos de uso</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom rule-top">
+      <p>© <span id="year">2026</span> AIR Consulting. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <div class="cookie" id="cookie-banner" role="region" aria-label="Aviso de cookies">
-    <p>Sin cookies de publicidad ni de análisis: solo lo técnico necesario. <a href="cookies.html">Más info</a></p>
-    <button class="btn btn--primary btn--sm" type="button" id="accept-cookies">Vale</button>
-  </div>
+  <section class="cookie" id="cookie-banner" aria-label="Aviso de cookies" hidden>
+    <p>Sin cookies de publicidad ni de análisis: solo lo técnico necesario. <a href="cookies.html">Política de
+        cookies</a></p>
+    <button class="btn btn--sm btn--ghost" type="button" id="accept-cookies">Entendido</button>
+  </section>
 
-  <script>
-    (function () {
-      const header = document.getElementById('header');
-      const toggle = document.querySelector('.menu-toggle');
-      const menu = document.getElementById('mobile-menu');
-      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-      // Cabecera
-      const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
-      onScroll();
-      window.addEventListener('scroll', onScroll, { passive: true });
-
-      // Menú móvil
-      toggle.addEventListener('click', () => {
-        const open = menu.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-      });
-      menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
-        menu.classList.remove('is-open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú');
-      }));
-
-      // Aviso de cookies (solo informativo: no hay cookies que no sean técnicas)
-      const banner = document.getElementById('cookie-banner');
-      let seen = false;
-      try { seen = localStorage.getItem('airCookiesAccepted') === 'true'; } catch (e) { }
-      if (!seen) banner.classList.add('is-visible');
-      document.getElementById('accept-cookies').addEventListener('click', () => {
-        try { localStorage.setItem('airCookiesAccepted', 'true'); } catch (e) { }
-        banner.classList.remove('is-visible');
-      });
-
-      // Revelado suave al hacer scroll
-      const items = document.querySelectorAll('[data-reveal]');
-      if (reduced || !('IntersectionObserver' in window)) {
-        items.forEach((el) => el.classList.add('is-in'));
-      } else {
-        const io = new IntersectionObserver((entries) => {
-          entries.forEach((e) => {
-            if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-          });
-        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-        items.forEach((el) => io.observe(el));
-      }
-
-      // ── Demo: documento → ERP ──
-      const docs = [
-        {
-          type: 'ALBARÁN', num: 'Nº A-2611', partyLabel: 'Proveedor', party: 'Tornillería Industrial (ej.)',
-          date: '14/10/2026', total: '286,40 €', stamp: 'RECIBIDO', source: 'Llega por email · PDF',
-          erp: 'ERP · Entradas de material', shortParty: 'Tornillería (ej.)', code: 'A-2611',
-          lines: [['M8-40', 'Tornillo DIN 933', '500'], ['T-M8', 'Tuerca autoblocante', '500'], ['AR-8', 'Arandela plana', '1.000']]
-        },
-        {
-          type: 'PEDIDO', num: 'Nº P-5531', partyLabel: 'Cliente', party: 'Carpintería Metálica (ej.)',
-          date: '15/10/2026', total: '2.145,00 €', stamp: 'URGENTE', source: 'Llega por email · cuerpo del correo',
-          erp: 'ERP · Pedidos de cliente', shortParty: 'Carpintería (ej.)', code: 'P-5531',
-          lines: [['PL-3', 'Chapa galvanizada 3 mm', '12'], ['PF-40', 'Perfil 40x40', '30'], ['SL-1', 'Soldadura (horas)', '6']]
-        },
-        {
-          type: 'FACTURA', num: 'Nº F-1042', partyLabel: 'Proveedor', party: 'Transportes Costa (ej.)',
-          date: '16/10/2026', total: '640,20 €', stamp: 'PAGAR 30 D', source: 'Llega por email · PDF escaneado',
-          erp: 'ERP · Facturas recibidas', shortParty: 'Transportes (ej.)', code: 'F-1042',
-          lines: [['PT-1', 'Portes A Coruña', '4'], ['PT-2', 'Portes Santiago', '2'], ['CR-1', 'Carga y descarga', '3']]
-        }
-      ];
-
-      const $ = (id) => document.getElementById(id);
-      const demo = $('demo'), doc = $('doc'), rows = $('erp-rows');
-      let idx = 0, timers = [], running = false, visible = true;
-
-      function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
-      function clearTimers() { timers.forEach(clearTimeout); timers = []; }
-
-      function paintDoc(d) {
-        $('doc-type').textContent = d.type;
-        $('doc-num').textContent = d.num;
-        $('doc-party-label').textContent = d.partyLabel;
-        $('doc-party').textContent = d.party;
-        $('doc-date').textContent = d.date;
-        $('doc-total').textContent = d.total;
-        $('doc-stamp').textContent = d.stamp;
-        $('demo-source').textContent = d.source;
-        $('erp-title').textContent = d.erp;
-        $('doc-lines').innerHTML = d.lines.map((l) =>
-          `<tr><td>${l[0]}</td><td>${l[1]}</td><td class="num">${l[2]}</td></tr>`).join('');
-        doc.querySelectorAll('[data-f]').forEach((f) => f.classList.remove('is-read'));
-      }
-
-      function newRow(d, done) {
-        const short = d.date.slice(0, 6) + d.date.slice(8);
-        const tr = document.createElement('tr');
-        tr.className = 'is-new';
-        tr.innerHTML = `<td>${done ? short : ''}</td><td>${done ? d.code : ''}</td><td>${done ? d.shortParty : ''}</td>` +
-          `<td class="col-imp col-hide">${done ? d.total : ''}</td>` +
-          `<td><span class="chip ${done ? 'chip--ok' : 'chip--wait'}">${done ? 'Registrado' : 'Leyendo…'}</span></td>`;
-        rows.querySelectorAll('tr.is-new').forEach((r) => r.classList.remove('is-new'));
-        rows.insertBefore(tr, rows.firstChild);
-        while (rows.children.length > 3) rows.removeChild(rows.lastChild);
-        return tr;
-      }
-
-      function cycle() {
-        const d = docs[idx % docs.length];
-        paintDoc(d);
-        doc.classList.remove('is-out', 'is-scanning');
-        void doc.offsetWidth;
-        $('demo-step').textContent = 'Air lee y comprueba';
-        later(() => doc.classList.add('is-scanning'), 400);
-        const fields = ['num', 'party', 'date', 'lines', 'total'];
-        fields.forEach((f, i) => later(() => {
-          const el = doc.querySelector(`[data-f="${f}"]`);
-          if (el) el.classList.add('is-read');
-        }, 700 + i * 260));
-        let tr;
-        later(() => { tr = newRow(d, false); $('demo-step').textContent = 'Comprobado con el pedido'; }, 2200);
-        const cells = () => tr.querySelectorAll('td');
-        later(() => { cells()[0].textContent = d.date.slice(0, 6) + d.date.slice(8); }, 2500);
-        later(() => { cells()[1].textContent = d.code; }, 2700);
-        later(() => { cells()[2].textContent = d.shortParty; }, 2900);
-        later(() => { cells()[3].textContent = d.total; }, 3100);
-        later(() => {
-          cells()[4].innerHTML = '<span class="chip chip--ok">Registrado</span>';
-          $('demo-step').textContent = 'Registrado en el ERP';
-        }, 3500);
-        later(() => doc.classList.add('is-out'), 5600);
-        later(() => { idx += 1; if (running) cycle(); }, 6100);
-      }
-
-      function start() {
-        if (running || reduced) return;
-        running = true;
-        demo.classList.add('is-live');
-        cycle();
-      }
-
-      function stop() {
-        running = false;
-        clearTimers();
-        demo.classList.remove('is-live');
-        doc.classList.remove('is-out');
-      }
-
-      if (reduced) {
-        // Estado final estático, sin animación
-        const d = docs[0];
-        paintDoc(d);
-        doc.querySelectorAll('[data-f]').forEach((f) => f.classList.add('is-read'));
-        newRow(d, true);
-        $('demo-step').textContent = 'Registrado en el ERP';
-      } else {
-        if ('IntersectionObserver' in window) {
-          new IntersectionObserver((entries) => {
-            visible = entries[0].isIntersecting;
-            if (visible && !document.hidden) start(); else stop();
-          }, { threshold: 0.2 }).observe(demo);
-        } else {
-          start();
-        }
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) stop(); else if (visible) start();
-        });
-      }
-
-      // ── Formulario de contacto → n8n ──
-      const N8N_WEBHOOK = 'https://n8n.airconsulting.es/webhook/contacto';
-      const form = document.getElementById('contact-form');
-      const btn = document.getElementById('submit-btn');
-      const status = document.getElementById('submit-status');
-
-      function setStatus(msg, ok) {
-        status.hidden = false;
-        status.textContent = msg;
-        status.style.color = ok ? 'var(--esmeralda)' : 'var(--aviso)';
-      }
-
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        if (!form.checkValidity()) { form.reportValidity(); return; }
-
-        btn.disabled = true;
-        btn.textContent = 'Enviando…';
-        status.hidden = true;
-
-        const payload = {
-          nombre: document.getElementById('nombre').value.trim(),
-          empresa: document.getElementById('empresa').value.trim(),
-          email: document.getElementById('email').value.trim(),
-          telefono: document.getElementById('telefono').value.trim(),
-          fecha: new Date().toISOString(),
-          origen: window.location.href
-        };
-
-        try {
-          const res = await fetch(N8N_WEBHOOK, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          btn.textContent = 'Solicitud enviada';
-          setStatus('Recibido. Te llamamos en menos de 24 horas en días laborables.', true);
-          form.reset();
-        } catch (err) {
-          console.error('Webhook error:', err);
-          btn.disabled = false;
-          btn.textContent = 'Pedir que me llamen';
-          setStatus('No se ha podido enviar. Llámanos al 634 055 428 o escribe a air@airconsulting.es.', false);
-        }
-      });
-    })();
-  </script>
-
+  <script defer src="assets/js/site.js"></script>
+  <script defer src="assets/js/tabs.js"></script>
+  <script defer src="assets/js/hero-field.js"></script>
+  <script defer src="assets/js/ai-demos.js"></script>
+  <script defer src="assets/js/contact-form.js"></script>
 </body>
 
 </html>
