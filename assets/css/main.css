@@ -428,7 +428,7 @@ h2 {
 
   .hero-visual::after {
     background:
-      linear-gradient(90deg, rgba(10, 14, 13, .96) 0%, rgba(10, 14, 13, .82) 32%, rgba(10, 14, 13, 0) 66%),
+      linear-gradient(90deg, rgba(10, 14, 13, .96) 0%, rgba(10, 14, 13, .8) 30%, rgba(10, 14, 13, 0) 56%),
       linear-gradient(0deg, rgba(10, 14, 13, .95) 0%, rgba(10, 14, 13, 0) 22%);
   }
 

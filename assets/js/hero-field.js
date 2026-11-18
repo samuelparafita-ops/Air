@@ -14,8 +14,13 @@
   var hero = canvas.closest('.hero') || host;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var COS = Math.cos(Math.PI / 6);
-  var SIN = Math.sin(Math.PI / 6);
+  // Proporción del rombo del logotipo (160 × 70), algo más plana que la isométrica estándar
+  var COS = 80 / Math.sqrt(80 * 80 + 35 * 35);
+  var SIN = 35 / Math.sqrt(80 * 80 + 35 * 35);
+  // El chevrón del logo es la banda de la rejilla donde max(a, b) está entre estos dos niveles
+  var CHEVRON_IN = 0.4334;
+  var CHEVRON_OUT = 0.6667;
+  var ECHO_MS = 3600; // un chevrón tenue recorre el campo en la dirección de la flecha
   var LEVELS = 12;           // niveles de opacidad para dibujar por lotes
   var FRAME_MS = 1000 / 30;  // 30 fps
 
@@ -34,14 +39,23 @@
     return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, a[2] + (b[2] - a[2]) * k];
   }
 
-  var C_DOT, C_GREEN, C_MID, DOT_STYLES, LINE_STYLE, TRAIL_STYLES, HALO_STYLE, HEAD_STYLE;
+  var C_DOT, C_GREEN, C_MID, DOT_STYLES, BAND_STYLES, LINE_STYLE, TRAIL_STYLES, HALO_STYLE, HEAD_STYLE;
+  var BAND_FILL, BAND_LINE, EDGE_LINE;
 
   function palette() {
     C_DOT = rgb('--muted', '#9AA6A1');
     C_GREEN = rgb('--green', '#4ADE80');
     C_MID = rgb('--green-mid', '#2FBF68');
     DOT_STYLES = [];
-    for (var l = 0; l < LEVELS; l++) DOT_STYLES.push(rgba(C_DOT, 0.24 + 0.56 * l / (LEVELS - 1)));
+    BAND_STYLES = [];
+    var bandDot = mix(C_DOT, C_GREEN, 0.6);
+    for (var l = 0; l < LEVELS; l++) {
+      DOT_STYLES.push(rgba(C_DOT, 0.24 + 0.56 * l / (LEVELS - 1)));
+      BAND_STYLES.push(rgba(bandDot, 0.4 + 0.55 * l / (LEVELS - 1)));
+    }
+    BAND_FILL = rgba(C_GREEN, 0.075);
+    BAND_LINE = rgba(C_MID, 0.6);
+    EDGE_LINE = rgba(C_MID, 0.32);
     LINE_STYLE = rgba(C_DOT, 0.085);
     TRAIL_STYLES = [];
     for (var s = 0; s < 10; s++) TRAIL_STYLES.push(rgba(C_MID, 0.9 * (1 - s / 10)));
@@ -52,6 +66,19 @@
   // Geometría
   var W = 0, H = 0, N = 26, S = 20, CX = 0, CY = 0, half = 12.5;
   var px, py, glow, baseR, level;
+  var inBand, bandPoly, edgePoly, K1, K2;
+
+  /* Coordenadas del logo: a crece del vértice izquierdo hacia el superior y b hacia el inferior.
+     En la rejilla, a = N-1-j y b = i. Devuelve el índice del punto. */
+  function at(a, b) { return b * N + (N - 1 - a); }
+
+  // Línea de nivel max(a, b) = m: el chevrón «>» de ese tamaño
+  function chevronPath(m) {
+    var pts = [];
+    for (var b = 0; b <= m; b++) pts.push(at(m, b));
+    for (var a = m - 1; a >= 0; a--) pts.push(at(a, m));
+    return pts;
+  }
 
   // Puntero (en coordenadas de rejilla) con relajación
   var pointer = { u: 0, v: 0, tu: 0, tv: 0, k: 0, tk: 0 };
@@ -69,12 +96,12 @@
 
     var target;
     if (W >= 960) {
-      N = 26; target = Math.min(W * 0.62, 1000); CX = W * 0.68; CY = H * 0.46;
+      N = 26; target = Math.min(W * 0.55, 900); CX = W * 0.705; CY = H * 0.45;
     } else if (W >= 600) {
       // Banda bajo el texto (la portada reserva 220 px de aire inferior)
-      N = 22; target = W * 0.8; CX = W * 0.5; CY = H - 250;
+      N = 22; target = W * 0.78; CX = W * 0.5; CY = H - 235;
     } else {
-      N = 18; target = W * 1.15; CX = W * 0.5; CY = H - 235;
+      N = 18; target = W * 0.94; CX = W * 0.5; CY = H - 225;
     }
     half = (N - 1) / 2;
     S = target / (2 * (N - 1) * COS);
@@ -83,13 +110,38 @@
     glow = new Float32Array(N * N);
     baseR = new Float32Array(N * N);
     level = new Uint8Array(N * N);
+    K1 = Math.round(CHEVRON_IN * (N - 1));
+    K2 = Math.round(CHEVRON_OUT * (N - 1));
+    inBand = new Uint8Array(N * N);
     for (var i = 0; i < N; i++) {
       for (var j = 0; j < N; j++) {
         var depth = (i + j) / (2 * (N - 1)); // 0 fondo, 1 frente
+        var m = Math.max(N - 1 - j, i);
         baseR[i * N + j] = 0.75 + depth * 0.95;
         level[i * N + j] = Math.round(depth * (LEVELS - 1));
+        inBand[i * N + j] = m >= K1 && m <= K2 ? 1 : 0;
       }
     }
+
+    // Contorno del chevrón relleno: línea exterior, borde inferior, línea interior y borde superior
+    bandPoly = chevronPath(K2);
+    for (var b1 = K2 - 1; b1 >= K1; b1--) bandPoly.push(at(0, b1));
+    bandPoly = bandPoly.concat(chevronPath(K1).slice(0, -1).reverse());
+    for (var a1 = K1; a1 < K2; a1++) bandPoly.push(at(a1, 0));
+
+    // Rombo exterior (el borde de la rejilla)
+    edgePoly = [];
+    for (var e = 0; e < N; e++) edgePoly.push(e);
+    for (e = 1; e < N; e++) edgePoly.push(e * N + N - 1);
+    for (e = N - 2; e >= 0; e--) edgePoly.push((N - 1) * N + e);
+    for (e = N - 2; e > 0; e--) edgePoly.push(e * N);
+  }
+
+  function tracePath(pts, close) {
+    ctx.beginPath();
+    ctx.moveTo(px[pts[0]], py[pts[0]]);
+    for (var p = 1; p < pts.length; p++) ctx.lineTo(px[pts[p]], py[pts[p]]);
+    if (close) ctx.closePath();
   }
 
   function spawnPulse(p, at) {
@@ -131,7 +183,7 @@
         }
         glow[k] = g;
         px[k] = CX + (u - v) * COS * S;
-        py[k] = CY + (u + v) * SIN * S - z * S * 0.9;
+        py[k] = CY + (u + v) * SIN * S - z * S * 0.7;
       }
     }
   }
@@ -169,16 +221,52 @@
     }
     ctx.stroke();
 
-    // Puntos sin brillo: un relleno por nivel de opacidad
-    for (var l = 0; l < LEVELS; l++) {
-      ctx.fillStyle = DOT_STYLES[l];
-      ctx.beginPath();
-      for (k = 0; k < total; k++) {
-        if (level[k] !== l || glow[k] > 0.02) continue;
-        ctx.moveTo(px[k] + baseR[k], py[k]);
-        ctx.arc(px[k], py[k], baseR[k], 0, TAU);
+    // Logotipo sobre la malla: rombo exterior, chevrón relleno y sus dos líneas
+    tracePath(edgePoly, true);
+    ctx.strokeStyle = EDGE_LINE;
+    ctx.stroke();
+    tracePath(bandPoly, true);
+    ctx.fillStyle = BAND_FILL;
+    ctx.fill();
+    ctx.lineWidth = 1.2;
+    ctx.strokeStyle = BAND_LINE;
+    tracePath(chevronPath(K1), false);
+    ctx.stroke();
+    tracePath(chevronPath(K2), false);
+    ctx.stroke();
+
+    // Eco: un chevrón tenue que avanza hacia la derecha, como la flecha del logo
+    if (!reduced) {
+      var phase = (t % ECHO_MS) / ECHO_MS;
+      var m = phase * (N - 1);
+      var m0 = Math.floor(m), frac = m - m0;
+      var env = Math.sin(Math.PI * phase) * 0.45;
+      ctx.lineWidth = 1;
+      if (m0 >= 1) {
+        ctx.strokeStyle = rgba(C_GREEN, env * (1 - frac));
+        tracePath(chevronPath(m0), false);
+        ctx.stroke();
       }
-      ctx.fill();
+      if (m0 + 1 <= N - 1) {
+        ctx.strokeStyle = rgba(C_GREEN, env * frac);
+        tracePath(chevronPath(m0 + 1), false);
+        ctx.stroke();
+      }
+    }
+
+    // Puntos sin brillo: un relleno por nivel de opacidad (los del chevrón, en verde)
+    for (var band = 0; band < 2; band++) {
+      var styles = band ? BAND_STYLES : DOT_STYLES;
+      for (var l = 0; l < LEVELS; l++) {
+        ctx.fillStyle = styles[l];
+        ctx.beginPath();
+        for (k = 0; k < total; k++) {
+          if (level[k] !== l || inBand[k] !== band || glow[k] > 0.02) continue;
+          ctx.moveTo(px[k] + baseR[k], py[k]);
+          ctx.arc(px[k], py[k], baseR[k], 0, TAU);
+        }
+        ctx.fill();
+      }
     }
 
     // Puntos iluminados por el puntero (pocos): uno a uno
