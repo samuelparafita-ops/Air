@@ -328,18 +328,19 @@ h2 {
 .hero-visual { position: absolute; inset: 0; z-index: -1; }
 .hero-field { width: 100%; height: 100%; }
 
+/* En móvil y tableta el campo ocupa una banda propia bajo el texto */
 .hero-visual::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(10, 14, 13, .94) 0%, rgba(10, 14, 13, .72) 48%, rgba(10, 14, 13, .25) 78%, rgba(10, 14, 13, .9) 100%);
+    linear-gradient(180deg, rgba(10, 14, 13, .96) 0%, rgba(10, 14, 13, .9) 58%, rgba(10, 14, 13, .15) 74%, rgba(10, 14, 13, .3) 90%, rgba(10, 14, 13, .95) 100%);
   pointer-events: none;
 }
 
-.hero-inner { padding-top: clamp(56px, 11vh, 136px); padding-bottom: 56px; }
+.hero-inner { padding-top: clamp(40px, 7vh, 112px); padding-bottom: 220px; }
 .hero-copy { max-width: 720px; }
-.hero-copy .label { margin-bottom: 28px; }
+.hero-copy .label { margin-bottom: 24px; }
 
 .hero h1 {
   font-weight: 300;
@@ -347,7 +348,7 @@ h2 {
   line-height: 1.02;
   letter-spacing: -0.025em;
   max-width: 15ch;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .hero-lead {
@@ -355,34 +356,46 @@ h2 {
   line-height: 1.6;
   color: var(--text-2);
   max-width: 52ch;
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
 .hero-note {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 24px;
-  font: 500 .92rem var(--f-display);
+  margin-top: 22px;
+  font: 500 .92rem/1.5 var(--f-display);
   color: var(--muted);
 }
 
 .hero-note::before {
   content: "";
+  display: inline-block;
+  vertical-align: middle;
   width: 6px;
   height: 6px;
+  margin: -2px 12px 0 2px;
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 0 4px rgba(74, 222, 128, .15);
+}
+
+/* Filete alineado con el contenido (no con el relleno lateral de .wrap) */
+.rule-top { position: relative; }
+
+.rule-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--gutter);
+  right: var(--gutter);
+  height: 1px;
+  background: var(--line);
 }
 
 .hero-foot {
   display: grid;
   gap: 12px;
   padding-block: 22px 28px;
-  border-top: 1px solid var(--line);
 }
 
 .hero-foot-title {
@@ -401,6 +414,8 @@ h2 {
 }
 
 @media (min-width: 960px) {
+  .hero-inner { padding-bottom: 48px; }
+
   .hero-visual::after {
     background:
       linear-gradient(90deg, rgba(10, 14, 13, .96) 0%, rgba(10, 14, 13, .82) 32%, rgba(10, 14, 13, 0) 66%),
@@ -935,7 +950,6 @@ h2 {
 .footer-bottom {
   margin-top: 48px;
   padding-top: 20px;
-  border-top: 1px solid var(--line);
   font-size: .85rem;
 }
 
