@@ -1,7 +1,0 @@
-/* Sin JavaScript: se muestran todos los paneles y se ocultan los controles que no funcionarían. */
-[role="tablist"],
-.menu-toggle { display: none !important; }
-
-[role="tabpanel"][hidden] { display: block !important; margin-top: 48px; }
-
-.nav-cta { display: inline-flex !important; }
