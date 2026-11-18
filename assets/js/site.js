@@ -87,6 +87,44 @@
     }
   }
 
+  /* Menú: marca la sección que se está leyendo (aria-current), en escritorio y en móvil */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a[href^="#"], #mobile-menu a[href^="#"]:not(.btn)'));
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    var setCurrent = function (id) {
+      navLinks.forEach(function (a) {
+        if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    };
+    var ids = navLinks.map(function (a) { return a.getAttribute('href').slice(1); })
+      .filter(function (id, i, all) { return all.indexOf(id) === i; });
+    var watched = ids.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) setCurrent(entry.target.id);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    watched.forEach(function (el) { spy.observe(el); });
+    // Por encima de la primera sección enlazada no se marca nada
+    var hero = document.getElementById('inicio');
+    if (hero) {
+      new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) setCurrent('');
+      }, { rootMargin: '-45% 0px -50% 0px' }).observe(hero);
+    }
+  }
+
+  /* Pestañas de IA en móvil: el degradado que indica «hay más» desaparece al llegar al final */
+  var aiTabs = document.querySelector('.ai-tabs');
+  if (aiTabs) {
+    var checkEnd = function () {
+      aiTabs.classList.toggle('is-end', aiTabs.scrollLeft + aiTabs.clientWidth >= aiTabs.scrollWidth - 4);
+    };
+    aiTabs.addEventListener('scroll', checkEnd, { passive: true });
+    window.addEventListener('resize', checkEnd, { passive: true });
+    window.addEventListener('load', checkEnd, { once: true });
+  }
+
   /* Año del pie */
   var year = document.getElementById('year');
   if (year) year.textContent = String(new Date().getFullYear());
