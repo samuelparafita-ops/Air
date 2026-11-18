@@ -426,9 +426,16 @@ h2 {
 @media (min-width: 960px) {
   .hero-inner { padding-bottom: 48px; }
 
+  /* El campo pasa por detrás del texto: un halo oscuro muy suave lo separa de la malla */
+  .hero-copy h1,
+  .hero-lead,
+  .hero-note { text-shadow: 0 0 18px rgba(10, 14, 13, .9), 0 0 4px rgba(10, 14, 13, .7); }
+  .hero .btn--ghost { background: rgba(10, 14, 13, .7); }
+  .hero .btn--ghost:hover { background: rgba(21, 28, 25, .9); }
+
   .hero-visual::after {
     background:
-      linear-gradient(90deg, rgba(10, 14, 13, .96) 0%, rgba(10, 14, 13, .8) 30%, rgba(10, 14, 13, 0) 56%),
+      linear-gradient(90deg, rgba(10, 14, 13, .86) 0%, rgba(10, 14, 13, .6) 28%, rgba(10, 14, 13, .22) 48%, rgba(10, 14, 13, 0) 64%),
       linear-gradient(0deg, rgba(10, 14, 13, .95) 0%, rgba(10, 14, 13, 0) 22%);
   }
 

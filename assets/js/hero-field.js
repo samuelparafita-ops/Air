@@ -96,7 +96,8 @@
 
     var target;
     if (W >= 960) {
-      N = 26; target = Math.min(W * 0.55, 900); CX = W * 0.705; CY = H * 0.45;
+      // Grande y centrado: pasa por detrás del titular
+      N = 32; target = Math.min(W * 0.9, 1500); CX = W * 0.55; CY = H * 0.47;
     } else if (W >= 600) {
       // Banda bajo el texto (la portada reserva 220 px de aire inferior)
       N = 22; target = W * 0.78; CX = W * 0.5; CY = H - 235;
