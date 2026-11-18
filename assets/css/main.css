@@ -1553,6 +1553,71 @@ h2 {
   .footer-grid { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr); }
 }
 
+/* ── Páginas legales ── */
+.legal {
+  padding: clamp(56px, 8vw, 96px) 0 clamp(72px, 10vw, 120px);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.legal-doc { max-width: calc(820px + var(--gutter) * 2); }
+.legal .label { margin-bottom: 18px; color: var(--ink-muted); }
+.legal .label::before { background: var(--green-dark); }
+
+.legal h1 {
+  margin-bottom: 16px;
+  font-size: clamp(2.2rem, 5vw, 3.25rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.legal .intro { color: var(--ink-muted); font-size: 1.12rem; }
+.legal .updated { margin: 10px 0 40px; color: var(--ink-muted); font: 400 .88rem var(--f-display); }
+.legal section { padding: 28px 0; border-top: 1px solid var(--paper-line); }
+.legal h2 { max-width: none; margin-bottom: 12px; font-size: 1.35rem; line-height: 1.25; }
+
+.legal section p + p,
+.legal section p + ul,
+.legal section ul + p,
+.legal section table + p { margin-top: 12px; }
+
+.legal section ul { display: grid; gap: 6px; padding-left: 1.2em; list-style: disc; }
+.legal a { color: var(--green-dark); }
+.legal strong { font-weight: 600; }
+
+.legal table {
+  width: 100%;
+  margin-top: 14px;
+  border-collapse: collapse;
+  background: var(--paper-card);
+  border: 1px solid var(--paper-line);
+  font: 400 .95rem/1.5 var(--f-display);
+}
+
+.legal th,
+.legal td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--paper-line);
+  overflow-wrap: anywhere;
+}
+
+.legal th { font-weight: 600; }
+.legal code { font: 400 .85em var(--f-mono); }
+
+/* ── Página no encontrada ── */
+.not-found {
+  min-height: calc(100svh - var(--header-h) - 260px);
+  display: grid;
+  align-content: center;
+  padding-block: 96px;
+}
+
+.not-found h1 { margin: 20px 0 16px; font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 300; }
+.not-found .lead { margin-bottom: 32px; }
+
 /* ── Aviso de cookies ── */
 .cookie {
   position: fixed;
