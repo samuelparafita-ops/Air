@@ -613,6 +613,7 @@ h2 {
   padding: 2px var(--gutter) 6px;
   overflow-x: auto;
   scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
   scrollbar-width: none;
 }
 
@@ -766,16 +767,14 @@ h2 {
 
 .js .demo-stage .fade { opacity: 0; }
 
-/* En escritorio todas las demos miden lo mismo y el contenido se centra en el hueco */
 @media (min-width: 768px) {
-  .demo-stage {
-    display: flex;
-    flex-direction: column;
-    min-height: 470px;
-    padding: 20px 26px 26px;
-  }
-
+  .demo-stage { padding: 20px 26px 26px; }
   .demo-title { padding-right: 150px; margin-bottom: 18px; }
+}
+
+/* En escritorio todas las demos miden lo mismo y el contenido se centra en el hueco */
+@media (min-width: 960px) {
+  .demo-stage { display: flex; flex-direction: column; min-height: 470px; }
   .demo-stage > :last-child { margin-block: auto; }
 }
 
