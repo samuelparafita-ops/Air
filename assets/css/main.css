@@ -371,23 +371,6 @@ h2 {
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
-.hero-note {
-  margin-top: 22px;
-  font: 500 .92rem/1.5 var(--f-display);
-  color: var(--muted);
-}
-
-.hero-note::before {
-  content: "";
-  display: inline-block;
-  vertical-align: middle;
-  width: 6px;
-  height: 6px;
-  margin: -2px 12px 0 2px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 0 4px rgba(74, 222, 128, .15);
-}
 
 /* Filete alineado con el contenido (no con el relleno lateral de .wrap) */
 .rule-top { position: relative; }
@@ -428,8 +411,7 @@ h2 {
 
   /* El campo pasa por detrás del texto: un halo oscuro muy suave lo separa de la malla */
   .hero-copy h1,
-  .hero-lead,
-  .hero-note { text-shadow: 0 0 18px rgba(10, 14, 13, .9), 0 0 4px rgba(10, 14, 13, .7); }
+  .hero-lead { text-shadow: 0 0 18px rgba(10, 14, 13, .9), 0 0 4px rgba(10, 14, 13, .7); }
   .hero .btn--ghost { background: rgba(10, 14, 13, .7); }
   .hero .btn--ghost:hover { background: rgba(21, 28, 25, .9); }
 
