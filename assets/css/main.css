@@ -892,10 +892,10 @@ h2 {
 }
 
 /* Visión artificial */
-/* La foto y la capa SVG comparten proporción (6240 × 2886), así que las etiquetas se colocan en % */
+/* La foto y la capa SVG comparten proporción (1264 × 585), así que las etiquetas se colocan en % */
 .vision-frame {
   position: relative;
-  aspect-ratio: 6240 / 2886;
+  aspect-ratio: 1264 / 585;
   overflow: hidden;
   background: #2A2E2C;
   border-radius: 8px;
@@ -943,7 +943,7 @@ h2 {
 .det-label--2 { left: 11.5%; top: 12.252%; }
 .det-label--3 { left: 29.833%; top: 19.459%; }
 .det-label--4 { left: 49.167%; top: 32.072%; }
-.det-label--5 { left: 70.833%; top: 36.937%; }
+.det-label--5 { left: 70.5%; top: 36.577%; }
 
 /* En móvil las cajas son estrechas: solo se rotula el defecto (el color de cada caja ya lo dice todo) */
 @media (max-width: 599px) {
