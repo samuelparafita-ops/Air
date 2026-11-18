@@ -6,11 +6,21 @@
   var root = document.documentElement;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Las secciones usan content-visibility: auto (carga más rápida). Antes de saltar a un ancla se
+     pintan todas, para que el navegador calcule la posición con las alturas reales. */
+  var renderAll = function () { root.classList.add('cv-all'); };
+  if (window.location.hash) renderAll();
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest && e.target.closest('a[href^="#"]');
+    if (link && link.getAttribute('href').length > 1) renderAll();
+  }, true);
+
   /* Cabecera: filete al hacer scroll */
   var header = document.getElementById('header');
   if (header) {
     var onScroll = function () { header.classList.toggle('is-scrolled', window.scrollY > 8); };
-    onScroll();
+    // La primera lectura espera a la carga: leer el scroll antes fuerza una maquetación completa.
+    window.addEventListener('load', function () { window.requestAnimationFrame(onScroll); }, { once: true });
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
@@ -71,7 +81,7 @@
       var request = function () {
         if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
       };
-      update();
+      window.addEventListener('load', request, { once: true });
       window.addEventListener('scroll', request, { passive: true });
       window.addEventListener('resize', request, { passive: true });
     }
