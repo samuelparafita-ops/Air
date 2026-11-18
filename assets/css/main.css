@@ -17,6 +17,7 @@
 
 /* ── Tokens ── */
 :root {
+  color-scheme: dark;
   --bg: #0A0E0D;
   --surface: #0F1513;
   --surface-2: #151C19;
@@ -191,7 +192,7 @@ h2 {
 /* ── Cabecera ── */
 .site-header {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 50;
   background: rgba(10, 14, 13, .72);
   border-bottom: 1px solid transparent;
