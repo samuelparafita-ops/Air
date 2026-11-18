@@ -99,10 +99,11 @@
       // Grande y centrado: pasa por detrás del titular
       N = 32; target = Math.min(W * 0.9, 1500); CX = W * 0.55; CY = H * 0.47;
     } else if (W >= 600) {
-      // Banda bajo el texto (la portada reserva 220 px de aire inferior)
-      N = 22; target = W * 0.78; CX = W * 0.5; CY = H - 235;
+      // Tableta: de fondo, por detrás del titular
+      N = 26; target = W * 1.25; CX = W * 0.56; CY = H * 0.55;
     } else {
-      N = 18; target = W * 0.94; CX = W * 0.5; CY = H - 225;
+      // Móvil: de fondo, más ancho que la pantalla para que el chevrón quede tras el texto
+      N = 22; target = W * 1.6; CX = W * 0.58; CY = H * 0.55;
     }
     half = (N - 1) / 2;
     S = target / (2 * (N - 1) * COS);
