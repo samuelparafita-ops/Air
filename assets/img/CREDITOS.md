@@ -2,6 +2,6 @@
 
 | Archivo | Fuente | Autor | Licencia |
 |---|---|---|---|
-| `inspeccion-800.*`, `inspeccion-1400.*` | https://unsplash.com/photos/a-row-of-screws-sitting-on-top-of-a-white-surface-oxEPSdtSZoM (recortada) | gomi (https://unsplash.com/@gomi_design) | Unsplash License (https://unsplash.com/license): uso libre, sin atribución obligatoria |
+| `latas-800.*`, `latas-1400.*` | Imagen aportada por el equipo de AIR (recortada) | Pendiente de anotar | Pendiente de anotar |
 
 Las cajas de detección que se dibujan sobre la foto son ilustrativas (datos de ejemplo).
