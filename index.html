@@ -266,7 +266,29 @@
               <div class="demo demo--nlp" data-demo="nlp" data-state="idle" role="img"
                 aria-label="Ejemplo animado: un correo entrante en el que la IA marca el cliente, la fecha, el importe y la referencia, y lo clasifica como pedido urgente.">
                 <p class="demo-tag">Datos de ejemplo</p>
-                <div class="demo-stage" aria-hidden="true"></div>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Bandeja de entrada <span>· análisis automático</span></p>
+                  <div class="nlp">
+                    <article class="mail">
+                      <p class="mail-meta"><span>De</span> compras@cliente-ejemplo.es</p>
+                      <p class="mail-meta"><span>Asunto</span> Pedido urgente ref. PX-2048</p>
+                      <p class="mail-body">Buenos días: necesitamos <span class="ent" data-kind="cantidad">400 unidades</span>
+                        del <span class="ent" data-kind="producto">soporte X200</span> antes del <span class="ent"
+                          data-kind="fecha">viernes 27</span>. El importe acordado es de <span class="ent"
+                          data-kind="importe">3.180,00 €</span>. Un saludo, <span class="ent"
+                          data-kind="cliente">Industrias Ejemplo</span>.</p>
+                    </article>
+                    <div class="nlp-out">
+                      <p class="out-title">Resultado</p>
+                      <dl class="nlp-tags">
+                        <div><dt>Intención</dt><dd>Pedido de cliente</dd></div>
+                        <div><dt>Urgencia</dt><dd class="is-hot">Alta</dd></div>
+                        <div><dt>Sentimiento</dt><dd>Neutro</dd></div>
+                        <div><dt>Destino</dt><dd>ERP · Pedidos</dd></div>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -285,7 +307,38 @@
               <div class="demo demo--rag" data-demo="rag" data-state="idle" role="img"
                 aria-label="Ejemplo animado: una pregunta sobre la garantía de un producto, los fragmentos de documentación interna que se recuperan y la respuesta con sus fuentes citadas.">
                 <p class="demo-tag">Datos de ejemplo</p>
-                <div class="demo-stage" aria-hidden="true"></div>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Asistente interno <span>· documentación técnica</span></p>
+                  <div class="rag">
+                    <div class="rag-q">
+                      <span class="out-title">Pregunta</span>
+                      <p class="rag-q-text" data-text="¿Cuál es el plazo de garantía del modelo X200?"><span
+                          class="caret"></span></p>
+                    </div>
+                    <ol class="rag-docs">
+                      <li><span class="doc-src">[1] Manual X200 · p. 14</span><span class="doc-score">0,91</span>
+                        <p>«…el equipo X200 dispone de una garantía de 24 meses desde la fecha de entrega…»</p>
+                      </li>
+                      <li><span class="doc-src">[2] Condiciones de venta · §4.2</span><span class="doc-score">0,87</span>
+                        <p>«…la garantía se amplía a 36 meses con contrato de mantenimiento…»</p>
+                      </li>
+                      <li class="is-low"><span class="doc-src">FAQ de soporte</span><span class="doc-score">0,62</span>
+                        <p>«…para tramitar una garantía, contacta con el servicio técnico…»</p>
+                      </li>
+                    </ol>
+                    <div class="rag-a">
+                      <span class="out-title">Respuesta</span>
+                      <p class="rag-a-text"><span class="w">El</span> <span class="w">modelo</span> <span
+                          class="w">X200</span> <span class="w">tiene</span> <span class="w">24</span> <span
+                          class="w">meses</span> <span class="w">de</span> <span class="w">garantía</span> <span
+                          class="w">desde</span> <span class="w">la</span> <span class="w">entrega</span><sup
+                          class="w">1</sup><span class="w">,</span> <span class="w">ampliables</span> <span
+                          class="w">a</span> <span class="w">36</span> <span class="w">meses</span> <span
+                          class="w">con</span> <span class="w">contrato</span> <span class="w">de</span> <span
+                          class="w">mantenimiento</span><sup class="w">2</sup><span class="w">.</span></p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -305,7 +358,49 @@
               <div class="demo demo--vision" data-demo="vision" data-state="idle" role="img"
                 aria-label="Ejemplo animado: una foto de una línea de producción en la que la visión artificial detecta las piezas y marca una como defectuosa.">
                 <p class="demo-tag">Datos de ejemplo</p>
-                <div class="demo-stage" aria-hidden="true"></div>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Inspección de calidad <span>· línea 2</span></p>
+                  <div class="vision">
+                    <div class="vision-frame">
+                      <picture>
+                        <source type="image/avif"
+                          srcset="assets/img/vision-800.avif 800w, assets/img/vision-1400.avif 1400w"
+                          sizes="(min-width: 960px) 860px, 100vw">
+                        <source type="image/webp"
+                          srcset="assets/img/vision-800.webp 800w, assets/img/vision-1400.webp 1400w"
+                          sizes="(min-width: 960px) 860px, 100vw">
+                        <img src="assets/img/vision-800.jpg"
+                          srcset="assets/img/vision-800.jpg 800w, assets/img/vision-1400.jpg 1400w"
+                          sizes="(min-width: 960px) 860px, 100vw" width="1400" height="788" alt="" loading="lazy"
+                          decoding="async">
+                      </picture>
+                      <svg class="vision-boxes" viewBox="0 0 2000 1125" preserveAspectRatio="xMidYMid slice">
+                        <g class="det"><rect x="400" y="322" width="206" height="92" /></g>
+                        <g class="det"><rect x="378" y="390" width="236" height="64" /></g>
+                        <g class="det"><rect x="362" y="436" width="262" height="66" /></g>
+                        <g class="det"><rect x="345" y="488" width="285" height="78" /></g>
+                        <g class="det"><rect x="323" y="550" width="318" height="96" /></g>
+                        <g class="det is-labeled"><rect x="296" y="632" width="366" height="268" /><rect
+                            class="det-tag" x="296" y="590" width="206" height="42" /><text x="310"
+                            y="620">pieza · 0,98</text></g>
+                        <g class="det"><rect x="815" y="314" width="198" height="98" /></g>
+                        <g class="det"><rect x="895" y="388" width="230" height="66" /></g>
+                        <g class="det is-bad is-labeled"><rect x="930" y="440" width="278" height="68" /><rect
+                            class="det-tag" x="930" y="398" width="232" height="42" /><text x="944"
+                            y="428">defecto · 0,91</text></g>
+                        <g class="det"><rect x="972" y="488" width="285" height="76" /></g>
+                        <g class="det"><rect x="1030" y="544" width="318" height="98" /></g>
+                        <g class="det is-labeled"><rect x="1098" y="618" width="366" height="264" /><rect
+                            class="det-tag" x="1098" y="576" width="206" height="42" /><text x="1112"
+                            y="606">pieza · 0,97</text></g>
+                      </svg>
+                      <span class="scanline"></span>
+                    </div>
+                    <p class="vision-stats"><span>Piezas <b class="v-count">0</b></span><span>Defectos <b
+                          class="v-bad">0</b></span><span class="v-model">Detección de objetos · 32 ms por imagen</span>
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -326,7 +421,31 @@
               <div class="demo demo--agentes" data-demo="agentes" data-state="idle" role="img"
                 aria-label="Ejemplo animado: un agente que recibe un correo, lo clasifica, lo registra en el ERP, pide aprobación a una persona y envía el aviso.">
                 <p class="demo-tag">Datos de ejemplo</p>
-                <div class="demo-stage" aria-hidden="true"></div>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Agente de pedidos <span>· ejecución</span></p>
+                  <div class="flow">
+                    <ol class="flow-nodes">
+                      <li class="node"><span class="node-dot"></span><span class="node-name">Correo</span><span
+                          class="node-sub">Pedido recibido</span></li>
+                      <li class="node"><span class="node-dot"></span><span class="node-name">Clasificar</span><span
+                          class="node-sub">Pedido · urgente</span></li>
+                      <li class="node"><span class="node-dot"></span><span class="node-name">ERP</span><span
+                          class="node-sub">Pedido P-5531 creado</span></li>
+                      <li class="node node--human"><span class="node-dot"></span><span
+                          class="node-name">Aprobación</span><span class="node-sub"><span class="sub-wait">Supervisión
+                            humana</span><span class="sub-ok">Aprobado por el responsable</span></span></li>
+                      <li class="node"><span class="node-dot"></span><span class="node-name">Aviso</span><span
+                          class="node-sub">Cliente informado</span></li>
+                    </ol>
+                    <ol class="flow-log">
+                      <li><span>09:14:02</span> correo recibido de compras@cliente-ejemplo.es</li>
+                      <li><span>09:14:03</span> intención: pedido · urgencia: alta</li>
+                      <li><span>09:14:05</span> erp.crear_pedido(cliente=C-118, líneas=3)</li>
+                      <li><span>09:14:05</span> importe superior a 3.000 € · se solicita aprobación</li>
+                      <li><span>09:21:40</span> aprobado · correo de confirmación enviado</li>
+                    </ol>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -345,7 +464,42 @@
               <div class="demo demo--prediccion" data-demo="prediccion" data-state="idle" role="img"
                 aria-label="Ejemplo animado: un gráfico con dos años de ventas y la previsión de los próximos seis meses con su margen de confianza.">
                 <p class="demo-tag">Datos de ejemplo</p>
-                <div class="demo-stage" aria-hidden="true"></div>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Previsión de demanda <span>· referencia X200, unidades al mes</span></p>
+                  <div class="predict">
+                    <svg class="chart" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
+                      <line class="ch-grid" x1="48" y1="232" x2="780" y2="232" /><text class="ch-axis" x="40" y="236"
+                        text-anchor="end">100</text>
+                      <line class="ch-grid" x1="48" y1="162" x2="780" y2="162" /><text class="ch-axis" x="40" y="166"
+                        text-anchor="end">150</text>
+                      <line class="ch-grid" x1="48" y1="92" x2="780" y2="92" /><text class="ch-axis" x="40" y="96"
+                        text-anchor="end">200</text>
+                      <text class="ch-axis" x="48" y="290" text-anchor="start">ene 2025</text>
+                      <text class="ch-axis" x="350.9" y="290" text-anchor="middle">ene 2026</text>
+                      <text class="ch-axis" x="653.8" y="290" text-anchor="middle">ene 2027</text>
+                      <line class="ch-now" x1="628.6" y1="40" x2="628.6" y2="268" /><text class="ch-axis" x="622.6"
+                        y="48" text-anchor="end">hoy</text>
+                      <g class="ch-hist">
+                        <path class="ch-line"
+                          d="M48 226.5 L73.2 221.9 L98.5 195 L123.7 172.4 L149 167.8 L174.2 166.2 L199.4 153.2 L224.7 165.6 L249.9 183.6 L275.2 183.3 L300.4 201.3 L325.7 198.1 L350.9 200.7 L376.1 175.2 L401.4 160.9 L426.6 89.2 L451.9 130.8 L477.1 115.2 L502.3 126.1 L527.6 128.7 L552.8 135.4 L578.1 160.3 L603.3 160.1 L628.6 165.4" />
+                      </g>
+                      <g class="ch-anom">
+                        <circle cx="426.6" cy="89.2" r="5" />
+                        <circle class="ch-anom-ring" cx="426.6" cy="89.2" r="12" />
+                        <text class="ch-note" x="442.6" y="78">Anomalía detectada</text>
+                      </g>
+                      <g class="ch-fc">
+                        <path class="ch-band" d="M628.6 165.4 L653.8 144.9 L679 127 L704.3 105 L729.5 83 L754.8 65.2 L780 54.5 L780 113.3 L754.8 117 L729.5 127.8 L704.3 142.8 L679 157.8 L653.8 168.7 L628.6 165.4 Z" />
+                        <path class="ch-fc-line" d="M628.6 165.4 L653.8 156.8 L679 142.4 L704.3 123.9 L729.5 105.4 L754.8 91.1 L780 83.9" />
+                      </g>
+                    </svg>
+                    <dl class="predict-stats">
+                      <div><dt>Próximo trimestre</dt><dd>+18 %</dd></div>
+                      <div><dt>Error medio del modelo</dt><dd>4,2 %</dd></div>
+                      <div><dt>Stock recomendado</dt><dd>620 uds.</dd></div>
+                    </dl>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -364,7 +518,56 @@
               <div class="demo demo--documentos" data-demo="documentos" data-state="idle" role="img"
                 aria-label="Ejemplo animado: un albarán que se lee automáticamente y aparece registrado como una fila nueva en el ERP.">
                 <p class="demo-tag">Datos de ejemplo</p>
-                <div class="demo-stage" aria-hidden="true"></div>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Entrada de documentos <span>· llega por email en PDF</span></p>
+                  <div class="docs">
+                    <article class="paper">
+                      <span class="paper-scan"></span>
+                      <div class="paper-head"><b>ALBARÁN</b><span data-f>N.º A-2611</span></div>
+                      <dl class="paper-meta">
+                        <dt>Proveedor</dt>
+                        <dd><span data-f>Tornillería Industrial (ej.)</span></dd>
+                        <dt>Fecha</dt>
+                        <dd><span data-f>14/10/2026</span></dd>
+                      </dl>
+                      <table class="paper-lines">
+                        <thead>
+                          <tr><th>Ref.</th><th>Descripción</th><th class="num">Cant.</th></tr>
+                        </thead>
+                        <tbody data-f>
+                          <tr><td>M8-40</td><td>Tornillo DIN 933</td><td class="num">500</td></tr>
+                          <tr><td>T-M8</td><td>Tuerca autoblocante</td><td class="num">500</td></tr>
+                          <tr><td>AR-8</td><td>Arandela plana</td><td class="num">1.000</td></tr>
+                        </tbody>
+                      </table>
+                      <div class="paper-total"><span>Total</span><span data-f>286,40 €</span></div>
+                    </article>
+                    <div class="erp">
+                      <p class="erp-bar">ERP <span>· entradas de material</span></p>
+                      <table class="erp-table">
+                        <thead>
+                          <tr><th>Fecha</th><th>Doc.</th><th>Proveedor</th><th class="num">Importe</th><th>Estado</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr class="erp-new">
+                            <td data-v="14/10/26"></td><td data-v="A-2611"></td><td data-v="Tornillería (ej.)"></td>
+                            <td class="num" data-v="286,40 €"></td>
+                            <td><span class="chip"><span class="c-wait">Leyendo…</span><span
+                                  class="c-ok">Registrado</span></span></td>
+                          </tr>
+                          <tr>
+                            <td>13/10/26</td><td>F-0981</td><td>Pinturas (ej.)</td><td class="num">1.204,00 €</td>
+                            <td><span class="chip is-ok"><span class="c-ok">Registrado</span></span></td>
+                          </tr>
+                          <tr>
+                            <td>13/10/26</td><td>P-5502</td><td>Aceros (ej.)</td><td class="num">3.870,15 €</td>
+                            <td><span class="chip is-ok"><span class="c-ok">Registrado</span></span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -382,7 +585,36 @@
               <div class="demo demo--voz" data-demo="voz" data-state="idle" role="img"
                 aria-label="Ejemplo animado: la grabación de una reunión que se transcribe y de la que se extraen las tareas con su responsable.">
                 <p class="demo-tag">Datos de ejemplo</p>
-                <div class="demo-stage" aria-hidden="true"></div>
+                <div class="demo-stage" aria-hidden="true">
+                  <p class="demo-title">Reunión de seguimiento <span>· 14 min</span></p>
+                  <div class="voice">
+                    <div class="wave-wrap">
+                      <svg class="wave" viewBox="0 0 480 60" preserveAspectRatio="none"><rect x="0" y="27" width="3.5" height="6" rx="1.5"/><rect x="7.5" y="18.5" width="3.5" height="23" rx="1.5"/><rect x="15" y="26" width="3.5" height="8" rx="1.5"/><rect x="22.5" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="30" y="24.5" width="3.5" height="11" rx="1.5"/><rect x="37.5" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="45" y="19.5" width="3.5" height="21" rx="1.5"/><rect x="52.5" y="8.5" width="3.5" height="43" rx="1.5"/><rect x="60" y="15" width="3.5" height="30" rx="1.5"/><rect x="67.5" y="20.5" width="3.5" height="19" rx="1.5"/><rect x="75" y="14.5" width="3.5" height="31" rx="1.5"/><rect x="82.5" y="14" width="3.5" height="32" rx="1.5"/><rect x="90" y="12" width="3.5" height="36" rx="1.5"/><rect x="97.5" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="105" y="18" width="3.5" height="24" rx="1.5"/><rect x="112.5" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="120" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="127.5" y="25" width="3.5" height="10" rx="1.5"/><rect x="135" y="24" width="3.5" height="12" rx="1.5"/><rect x="142.5" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="150" y="11.5" width="3.5" height="37" rx="1.5"/><rect x="157.5" y="11.5" width="3.5" height="37" rx="1.5"/><rect x="165" y="25" width="3.5" height="10" rx="1.5"/><rect x="172.5" y="15" width="3.5" height="30" rx="1.5"/><rect x="180" y="14" width="3.5" height="32" rx="1.5"/><rect x="187.5" y="10.5" width="3.5" height="39" rx="1.5"/><rect x="195" y="18" width="3.5" height="24" rx="1.5"/><rect x="202.5" y="19.5" width="3.5" height="21" rx="1.5"/><rect x="210" y="19.5" width="3.5" height="21" rx="1.5"/><rect x="217.5" y="26" width="3.5" height="8" rx="1.5"/><rect x="225" y="25.5" width="3.5" height="9" rx="1.5"/><rect x="232.5" y="23.5" width="3.5" height="13" rx="1.5"/><rect x="240" y="25" width="3.5" height="10" rx="1.5"/><rect x="247.5" y="15.5" width="3.5" height="29" rx="1.5"/><rect x="255" y="10" width="3.5" height="40" rx="1.5"/><rect x="262.5" y="24.5" width="3.5" height="11" rx="1.5"/><rect x="270" y="16.5" width="3.5" height="27" rx="1.5"/><rect x="277.5" y="14.5" width="3.5" height="31" rx="1.5"/><rect x="285" y="10.5" width="3.5" height="39" rx="1.5"/><rect x="292.5" y="14" width="3.5" height="32" rx="1.5"/><rect x="300" y="22.5" width="3.5" height="15" rx="1.5"/><rect x="307.5" y="17" width="3.5" height="26" rx="1.5"/><rect x="315" y="25.5" width="3.5" height="9" rx="1.5"/><rect x="322.5" y="25.5" width="3.5" height="9" rx="1.5"/><rect x="330" y="23" width="3.5" height="14" rx="1.5"/><rect x="337.5" y="26.5" width="3.5" height="7" rx="1.5"/><rect x="345" y="20" width="3.5" height="20" rx="1.5"/><rect x="352.5" y="10" width="3.5" height="40" rx="1.5"/><rect x="360" y="20" width="3.5" height="20" rx="1.5"/><rect x="367.5" y="19" width="3.5" height="22" rx="1.5"/><rect x="375" y="15.5" width="3.5" height="29" rx="1.5"/><rect x="382.5" y="11" width="3.5" height="38" rx="1.5"/><rect x="390" y="10.5" width="3.5" height="39" rx="1.5"/><rect x="397.5" y="26.5" width="3.5" height="7" rx="1.5"/><rect x="405" y="15.5" width="3.5" height="29" rx="1.5"/><rect x="412.5" y="22" width="3.5" height="16" rx="1.5"/><rect x="420" y="24.5" width="3.5" height="11" rx="1.5"/><rect x="427.5" y="22" width="3.5" height="16" rx="1.5"/><rect x="435" y="27" width="3.5" height="6" rx="1.5"/><rect x="442.5" y="24" width="3.5" height="12" rx="1.5"/><rect x="450" y="12.5" width="3.5" height="35" rx="1.5"/><rect x="457.5" y="16.5" width="3.5" height="27" rx="1.5"/><rect x="465" y="22" width="3.5" height="16" rx="1.5"/><rect x="472.5" y="16" width="3.5" height="28" rx="1.5"/></svg>
+                      <span class="wave-progress"></span>
+                    </div>
+                    <div class="voice-body">
+                      <ol class="transcript">
+                        <li><span class="spk">Ana</span><span class="ts">00:42</span>
+                          <p>Necesitamos cerrar el presupuesto de la línea 3 antes del jueves.</p>
+                        </li>
+                        <li><span class="spk">Marcos</span><span class="ts">01:15</span>
+                          <p>Yo preparo la comparativa de proveedores y la envío mañana.</p>
+                        </li>
+                        <li><span class="spk">Ana</span><span class="ts">01:38</span>
+                          <p>Perfecto. Revisamos los plazos el lunes.</p>
+                        </li>
+                      </ol>
+                      <div class="voice-tasks">
+                        <p class="out-title">Tareas detectadas</p>
+                        <ul>
+                          <li><b>Cerrar presupuesto de la línea 3</b><span>Ana · jueves</span></li>
+                          <li><b>Enviar comparativa de proveedores</b><span>Marcos · mañana</span></li>
+                          <li><b>Revisar plazos</b><span>Equipo · lunes</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -613,6 +845,7 @@
   <script defer src="assets/js/site.js"></script>
   <script defer src="assets/js/tabs.js"></script>
   <script defer src="assets/js/hero-field.js"></script>
+  <script defer src="assets/js/ai-demos.js"></script>
 </body>
 
 </html>
