@@ -1404,7 +1404,6 @@ h2 {
 .contact-list dd { font: 400 1.08rem/1.5 var(--f-display); color: var(--text); }
 .contact-list a { text-decoration: none; border-bottom: 1px solid var(--line-strong); transition: border-color .2s ease, color .2s ease; }
 .contact-list a:hover { color: var(--green); border-color: var(--green); }
-.contact-person { margin-left: 8px; color: var(--muted); font-size: .95rem; }
 
 @media (min-width: 560px) {
   .contact-list > div { grid-template-columns: 120px minmax(0, 1fr); gap: 16px; align-items: baseline; }
