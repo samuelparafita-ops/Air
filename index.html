@@ -558,47 +558,62 @@
                 <div class="demo-stage" aria-hidden="true">
                   <p class="demo-title">Entrada de documentos <span>· llega por email en PDF</span></p>
                   <div class="docs">
-                    <article class="paper">
-                      <span class="paper-scan"></span>
-                      <div class="paper-head"><b>ALBARÁN</b><span data-f>N.º A-2611</span></div>
-                      <dl class="paper-meta">
-                        <dt>Proveedor</dt>
-                        <dd><span data-f>Tornillería Industrial (ej.)</span></dd>
-                        <dt>Fecha</dt>
-                        <dd><span data-f>14/10/2026</span></dd>
+                    <article class="albaran">
+                      <header class="alb-head">
+                        <div class="alb-from">
+                          <b data-f>Suministros Industriales Arnela, S.L.</b>
+                          <span>Av. de la Industria, 14 · Nave 3</span>
+                          <span>Parque Empresarial Norte, parcela 12</span>
+                        </div>
+                        <div class="alb-title">
+                          <b>ALBARÁN</b>
+                          <dl>
+                            <dt>Número</dt><dd><span data-f>A-2611</span></dd>
+                            <dt>Fecha</dt><dd><span data-f>14/10/2026</span></dd>
+                            <dt>Su pedido</dt><dd><span data-f>P-5502</span></dd>
+                          </dl>
+                        </div>
+                      </header>
+                      <p class="alb-to"><span>Cliente</span> Mecanizados Eira, S.L. · Entrega en almacén</p>
+                      <div class="alb-lines" data-f>
+                        <table>
+                          <thead>
+                            <tr><th>Código</th><th>Descripción</th><th class="num">Cant.</th><th class="num alb-price">Precio</th><th class="num">Importe</th></tr>
+                          </thead>
+                          <tbody>
+                            <tr><td>M8-40</td><td>Tornillo hexagonal DIN 933 M8×40</td><td class="num">500</td><td class="num alb-price">0,18</td><td class="num">90,00</td></tr>
+                            <tr><td>T-M8</td><td>Tuerca autoblocante DIN 985 M8</td><td class="num">500</td><td class="num alb-price">0,09</td><td class="num">45,00</td></tr>
+                            <tr><td>AR-8</td><td>Arandela plana DIN 125 M8</td><td class="num">1.000</td><td class="num alb-price">0,03</td><td class="num">30,00</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <dl class="alb-totals">
+                        <dt>Base imponible</dt><dd>165,00 €</dd>
+                        <dt>IVA 21 %</dt><dd>34,65 €</dd>
+                        <dt class="alb-total">Total</dt><dd class="alb-total"><span data-f>199,65 €</span></dd>
                       </dl>
-                      <table class="paper-lines">
-                        <thead>
-                          <tr><th>Ref.</th><th>Descripción</th><th class="num">Cant.</th></tr>
-                        </thead>
-                        <tbody data-f>
-                          <tr><td>M8-40</td><td>Tornillo DIN 933</td><td class="num">500</td></tr>
-                          <tr><td>T-M8</td><td>Tuerca autoblocante</td><td class="num">500</td></tr>
-                          <tr><td>AR-8</td><td>Arandela plana</td><td class="num">1.000</td></tr>
-                        </tbody>
-                      </table>
-                      <div class="paper-total"><span>Total</span><span data-f>286,40 €</span></div>
+                      <footer class="alb-sign"><span>Recibí conforme</span><span>Página 1 de 1</span></footer>
                     </article>
                     <div class="erp">
-                      <p class="erp-bar">ERP <span>· entradas de material</span></p>
+                      <p class="erp-head"><b>Entradas de material</b><span>Octubre 2026</span></p>
                       <table class="erp-table">
                         <thead>
-                          <tr><th>Fecha</th><th>Doc.</th><th>Proveedor</th><th class="num">Importe</th><th>Estado</th></tr>
+                          <tr><th>Albarán</th><th>Proveedor</th><th class="num">Importe</th><th>Estado</th></tr>
                         </thead>
                         <tbody>
                           <tr class="erp-new">
-                            <td data-v="14/10/26"></td><td data-v="A-2611"></td><td data-v="Tornillería (ej.)"></td>
-                            <td class="num" data-v="286,40 €"></td>
-                            <td><span class="chip"><span class="c-wait">Leyendo…</span><span
-                                  class="c-ok">Registrado</span></span></td>
+                            <td data-v="A-2611"></td><td data-v="Suministros Arnela"></td>
+                            <td class="num" data-v="199,65 €"></td>
+                            <td><span class="erp-status"><span class="s-wait">Procesando</span><span
+                                  class="s-ok">Registrado</span></span></td>
                           </tr>
                           <tr>
-                            <td>13/10/26</td><td>F-0981</td><td>Pinturas (ej.)</td><td class="num">1.204,00 €</td>
-                            <td><span class="chip is-ok"><span class="c-ok">Registrado</span></span></td>
+                            <td>F-0981</td><td>Pinturas Saler</td><td class="num">1.204,00 €</td>
+                            <td><span class="erp-status is-ok"><span class="s-ok">Registrado</span></span></td>
                           </tr>
                           <tr>
-                            <td>13/10/26</td><td>P-5502</td><td>Aceros (ej.)</td><td class="num">3.870,15 €</td>
-                            <td><span class="chip is-ok"><span class="c-ok">Registrado</span></span></td>
+                            <td>A-5502</td><td>Perfiles Navia</td><td class="num">3.870,15 €</td>
+                            <td><span class="erp-status is-ok"><span class="s-ok">Registrado</span></span></td>
                           </tr>
                         </tbody>
                       </table>

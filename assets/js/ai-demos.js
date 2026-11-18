@@ -133,25 +133,24 @@
     documentos: {
       reset: function (s) {
         clearOn(s);
-        $(s, '.paper').classList.remove('is-scanning');
         $$(s, '.erp-new td[data-v]').forEach(function (td) { td.textContent = ''; });
-        $(s, '.erp-new .chip').classList.remove('is-ok');
+        $(s, '.erp-new .erp-status').classList.remove('is-ok');
       },
       play: function (s, done) {
-        at(200, function () { $(s, '.paper').classList.add('is-scanning'); });
-        var t = sequence($$(s, '.paper [data-f]'), 700, 260);
+        // Se recuadran uno a uno los campos que se extraen del albarán
+        var t = sequence($$(s, '.albaran [data-f]'), 500, 380);
         var row = $(s, '.erp-new');
-        at(t + 400, function () { on(row); });
-        t = sequence($$(s, '.erp-new td[data-v]'), t + 700, 220, function (td) {
+        at(t + 600, function () { on(row); });
+        t = sequence($$(s, '.erp-new td[data-v]'), t + 900, 240, function (td) {
           td.textContent = td.getAttribute('data-v');
         });
-        at(t + 450, function () { $(s, '.erp-new .chip').classList.add('is-ok'); });
-        at(t + 3200, done);
+        at(t + 600, function () { $(s, '.erp-new .erp-status').classList.add('is-ok'); });
+        at(t + 3400, done);
       },
       final: function (s) {
-        $$(s, '.paper [data-f], .erp-new').forEach(on);
+        $$(s, '.albaran [data-f], .erp-new').forEach(on);
         $$(s, '.erp-new td[data-v]').forEach(function (td) { td.textContent = td.getAttribute('data-v'); });
-        $(s, '.erp-new .chip').classList.add('is-ok');
+        $(s, '.erp-new .erp-status').classList.add('is-ok');
       }
     },
 
