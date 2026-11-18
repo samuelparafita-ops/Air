@@ -1442,13 +1442,11 @@ h2 {
 
 .field { display: grid; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
 
-.field > label,
-.choice-group legend {
+.field > label {
   font: 500 .92rem/1.3 var(--f-display);
   color: var(--text);
 }
 
-.choice-group legend { padding: 0; margin-bottom: 8px; }
 .optional { color: var(--muted); font-weight: 400; }
 
 .field input:not([type="radio"]):not([type="checkbox"]),
@@ -1474,37 +1472,6 @@ h2 {
 }
 
 .field [aria-invalid="true"] { border-color: var(--danger) !important; }
-
-.choices { display: flex; flex-wrap: wrap; gap: 8px; }
-.choice { position: relative; }
-
-.choice input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.choice span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 10px 16px;
-  background: var(--bg);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
-  color: var(--text-2);
-  font: 500 .95rem var(--f-display);
-  transition: border-color .2s ease, color .2s ease, background-color .2s ease;
-}
-
-.choice input:hover + span { border-color: var(--muted); }
-.choice input:checked + span { border-color: var(--green); color: var(--text); background: rgba(74, 222, 128, .08); }
-.choice input:focus-visible + span { outline: 2px solid var(--green); outline-offset: 2px; }
-.choice-group[aria-invalid="true"] .choice span { border-color: var(--danger); }
 
 .field > .check,
 .check {

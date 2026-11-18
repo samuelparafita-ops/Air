@@ -16,7 +16,6 @@
 
   function field(id) { return document.getElementById(id); }
   function value(id) { return field(id).value.trim(); }
-  function sizeChoice() { return form.querySelector('input[name="tamano"]:checked'); }
 
   var RULES = {
     nombre: function () { return value('nombre') ? '' : 'Escribe tu nombre.'; },
@@ -27,14 +26,13 @@
       return EMAIL.test(v) && !field('email').validity.typeMismatch
         ? '' : 'Escribe un email válido, por ejemplo nombre@empresa.es.';
     },
-    tamano: function () { return sizeChoice() ? '' : 'Elige el tamaño de tu empresa.'; },
     privacidad: function () { return field('privacidad').checked ? '' : 'Necesitamos tu aceptación para responderte.'; }
   };
-  var ORDER = ['nombre', 'empresa', 'email', 'tamano', 'privacidad'];
+  var ORDER = ['nombre', 'empresa', 'email', 'privacidad'];
 
   // Elemento que recibe aria-invalid / aria-describedby y el foco de cada regla
-  function target(id) { return id === 'tamano' ? field('tamano') : field(id); }
-  function focusTarget(id) { return id === 'tamano' ? form.querySelector('input[name="tamano"]') : field(id); }
+  function target(id) { return field(id); }
+  function focusTarget(id) { return field(id); }
 
   function describe(el, errorId, add) {
     var ids = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
@@ -83,14 +81,9 @@
 
   // Revalida solo el campo que ya mostraba un error
   ORDER.forEach(function (id) {
-    var els = id === 'tamano'
-      ? Array.prototype.slice.call(form.querySelectorAll('input[name="tamano"]'))
-      : [field(id)];
-    els.forEach(function (el) {
-      ['input', 'change', 'blur'].forEach(function (type) {
-        el.addEventListener(type, function () {
-          if (target(id).getAttribute('aria-invalid') === 'true') check(id);
-        });
+    ['input', 'change', 'blur'].forEach(function (type) {
+      field(id).addEventListener(type, function () {
+        if (target(id).getAttribute('aria-invalid') === 'true') check(id);
       });
     });
   });
@@ -116,13 +109,11 @@
       return;
     }
 
-    var size = sizeChoice();
     var payload = {
       nombre: value('nombre'),
       empresa: value('empresa'),
       email: value('email'),
       telefono: value('telefono'),
-      tamano: size ? size.value : '',
       mensaje: value('mensaje'),
       fecha: new Date().toISOString(),
       origen: window.location.href
