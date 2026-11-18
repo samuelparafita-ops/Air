@@ -75,10 +75,12 @@
         var frame = $(s, '.vision-frame');
         var count = $(s, '.v-count');
         var bad = $(s, '.v-bad');
+        var labels = $$(s, '.det-label');
         at(150, function () { frame.classList.add('is-scanning'); });
         var n = 0, b = 0;
-        var end = sequence($$(s, '.det'), 1300, 150, function (el) {
+        var end = sequence($$(s, '.det'), 1300, 420, function (el, i) {
           on(el);
+          on(labels[i]);
           count.textContent = String(++n);
           if (el.classList.contains('is-bad')) bad.textContent = String(++b);
         });
@@ -86,7 +88,7 @@
         at(end + 3200, done);
       },
       final: function (s) {
-        $$(s, '.det, .vision-stats').forEach(on);
+        $$(s, '.det, .det-label, .vision-stats').forEach(on);
         $(s, '.v-count').textContent = String($$(s, '.det').length);
         $(s, '.v-bad').textContent = String($$(s, '.det.is-bad').length);
       }

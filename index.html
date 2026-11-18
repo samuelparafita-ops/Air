@@ -402,7 +402,7 @@
                 <li>Vídeo en tiempo real</li>
               </ul>
               <div class="demo demo--vision" data-demo="vision" data-state="idle" role="img"
-                aria-label="Ejemplo animado: una foto de una línea de producción en la que la visión artificial detecta las piezas y marca una como defectuosa.">
+                aria-label="Ejemplo animado: una foto de cuatro tornillos en la que la visión artificial detecta cada pieza y marca como defectuoso el que está mal colocado.">
                 <p class="demo-tag">Datos de ejemplo</p>
                 <div class="demo-stage" aria-hidden="true">
                   <p class="demo-title">Inspección de calidad <span>· línea 2</span></p>
@@ -410,36 +410,27 @@
                     <div class="vision-frame">
                       <picture>
                         <source type="image/avif"
-                          srcset="assets/img/vision-800.avif 800w, assets/img/vision-1400.avif 1400w"
+                          srcset="assets/img/inspeccion-800.avif 800w, assets/img/inspeccion-1400.avif 1400w"
                           sizes="(min-width: 960px) 860px, 100vw">
                         <source type="image/webp"
-                          srcset="assets/img/vision-800.webp 800w, assets/img/vision-1400.webp 1400w"
+                          srcset="assets/img/inspeccion-800.webp 800w, assets/img/inspeccion-1400.webp 1400w"
                           sizes="(min-width: 960px) 860px, 100vw">
-                        <img src="assets/img/vision-800.jpg"
-                          srcset="assets/img/vision-800.jpg 800w, assets/img/vision-1400.jpg 1400w"
-                          sizes="(min-width: 960px) 860px, 100vw" width="1400" height="788" alt="" loading="lazy"
+                        <img src="assets/img/inspeccion-800.jpg"
+                          srcset="assets/img/inspeccion-800.jpg 800w, assets/img/inspeccion-1400.jpg 1400w"
+                          sizes="(min-width: 960px) 860px, 100vw" width="1400" height="648" alt="" loading="lazy"
                           decoding="async">
                       </picture>
-                      <svg class="vision-boxes" viewBox="0 0 2000 1125" preserveAspectRatio="xMidYMid slice">
-                        <g class="det"><rect x="400" y="322" width="206" height="92" /></g>
-                        <g class="det"><rect x="378" y="390" width="236" height="64" /></g>
-                        <g class="det"><rect x="362" y="436" width="262" height="66" /></g>
-                        <g class="det"><rect x="345" y="488" width="285" height="78" /></g>
-                        <g class="det"><rect x="323" y="550" width="318" height="96" /></g>
-                        <g class="det is-labeled"><rect x="296" y="632" width="366" height="268" /><rect
-                            class="det-tag" x="296" y="590" width="206" height="42" /><text x="310"
-                            y="620">pieza · 0,98</text></g>
-                        <g class="det"><rect x="815" y="314" width="198" height="98" /></g>
-                        <g class="det"><rect x="895" y="388" width="230" height="66" /></g>
-                        <g class="det is-bad is-labeled"><rect x="930" y="440" width="278" height="68" /><rect
-                            class="det-tag" x="930" y="398" width="232" height="42" /><text x="944"
-                            y="428">defecto · 0,91</text></g>
-                        <g class="det"><rect x="972" y="488" width="285" height="76" /></g>
-                        <g class="det"><rect x="1030" y="544" width="318" height="98" /></g>
-                        <g class="det is-labeled"><rect x="1098" y="618" width="366" height="264" /><rect
-                            class="det-tag" x="1098" y="576" width="206" height="42" /><text x="1112"
-                            y="606">pieza · 0,97</text></g>
+                      <!-- Coordenadas sobre la foto recortada (1200 × 555) -->
+                      <svg class="vision-boxes" viewBox="0 0 1200 555" preserveAspectRatio="xMidYMid slice">
+                        <rect class="det" x="380" y="52" width="86" height="140" />
+                        <rect class="det" x="500" y="148" width="86" height="138" />
+                        <rect class="det" x="626" y="246" width="88" height="140" />
+                        <rect class="det is-bad" x="742" y="396" width="130" height="106" />
                       </svg>
+                      <span class="det-label det-label--1">tornillo · 0,98</span>
+                      <span class="det-label det-label--2">tornillo · 0,97</span>
+                      <span class="det-label det-label--3">tornillo · 0,99</span>
+                      <span class="det-label det-label--4 is-bad">defecto · 0,94</span>
                       <span class="scanline"></span>
                     </div>
                     <p class="vision-stats"><span>Piezas <b class="v-count">0</b></span><span>Defectos <b

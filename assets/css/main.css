@@ -903,35 +903,60 @@ h2 {
 }
 
 /* Visión artificial */
+/* La foto y la capa SVG comparten proporción (2400 × 1110), así que las etiquetas se colocan en % */
 .vision-frame {
   position: relative;
-  aspect-ratio: 16 / 7.4;
+  aspect-ratio: 2400 / 1110;
   overflow: hidden;
-  background: #111614;
+  background: #DADDDB;
   border-radius: 8px;
 }
 
 .vision-frame picture,
 .vision-frame img { width: 100%; height: 100%; }
-.vision-frame img { object-fit: cover; filter: saturate(.7) brightness(.78); }
+.vision-frame img { object-fit: cover; filter: saturate(.8) brightness(.9); }
 
 .vision-boxes { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-.det > rect:first-child {
-  fill: rgba(74, 222, 128, .06);
-  stroke: var(--green);
-  stroke-width: 1.5;
+.det {
+  fill: rgba(23, 115, 74, .08);
+  stroke: var(--green-dark);
+  stroke-width: 2;
   vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity .3s ease, transform .35s var(--ease);
 }
 
-.det.is-bad > rect:first-child { fill: rgba(248, 113, 113, .12); stroke: var(--danger); stroke-width: 2; }
-.det-tag { fill: var(--green); }
-.det.is-bad .det-tag { fill: var(--danger); }
-.det text { fill: var(--on-green); font: 500 26px var(--f-mono); }
-
-.det { transform-box: fill-box; transform-origin: center; transition: opacity .3s ease, transform .35s var(--ease); }
-.js .det { opacity: 0; transform: scale(1.06); }
+.det.is-bad { fill: rgba(220, 38, 38, .1); stroke: #DC2626; }
+.js .det { opacity: 0; transform: scale(1.08); }
 .js .det.on { opacity: 1; transform: none; }
+
+.det-label {
+  position: absolute;
+  z-index: 1;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--green-dark);
+  color: #FFFFFF;
+  font: 500 .68rem/1.3 var(--f-mono);
+  white-space: nowrap;
+  transition: opacity .3s ease, transform .3s var(--ease);
+}
+
+.det-label.is-bad { background: #DC2626; }
+.js .det-label { opacity: 0; transform: translateY(3px); }
+.js .det-label.on { opacity: 1; transform: none; }
+
+/* Esquina superior de cada caja: a la derecha en las tres primeras, a la izquierda en la última */
+.det-label--1 { left: calc(38.833% + 6px); top: 9.369%; }
+.det-label--2 { left: calc(48.833% + 6px); top: 26.667%; }
+.det-label--3 { left: calc(59.5% + 6px); top: 44.324%; }
+.det-label--4 { right: calc(38.167% + 6px); top: 71.351%; }
+
+@media (max-width: 599px) {
+  .det-label { padding: 1px 4px; font-size: .56rem; }
+}
 
 .scanline {
   position: absolute;
@@ -965,10 +990,6 @@ h2 {
 .v-model { transition: opacity .4s ease; }
 .js .v-model { opacity: 0; }
 .js .vision-stats.on .v-model { opacity: 1; }
-
-@media (max-width: 599px) {
-  .det-tag, .det text { display: none; }
-}
 
 @media (min-width: 768px) {
   .v-model { margin-left: auto; }
